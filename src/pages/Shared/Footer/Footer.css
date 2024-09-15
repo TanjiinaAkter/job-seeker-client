@@ -1,0 +1,18 @@
+.f-img {
+  background-image: url("../../../assets/slider.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.f-img::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  left: 0;
+  background: linear-gradient(to left, #010111d6, rgba(0, 0, 0, 0.896));
+  z-index: -1;
+}

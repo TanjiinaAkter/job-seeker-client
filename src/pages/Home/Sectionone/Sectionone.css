@@ -1,0 +1,21 @@
+.section-img {
+  background-image: url("../../../assets/slider11.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 20rem;
+  position: relative;
+  background-attachment: fixed;
+  z-index: -1;
+}
+.section-img::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
