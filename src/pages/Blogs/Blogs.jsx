@@ -12,7 +12,7 @@ const Blogs = () => {
     });
   }, []);
   return (
-    <div className=" ">
+    <div className="overflow-hidden ">
       <Navbar></Navbar>
       <div className="addjob-img  bg-scroll space-y-28 relative">
         <div className="flex justify-center items-center py-24">

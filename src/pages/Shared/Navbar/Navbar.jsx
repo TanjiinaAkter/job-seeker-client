@@ -1,13 +1,21 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import img from "../../../assets/Untitled.png";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 const Navbar = () => {
   const location = useLocation();
-  console.log(location);
+  //console.log(location);
   const isHomeRoute = location.pathname === "/";
-
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+  const userLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch(() => {});
+  };
   const links = (
-    <div className="flex lg:flex-row flex-col space-y-2 md:space-y-0 md:space-x-2">
+    <div className="flex lg:flex-row flex-col lg:flex-1 space-y-2  md:space-y-0 md:space-x-2">
       <li>
         <NavLink
           to="/"
@@ -34,7 +42,8 @@ const Navbar = () => {
           All jobs
         </NavLink>
       </li>
-      <li>
+      {user?.email?  <>
+        <li>
         <NavLink
           to="/appliedjobs"
           className={({ isActive }) =>
@@ -73,6 +82,46 @@ const Navbar = () => {
           My jobs
         </NavLink>
       </li>
+      </> : ''}
+      {/* <li>
+        <NavLink
+          to="/appliedjobs"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#ff4848] font-semibold underline  text-lg"
+              : isHomeRoute
+              ? "text-white font-semibold text-lg"
+              : " text-black font-semibold text-lg "
+          }>
+          Applied jobs
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/addjob"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#ff4848] font-semibold underline  text-lg "
+              : isHomeRoute
+              ? "text-white font-semibold text-lg"
+              : " text-black font-semibold text-lg "
+          }>
+          Add a job
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/myjobs"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#ff4848] font-semibold underline  text-lg "
+              : isHomeRoute
+              ? "text-white font-semibold text-lg"
+              : " text-black font-semibold text-lg "
+          }>
+          My jobs
+        </NavLink>
+      </li> */}
       <li>
         <NavLink
           to="/blogs"
@@ -88,10 +137,17 @@ const Navbar = () => {
       </li>
     </div>
   );
-
+  // ==================== USERNAME SHOW AFTER HOVER ON IMG ======================//
+  const [Hovered, setHovered] = useState(false);
+  const handlehover = () => {
+    setHovered(true);
+  };
+  const handleNoHover = () => {
+    setHovered(false);
+  };
   return (
     <div className=" bg-white md:bg-transparent mx-auto max-w-6xl">
-      <div className=" flex flex-col md:flex-row navbar ">
+      <div className=" flex flex-col md:flex-row navbar pt-4 ">
         <div className="md:navbar-start w-full flex justify-between items-center">
           <div className="dropdown">
             <div
@@ -127,13 +183,43 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-center hidden lg:flex ">
           <ul className="menu  px-1">{links}</ul>
         </div>
-        <div className="md:navbar-end  space-y-2 sm:space-y-0 lg:space-x-4 mt-3">
-          <Link to="/login" className="button  bg-[#ff4848] ">
-            Login
-          </Link>
+        <div className="md:navbar-end  space-y-2 sm:space-y-0 lg:space-x-4 mt-3 md:mt-0 md:pl-4 ">
+          {user?.email ? (
+            <div className="flex flex-row space-x-2 items-center justify-center ">
+              <div className="relative z-10 ">
+                <img
+                  onMouseEnter={handlehover}
+                  onMouseLeave={handleNoHover}
+                  className="object-cover w-12 h-12 hover:border hover:border-white border-2 rounded-full"
+                  src={user?.photoURL}
+                  alt=""
+                />
+                {Hovered ? (
+                  <div>
+                    <p className="absolute text-lime-400 font-bold bg-red  top-14 ">
+                      {user?.displayName}
+                    </p>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+
+              {/* <p className="text-red-600 lg:hidden">{user?.displayName}</p> */}
+              <button
+                onClick={userLogOut}
+                className="button lg:btn-sm  bg-[#ff4848] ">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="button  bg-[#ff4848] ">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>

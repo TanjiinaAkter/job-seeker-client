@@ -1,23 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
-// import AOS from 'aos';
-// import 'aos/dist/aos.css'
+import { AuthContext } from "../../providers/AuthProvider";
+
 const Login = () => {
-  // useEffect(() => {
-  //   AOS.init({
-  //     duration: 1200,
-  //   });
-  // }, []);
   const [open, setOpen] = useState(false);
+  const { login } = useContext(AuthContext);
+  const location = useLocation();
+  console.log(location);
+  const navigate = location.pathname;
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(form, email, password);
+    // ============ USER LOGIN USING AUTHENTICATION ===================//
+    login(email, password)
+      .then((result) => {
+        console.log(result);
+        navigate(location?.state ? location?.state : "/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div className="">
       <Navbar></Navbar>
       <hr />
-      <div className="reg-img  relative mb-[25rem]">
+      <div className="reg-img  relative md:mb-[25rem]">
         <div className="flex w-1/2 mx-auto reg-img  items-center pt-12 justify-start flex-col space-y-4">
           <h2 className="text-xl  text-white md:text-xl text-center font-semibold">
             Account Login
@@ -29,7 +45,10 @@ const Login = () => {
           </p>
         </div>
         <div className=" md:w-[50%] reg-box ">
-          <form className="card-body bg-white rounded-none shadow-md">
+          {/*=================== LOGIN FORM ===================*/}
+          <form
+            onSubmit={handleLogin}
+            className="card-body bg-white rounded-none shadow-md">
             <h2 className="text-left font-semibold text-2xl text-[#ff4848]">
               Login Using your email
             </h2>
@@ -38,6 +57,7 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="email"
+                name="email"
                 className="input input-bordered rounded-sm focus:outline-none"
                 required
               />
@@ -46,6 +66,7 @@ const Login = () => {
               <input
                 type={open ? "text" : "password"}
                 placeholder="password"
+                name="password"
                 className="input input-bordered rounded-sm focus:outline-none"
                 required
               />

@@ -12,6 +12,7 @@ import Jobdetail from "../pages/Jobdetail/Jobdetail";
 import Myjobs from "../pages/Myjobs/Myjobs";
 import Appliedjob from "../pages/Appliedjob/Appliedjob";
 import Errorpage from "../pages/Errorpage/Errorpage";
+import PrivateRouter from "./PrivateRouter";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +30,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/addjob",
-        element: <Addjob></Addjob>,
+        element: (
+          <PrivateRouter>
+            <Addjob></Addjob>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/myjobs",
-        element: <Myjobs></Myjobs>,
+        element: (
+          <PrivateRouter>
+            <Myjobs></Myjobs>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/blogs",
@@ -53,11 +62,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/appliedjobs",
-        element: <Appliedjob></Appliedjob>,
+        element: (
+          <PrivateRouter>
+            {" "}
+            <Appliedjob></Appliedjob>
+          </PrivateRouter>
+        ),
       },
       {
         path: "/blogs",
-        element:<Blogs></Blogs>,
+        element: <Blogs></Blogs>,
       },
     ],
   },
