@@ -3,6 +3,7 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Navbar from "../Shared/Navbar/Navbar";
 import Footer from "../Shared/Footer/Footer";
+import Pageheader from "../../components/Pageheader/Pageheader";
 
 const Appliedjob = () => {
   useEffect(() => {
@@ -13,7 +14,7 @@ const Appliedjob = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <div className="addjob-img  bg-scroll space-y-28 relative">
+      {/* <div className="addjob-img  bg-scroll space-y-28 relative">
         <div className="flex justify-center items-center py-24">
           <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
           <p
@@ -23,7 +24,8 @@ const Appliedjob = () => {
           </p>
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
         </div>
-      </div>
+      </div> */}
+      <Pageheader heading={'Applied Jobs'}></Pageheader>
       {/* Table */}
       <div
         data-aos="fade-left"

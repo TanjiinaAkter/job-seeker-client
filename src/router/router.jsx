@@ -58,13 +58,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/jobdetail",
-        element: <Jobdetail></Jobdetail>,
+        element:<PrivateRouter><Jobdetail></Jobdetail></PrivateRouter>,
       },
       {
         path: "/appliedjobs",
         element: (
           <PrivateRouter>
-            {" "}
+           
             <Appliedjob></Appliedjob>
           </PrivateRouter>
         ),

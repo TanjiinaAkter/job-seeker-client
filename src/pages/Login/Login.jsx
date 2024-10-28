@@ -1,17 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import { AuthContext } from "../../providers/AuthProvider";
 
+
 const Login = () => {
   const [open, setOpen] = useState(false);
-  const { login } = useContext(AuthContext);
+  const { login, logOut,resetPassword } = useContext(AuthContext);
   const location = useLocation();
   console.log(location);
-  const navigate = location.pathname;
+  const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -22,13 +24,32 @@ const Login = () => {
     // ============ USER LOGIN USING AUTHENTICATION ===================//
     login(email, password)
       .then((result) => {
-        console.log(result);
-        navigate(location?.state ? location?.state : "/");
+        //console.log(result)
+        if (result.user.emailVerified) {
+          navigate("/");
+        } else {
+          logOut();
+        }
       })
+
       .catch((error) => {
         console.error(error);
       });
   };
+  const emailRef = useRef(null);
+  console.log(emailRef);
+  const handleReset = () => {
+    const email = emailRef.current.value;
+    console.log("yyyyyyyyyy", email);
+    resetPassword(email)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <div className="">
       <Navbar></Navbar>
@@ -58,6 +79,7 @@ const Login = () => {
                 type="email"
                 placeholder="email"
                 name="email"
+                ref={emailRef}
                 className="input input-bordered rounded-sm focus:outline-none"
                 required
               />
@@ -80,7 +102,9 @@ const Login = () => {
               </span>
             </div>
 
-            <p className="text-[#ff4848] underline">Forget Password</p>
+            <p onClick={handleReset} className="text-[#ff4848] underline">
+              Forget Password
+            </p>
             <div className="form-control mt-6">
               <button className="btn text-white text-lg  bg-[#ff4848]">
                 Login
@@ -88,10 +112,7 @@ const Login = () => {
             </div>
             <Link to="/registration">
               Dont you have account?
-              <span className="text-[#ff4848] font-semibold ">
-                {" "}
-                Sign up
-              </span>{" "}
+              <span className="text-[#ff4848] font-semibold ">Sign up</span>
               now
             </Link>
           </form>

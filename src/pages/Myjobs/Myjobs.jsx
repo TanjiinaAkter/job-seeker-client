@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Footer from "../Shared/Footer/Footer";
 import img from "../../assets/luca-bravo-9l_326FISzk-unsplash.jpg";
+import Pageheader from "../../components/Pageheader/Pageheader";
 const Myjobs = () => {
   useEffect(() => {
     AOS.init({
@@ -15,7 +16,7 @@ const Myjobs = () => {
   return (
     <div className="">
       <Navbar></Navbar>
-      <div className="addjob-img  bg-scroll space-y-28 relative">
+      {/* <div className="addjob-img  bg-scroll space-y-28 relative">
         <div className="flex justify-center items-center py-24">
           <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
           <p
@@ -25,7 +26,8 @@ const Myjobs = () => {
           </p>
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
         </div>
-      </div>
+      </div> */}
+      <Pageheader heading='My Jobs'></Pageheader>
       <div
         data-aos="fade-left"
         className="overflow-x-auto  mt-12 m-1 mx-auto card rounded-none md:w-[75%] shadow-xl w-[90%]  mb-12">

@@ -20,6 +20,14 @@ const Registration = () => {
     // ============ USER CREATE USING AUTHENTICATION ===================//
     createUser(email, password)
       .then((result) => {
+        sendEmailVerification(result.user)
+          .then((result) => {
+            console.log(result);
+            alert('check your email for verification')
+          })
+          .catch((error) => {
+            console.error(error.message);
+          });
         console.log(result.user);
         updateProfile(result.user, {
           displayName: name,

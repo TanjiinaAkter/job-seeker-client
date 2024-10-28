@@ -5,6 +5,7 @@ import img from "../../assets/luca-bravo-9l_326FISzk-unsplash.jpg";
 // import img1 from "../../assets/slider11.png";
 import { useEffect } from "react";
 import Footer from "../Shared/Footer/Footer";
+import Pageheader from "../../components/Pageheader/Pageheader";
 const Blogs = () => {
   useEffect(() => {
     AOS.init({
@@ -14,17 +15,7 @@ const Blogs = () => {
   return (
     <div className="overflow-hidden ">
       <Navbar></Navbar>
-      <div className="addjob-img  bg-scroll space-y-28 relative">
-        <div className="flex justify-center items-center py-24">
-          <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
-          <p
-            data-aos="fade-left"
-            className="text-white font-semibold text-3xl md:text-5xl text-center">
-            Blog
-          </p>
-          <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
-        </div>
-      </div>
+     <Pageheader heading={'Blog'}></Pageheader>
       {/* MAIN PART */}
       <div className=" flex flex-wrap md:flex-nowrap space-y-4 md:space-y-0  md:mx-auto px-5 md:px-0 gap-4  w-full my-12 md:w-[90%] lg:w-[75%]">
         <div data-aos ='fade-right' className="flex w-full md:w-2/3">

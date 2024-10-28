@@ -1,33 +1,62 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
-import AOS from 'aos';
-import 'aos/dist/aos.css'
+import AOS from "aos";
+import "aos/dist/aos.css";
+import Pageheader from "../../components/Pageheader/Pageheader";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAlljobs from "../../hooks/useAlljobs";
 const Alljobs = () => {
   useEffect(() => {
     AOS.init({
-    duration:1200
-    })
-  },[])
+      duration: 1200,
+    });
+  }, []);
+
+  const [alljobs, refetch] = useAlljobs();
+  const [showJobs, setShowJobs] = useState(alljobs);
+
+  useEffect(() => {
+    if (alljobs.length > 0) {
+      setShowJobs(alljobs);
+    }
+  }, [alljobs]);
+  const valuedata = useRef(null);
+  const clickToSearch = () => {
+    // kono space remove korte trim use hoy
+    const valueget = valuedata.current.value.trim();
+    //console.log(valueget);
+    if (valueget == "") {
+      setShowJobs(alljobs);
+    } else {
+      const firstWord = valueget.split(" ")[0];
+      const searchJob = alljobs.filter((job) =>
+        job.jobtitle.toLowerCase().startsWith(firstWord.toLowerCase())
+      );
+      setShowJobs(searchJob);
+    }
+  };
+
   return (
     <div className="">
       <Navbar></Navbar>
       <div className="addjob-img  bg-scroll space-y-28 relative">
-        <div className="flex justify-center items-center py-24">
-          <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
-          <p data-aos="fade-left" className="text-white font-semibold text-3xl md:text-5xl text-center">
-            All Job Page
-          </p>
-          <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
-        </div>
+        <Pageheader heading={"All Job Page"}></Pageheader>
       </div>
       <div className="flex flex-wrap space-y-3 justify-center space-x-2 items-center md:justify-between my-12 mx-auto w-[90%] md:w-[75%]">
         <h3 className="text-3xl text-[#ff4848] font-semibold">
           Job Vacancies :
         </h3>
-        <div>
+
+        <div onChange={clickToSearch}>
           <label className="input input-bordered  rounded-sm focus:outline-none focus:border-none flex items-center gap-2 border border-red-500">
-            <input type="text" className="grow" placeholder="Search by title" />
+            <input
+              type="text"
+              name="search"
+              ref={valuedata}
+              className="grow"
+              placeholder="Search by title"
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -43,7 +72,9 @@ const Alljobs = () => {
         </div>
       </div>
 
-      <div data-aos="fade-left" className="overflow-x-auto  m-1 mx-auto card rounded-none md:w-[75%] shadow-xl w-[90%]  mb-12">
+      <div
+        data-aos="fade-left"
+        className="overflow-x-auto  m-1 mx-auto card rounded-none md:w-[75%] shadow-xl w-[90%]  mb-12">
         <table className="table">
           {/* head#b0c5ca 353547*/}
           <thead className="bg-[#b0c5ca]">
@@ -58,105 +89,32 @@ const Alljobs = () => {
           </thead>
           <tbody className="bg-white">
             {/* row 1 */}
-            <tr>
-              <td>1</td>
+            {showJobs.map((job, index) => (
+              <tr key={job._id}>
+                <td>{index + 1}</td>
 
-              <td>
-                <div className="flex items-center gap-3">
-                  <h3 className="font-bold">Software engineer</h3>
-                </div>
-              </td>
-              <td>
-                <h3>12/12/2024</h3>
-              </td>
-              <td>
-                <h3>04/12/2024</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <h3 className="font-bold">{job.jobtitle}</h3>
+                  </div>
+                </td>
+                <td>
+                  <h3>12/12/2024</h3>
+                </td>
+                <td>
+                  <h3>04/12/2024</h3>
+                </td>
+                <td>
+                  <h3>$500</h3>
+                </td>
 
-              <th>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  details
-                </button>
-              </th>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <td>1</td>
-
-              <td>
-                <div className="flex items-center gap-3">
-                  <h3 className="font-bold">Software engineer</h3>
-                </div>
-              </td>
-              <td>
-                <h3>12/12/2024</h3>
-              </td>
-              <td>
-                <h3>04/12/2024</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
-
-              <th>
-              <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  details
-                </button>
-              </th>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <td>1</td>
-
-              <td>
-                <div className="flex items-center gap-3">
-                  <h3 className="font-bold">Software engineer</h3>
-                </div>
-              </td>
-              <td>
-                <h3>12/12/2024</h3>
-              </td>
-              <td>
-                <h3>04/12/2024</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
-
-              <th>
-              <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  details
-                </button>
-              </th>
-            </tr>
-            {/* row 4 */}
-            <tr>
-              <td>1</td>
-
-              <td>
-                <div className="flex items-center gap-3">
-                  <h3 className="font-bold">Software engineer</h3>
-                </div>
-              </td>
-              <td>
-                <h3>12/12/2024</h3>
-              </td>
-              <td>
-                <h3>04/12/2024</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
-
-              <th>
-              <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  details
-                </button>
-              </th>
-            </tr>
+                <th>
+                  <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
+                    details
+                  </button>
+                </th>
+              </tr>
+            ))}
           </tbody>
           {/* foot */}
         </table>
