@@ -5,15 +5,44 @@ import { IoMdTime } from "react-icons/io";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import loti from "../../assets/Animation - 1726164735519.gif";
 import tickimg from "../../assets/Animation - 1726209450587.gif";
-import corporateimg from "../../assets/luca-bravo-9l_326FISzk-unsplash.jpg";
-import Footer from '../Shared/Footer/Footer'
-import { useEffect } from "react";
+import Footer from "../Shared/Footer/Footer";
+import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Mutation, useMutation, useQuery } from "@tanstack/react-query";
+
 const Jobdetail = () => {
   useEffect(() => {
     AOS.init({
       duration: 800,
     });
   }, []);
+  const axiosSecure = useAxiosSecure();
+  const detalsofid = useLoaderData();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [resume, setResume] = useState(null);
+  //console.log(resume)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("resume", resume);
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    const formDataObj = Object.fromEntries(formData.entries());
+    console.log(formDataObj);
+
+    // POST DATA FROM FORM
+    const res = await axiosSecure.post("/formapply", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res.data);
+  };
   return (
     <div>
       <Navbar></Navbar>
@@ -21,7 +50,7 @@ const Jobdetail = () => {
         <div className="flex justify-center items-center py-24">
           <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
           <p className="text-white font-semibold text-3xl md:text-5xl text-center">
-            Job Details : Product Designer
+            Job Details : {detalsofid.jobtitle}
           </p>
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
         </div>
@@ -37,15 +66,15 @@ const Jobdetail = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <h3 className="text-3xl font-semibold">Product Designer</h3>
+            <h3 className="text-3xl font-semibold">{detalsofid.jobtitle}</h3>
             <div className="flex items-center justify-start space-x-5 ">
               <div className="flex items-center justify-center gap-2 text-gray-500">
                 <IoMdTime className="text-lg" />
-                <p>Full Time</p>
+                <p>{detalsofid.category}</p>
               </div>
               <div className="flex items-center gap-2 text-gray-500">
                 <FaMoneyCheckDollar className="text-lg" />
-                <p>$123 - $456</p>
+                <p>{detalsofid.salary}</p>
               </div>
             </div>
           </div>
@@ -58,7 +87,7 @@ const Jobdetail = () => {
               data-aos="fade-right">
               <img
                 className="w-full lg:w-[80%] rounded-sm"
-                src={corporateimg}
+                src={detalsofid.photo}
                 alt=""
               />
               <div></div>
@@ -84,7 +113,7 @@ const Jobdetail = () => {
                   data-aos="fade-left">
                   Title :
                   <span className="text-gray-500 font-normal pl-1">
-                    Product designer
+                    {detalsofid.jobtitle}
                   </span>
                 </h4>
               </div>
@@ -103,7 +132,9 @@ const Jobdetail = () => {
                   className="font-semibold text-gray-500 text-lg "
                   data-aos="fade-left">
                   Salary:
-                  <span className="text-gray-500 font-normal pl-1">$450</span>
+                  <span className="text-gray-500 font-normal pl-1">
+                    {detalsofid.salary}
+                  </span>
                 </h4>
               </div>
               <div className=" flex justify-start  items-center gap-2">
@@ -121,14 +152,87 @@ const Jobdetail = () => {
                   className="font-semibold text-gray-500 text-lg "
                   data-aos="fade-left">
                   No. of Applicants :
-                  <span className="text-gray-500 font-normal pl-1">0</span>
+                  <span className="text-gray-500 font-normal pl-1">
+                    {detalsofid.hiddenapplicationnumber}
+                  </span>
                 </h4>
               </div>
-              <div className="flex justify-start" data-aos="fade-left">
+              {/* <div className="flex justify-start" data-aos="fade-left">
                 <button className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md">
                   Apply Now
                 </button>
-              </div>
+              </div> */}
+              {/* Open the modal using document.getElementById('ID').showModal() method */}
+              <button
+                className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }>
+                Apply Now
+              </button>
+
+              {/* //MODAL */}
+              <dialog id="my_modal_1" className="modal">
+                <div className="modal-box max-h-fit">
+                  <form onSubmit={handleSubmit} className="card-body p-0">
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Name</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="name"
+                        className="input input-bordered"
+                        required
+                      />
+                    </div>
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Email</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="email"
+                        className="input input-bordered"
+                        required
+                      />
+                    </div>
+                    <div className="form-control">
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => {
+                          setResume(e.target.files[0]);
+
+                          console.log(e.target.files[0]);
+                        }}
+                        name="file"
+                        id=""
+                      />
+                    </div>
+
+                    <div className="form-control mt-6">
+                      <button type="submit" className="btn btn-primary">
+                        Submit apply
+                      </button>
+                    </div>
+                  </form>
+                  <div className="modal-action">
+                    <form method="dialog">
+                      {/* if there is a button in form, it will close the modal */}
+                      <button className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md">
+                        Close
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
             </div>
           </div>
         </div>
@@ -147,19 +251,10 @@ const Jobdetail = () => {
           <p>Job Description : </p>
         </div>
         <p className="p-4 text-gray-500">
-          Job Description : Benchmark is an architectural firm looking for a
-          potential experienced Photo Editor Job duties and responsibilities
-          Coordinate with the team to identify photography needs Review photos,
-          edit, and make necessary changes Must be team-oriented and proactive
-          in meeting the deadlines Study the work requirements and perform
-          accordingly Good understanding of design software and technologies
-          (such as Illustrator, Photoshop, etc.) Knows the concept of masking,
-          cloning, lightroom, cameraman, and other terminologies related to its
-          working. Have excellent time management skills and the ability to work
-          under pressure.
+          Job Description : {detalsofid.description}
         </p>
       </div>
-     <Footer></Footer>
+      <Footer></Footer>
     </div>
   );
 };

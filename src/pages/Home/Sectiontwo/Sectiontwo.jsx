@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 import job from "../../../assets/4171344-removebg-preview.png";
 const Sectiontwo = () => {
-    
   return (
     <div className="mx-auto w-full md:w-[90%] lg:w-[80%] mb-12">
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -20,13 +20,19 @@ const Sectiontwo = () => {
             expert advice
           </p>
           <div className="flex justify-start items-center">
-            <button className="btn bg-red-600 rounded-sm text-white">
-              Apply Now
-            </button>
+            <Link to="/alljobs">
+              <button className="btn bg-red-600 rounded-sm text-white">
+                Apply Now
+              </button>
+            </Link>
           </div>
         </div>
         <div className="w-full  flex justify-center items-center">
-          <img src={job} className="lg:w-[80%] md:w-full object-cover hover:transform hover:scale-105 transition-all duration-300" alt="" />
+          <img
+            src={job}
+            className="lg:w-[80%] md:w-full object-cover hover:transform hover:scale-105 transition-all duration-300"
+            alt=""
+          />
         </div>
       </div>
     </div>

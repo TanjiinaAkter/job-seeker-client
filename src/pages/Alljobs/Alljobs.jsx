@@ -6,6 +6,8 @@ import "aos/dist/aos.css";
 import Pageheader from "../../components/Pageheader/Pageheader";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAlljobs from "../../hooks/useAlljobs";
+import { Link } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Alljobs = () => {
   useEffect(() => {
     AOS.init({
@@ -15,7 +17,7 @@ const Alljobs = () => {
 
   const [alljobs, refetch] = useAlljobs();
   const [showJobs, setShowJobs] = useState(alljobs);
-
+  const axiosPublic = useAxiosPublic();
   useEffect(() => {
     if (alljobs.length > 0) {
       setShowJobs(alljobs);
@@ -109,9 +111,11 @@ const Alljobs = () => {
                 </td>
 
                 <th>
-                  <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                    details
-                  </button>
+                  <Link to={`/jobdetail/${job._id}`}>
+                    <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
+                      details
+                    </button>
+                  </Link>
                 </th>
               </tr>
             ))}

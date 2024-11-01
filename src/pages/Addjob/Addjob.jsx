@@ -51,6 +51,7 @@ const Addjob = () => {
       date: formatDate(startDate),
       deadline: formatDate(deadLine),
       hiddenapplicationnumber: parseInt(data.hiddenapplicationnumber),
+      description: data.description,
     };
     console.log("form final info", forminfo);
     axiosPublic.post("/alljobs", forminfo).then((res) => {
@@ -200,6 +201,22 @@ const Addjob = () => {
               {errors.photo && (
                 <span className="text-red-600">
                   job title field is required
+                </span>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Description</span>
+              </label>
+              <input
+                {...register("description", { required: true })}
+                type="text"
+                placeholder="description"
+                className="input input-bordered focus:outline-none rounded-sm"
+              />
+              {errors.description && (
+                <span className="text-red-600">
+                  description field is required
                 </span>
               )}
             </div>
