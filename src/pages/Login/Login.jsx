@@ -3,15 +3,17 @@ import Navbar from "../Shared/Navbar/Navbar";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { useContext, useRef, useState } from "react";
-import Footer from "../Shared/Footer/Footer";
 import { AuthContext } from "../../providers/AuthProvider";
-
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [open, setOpen] = useState(false);
-  const { login, logOut,resetPassword } = useContext(AuthContext);
+  const [noemail, setNoEmail] = useState("");
+  const { login, logOut, resetPassword } = useContext(AuthContext);
   const location = useLocation();
   console.log(location);
+  const from = location.state?.from.pathname || "/";
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -26,8 +28,42 @@ const Login = () => {
       .then((result) => {
         //console.log(result)
         if (result.user.emailVerified) {
-          navigate("/");
+          Swal.fire({
+            title: "Login successfull !!!",
+            showClass: {
+              popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `,
+            },
+            hideClass: {
+              popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `,
+            },
+          });
+          navigate(from, { replace: true });
         } else {
+          Swal.fire({
+            title: "Verify your email first, check your email !!!",
+            showClass: {
+              popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `,
+            },
+            hideClass: {
+              popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `,
+            },
+          });
           logOut();
         }
       })
@@ -39,11 +75,32 @@ const Login = () => {
   const emailRef = useRef(null);
   console.log(emailRef);
   const handleReset = () => {
+    setNoEmail('');
     const email = emailRef.current.value;
     console.log("yyyyyyyyyy", email);
+    if (!email) {
+      return setNoEmail("email requied");
+    }
     resetPassword(email)
       .then((result) => {
         console.log(result);
+        Swal.fire({
+          title: " check your email to reset password !!!",
+          showClass: {
+            popup: `
+              animate__animated
+              animate__fadeInUp
+              animate__faster
+            `,
+          },
+          hideClass: {
+            popup: `
+              animate__animated
+              animate__fadeOutDown
+              animate__faster
+            `,
+          },
+        });
       })
       .catch((error) => {
         console.log(error.message);
@@ -52,6 +109,9 @@ const Login = () => {
 
   return (
     <div className="">
+      <Helmet>
+        <title>Job seeker | Login</title>
+      </Helmet>
       <Navbar></Navbar>
       <hr />
       <div className="reg-img  relative md:mb-[25rem]">
@@ -102,9 +162,12 @@ const Login = () => {
               </span>
             </div>
 
-            <p onClick={handleReset} className="text-[#ff4848] underline">
+            <p
+              onClick={handleReset}
+              className="text-[#ff4848] underline cursor-pointer">
               Forget Password
             </p>
+            {<p className="text-[#ff4848]">{noemail}</p>}
             <div className="form-control mt-6">
               <button className="btn text-white text-lg  bg-[#ff4848]">
                 Login
@@ -118,7 +181,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

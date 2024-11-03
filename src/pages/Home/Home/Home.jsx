@@ -1,4 +1,5 @@
 // import Footer from "../Shared/Footer/Footer";
+import { Helmet } from "react-helmet-async";
 import Footer from "../../Shared/Footer/Footer";
 import Navbar from "../../Shared/Navbar/Navbar";
 import Banner from "../Banner/Banner";
@@ -13,6 +14,9 @@ import "./Home.css";
 const Home = () => {
   return (
     <div className="overflow-hidden">
+      <Helmet>
+        <title>Job seeker | Home</title>
+      </Helmet>
       <div className="bg-img">
         <Navbar></Navbar>
         <Banner></Banner>

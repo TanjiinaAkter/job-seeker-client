@@ -12,7 +12,7 @@ const Navbar = () => {
   const userLogOut = () => {
     logOut()
       .then(() => {})
-      .catch(() => {});
+      .catch((error) => console.log(error));
   };
   const links = (
     <div className="flex lg:flex-row flex-col lg:flex-1 space-y-2  md:space-y-0 md:space-x-2">

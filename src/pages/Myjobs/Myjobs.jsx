@@ -45,7 +45,7 @@ const Myjobs = () => {
               <th>Job description</th>
               <th>Job posting date</th>
               <th>Application Deadline</th>
-              <th>status</th>
+             
               <th>Action</th>
             </tr>
           </thead>
@@ -86,11 +86,7 @@ const Myjobs = () => {
                 <h3>24/12/2024 </h3>
               </td>
              
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
+            
               <td>
                 <div className="flex items-center justify-center space-x-3">
                   <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
@@ -102,165 +98,7 @@ const Myjobs = () => {
                 </div>
               </td>
             </tr>
-            {/* row 2 */}
-            <tr>
-              <td>1</td>
-
-              <td>
-                <div className="flex items-center gap-3">
-                  <img src={img} alt="" />
-                </div>
-              </td>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-              <td>
-                <h3>user@gmail.com</h3>
-              </td>
-              <td>
-                <h3>full stack</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
-              <td>
-                <h3>
-                  Benchmark is an architectural firm looking for a potential
-                  experienced
-                </h3>
-              </td>
-              <td>
-                <h3>04/12/2024 </h3>
-              </td>
-              <td>
-                <h3>24/12/2024 </h3>
-              </td>
-             
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    <MdModeEdit className="text-2xl text-yellow-600" />
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    <MdDelete className=" text-2xl text-[#ff4848]" />
-                  </div>
-                </div>
-              </td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <td>1</td>
-
-              <td>
-                <div className="flex items-center gap-3">
-                  <img src={img} alt="" />
-                </div>
-              </td>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-              <td>
-                <h3>user@gmail.com</h3>
-              </td>
-              <td>
-                <h3>full stack</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
-              <td>
-                <h3>
-                  Benchmark is an architectural firm looking for a potential
-                  experienced
-                </h3>
-              </td>
-              <td>
-                <h3>04/12/2024 </h3>
-              </td>
-              <td>
-                <h3>24/12/2024 </h3>
-              </td>
-             
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    <MdModeEdit className="text-2xl text-yellow-600" />
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    <MdDelete className=" text-2xl text-[#ff4848]" />
-                  </div>
-                </div>
-              </td>
-            </tr>
-            {/* row 4 */}
-            <tr>
-              <td>1</td>
-
-              <td>
-                <div className="flex items-center gap-3">
-                  <img src={img} alt="" />
-                </div>
-              </td>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-              <td>
-                <h3>user@gmail.com</h3>
-              </td>
-              <td>
-                <h3>full stack</h3>
-              </td>
-              <td>
-                <h3>$500</h3>
-              </td>
-              <td>
-                <h3>
-                  Benchmark is an architectural firm looking for a potential
-                  experienced
-                </h3>
-              </td>
-              <td>
-                <h3>04/12/2024 </h3>
-              </td>
-              <td>
-                <h3>24/12/2024 </h3>
-              </td>
-             
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    <MdModeEdit className="text-2xl text-yellow-600" />
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    <MdDelete className=" text-2xl text-[#ff4848]" />
-                  </div>
-                </div>
-              </td>
-            </tr>
+           
           </tbody>
           {/* foot */}
         </table>

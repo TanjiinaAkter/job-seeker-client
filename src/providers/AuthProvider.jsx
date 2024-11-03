@@ -4,9 +4,11 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -48,7 +50,30 @@ const AuthProvider = ({ children }) => {
     setLoader(true);
     return sendPasswordResetEmail(auth, email);
   };
-  const authInfo = { user, loader, createUser, login, logOut, resetPassword };
+  //============ 5 . USER UPDATE  ===============================//
+
+  const updateUserProfile = (name, photo) => {
+    setLoader(true);
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
+
+  const emailVerify = () => {
+    setLoader(true);
+    return sendEmailVerification(auth.currentUser);
+  };
+  const authInfo = {
+    user,
+    loader,
+    createUser,
+    login,
+    logOut,
+    updateUserProfile,
+    emailVerify,
+    resetPassword,
+  };
   return (
     <div>
       <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

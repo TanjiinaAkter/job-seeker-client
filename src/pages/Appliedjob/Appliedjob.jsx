@@ -4,13 +4,31 @@ import { useEffect } from "react";
 import Navbar from "../Shared/Navbar/Navbar";
 import Footer from "../Shared/Footer/Footer";
 import Pageheader from "../../components/Pageheader/Pageheader";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+
+// import { useLocation } from "react-router-dom";
 
 const Appliedjob = () => {
+  // const location = useLocation();
+  // const applicationData = location.state;
+  // console.log(applicationData);
+  const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     AOS.init({
       duration: 1200,
     });
   }, []);
+  const { data: applicationData = [] } = useQuery({
+    queryKey: ["applicationData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/applications");
+      console.log(res.data);
+      return res.data;
+    },
+  });
+
   return (
     <div>
       <Navbar></Navbar>
@@ -25,7 +43,8 @@ const Appliedjob = () => {
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
         </div>
       </div> */}
-      <Pageheader heading={'Applied Jobs'}></Pageheader>
+      <Pageheader
+        heading={`Applied Jobs : ${applicationData.length}`}></Pageheader>
       {/* Table */}
       <div
         data-aos="fade-left"
@@ -34,159 +53,46 @@ const Appliedjob = () => {
           {/* head#b0c5ca 353547*/}
           <thead className="bg-[#b0c5ca]">
             <tr className="text-lg font-base text-black ">
-              <th>Job title</th>
-              <th>Salary Range</th>
-              <th>Job description</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Resume</th>
               <th>No. of applicants</th>
               <th>Download summery</th>
-              <th>Apply</th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {/* row 1 */}
-            <tr>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-
-              <td>
-                <h3>$500 -$700</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-              <td>
-                <input type="file" name="resume" id="" />
-              </td>
-
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdModeEdit className="text-2xl text-yellow-600" /> */}
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdDelete className=" text-2xl text-[#ff4848]" /> */}
-                  </div>
-                </div>
-              </td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-
-              <td>
-                <h3>$500 -$700</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdModeEdit className="text-2xl text-yellow-600" /> */}
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdDelete className=" text-2xl text-[#ff4848]" /> */}
-                  </div>
-                </div>
-              </td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-
-              <td>
-                <h3>$500 -$700</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdModeEdit className="text-2xl text-yellow-600" /> */}
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdDelete className=" text-2xl text-[#ff4848]" /> */}
-                  </div>
-                </div>
-              </td>
-            </tr>
-            {/* row 4 */}
-            <tr>
-              <td>
-                <h3>Software engineer</h3>
-              </td>
-              <td>
-                <h3>ishehrin</h3>
-              </td>
-
-              <td>
-                <h3>$500 -$700</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-              <td>
-                <h3>1</h3>
-              </td>
-
-              <td>
-                <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                  Complete
-                </button>
-              </td>
-              <td>
-                <div className="flex items-center justify-center space-x-3">
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdModeEdit className="text-2xl text-yellow-600" /> */}
-                  </div>
-                  <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
-                    {/* <MdDelete className=" text-2xl text-[#ff4848]" /> */}
-                  </div>
-                </div>
-              </td>
-            </tr>
+            {applicationData.map((data) => (
+              <tr key={data._id}>
+                <td>
+                  <h3>{data.name}</h3>
+                </td>
+                <td>
+                  <h3>{data.email}</h3>
+                </td>
+                <td>
+                  <h3>{data.resume}</h3>
+                </td>
+                <td>{<h3>{data.resume}</h3>}</td>
+                {
+                  <td>
+                    <a
+                      href={`http://localhost:5000/uploads/${data.resume}`} // Link to download the resume
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn bg-[#b7e4a5] text-black text-base btn-sm rounded-full">
+                      Download
+                    </a>
+                  </td>
+                }
+              </tr>
+            ))}
           </tbody>
+
           {/* foot */}
         </table>
       </div>
+
       <Footer></Footer>
     </div>
   );

@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
+import useAuth from "../../hooks/useAuth";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Pageheader from "../../components/Pageheader/Pageheader";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAlljobs from "../../hooks/useAlljobs";
-import { Link } from "react-router-dom";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useLocation, useNavigate } from "react-router-dom";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Alljobs = () => {
   useEffect(() => {
     AOS.init({
       duration: 1200,
     });
   }, []);
-
-  const [alljobs, refetch] = useAlljobs();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [alljobs] = useAlljobs();
   const [showJobs, setShowJobs] = useState(alljobs);
-  const axiosPublic = useAxiosPublic();
+  // const axiosPublic = useAxiosPublic();
   useEffect(() => {
     if (alljobs.length > 0) {
       setShowJobs(alljobs);
@@ -94,7 +97,6 @@ const Alljobs = () => {
             {showJobs.map((job, index) => (
               <tr key={job._id}>
                 <td>{index + 1}</td>
-
                 <td>
                   <div className="flex items-center gap-3">
                     <h3 className="font-bold">{job.jobtitle}</h3>
@@ -109,13 +111,26 @@ const Alljobs = () => {
                 <td>
                   <h3>$500</h3>
                 </td>
-
                 <th>
-                  <Link to={`/jobdetail/${job._id}`}>
-                    <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
+                  {user && user?.email ? (
+                    <button
+                      onClick={() =>
+                        navigate(`/jobdetail/${job._id}`, {
+                          state: { from: location },
+                        })
+                      }
+                      className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
                       details
                     </button>
-                  </Link>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        navigate("/login", { state: { from: location } })
+                      }
+                      className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
+                      details
+                    </button>
+                  )}
                 </th>
               </tr>
             ))}

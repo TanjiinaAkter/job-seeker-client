@@ -7,9 +7,8 @@ import loti from "../../assets/Animation - 1726164735519.gif";
 import tickimg from "../../assets/Animation - 1726209450587.gif";
 import Footer from "../Shared/Footer/Footer";
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { Mutation, useMutation, useQuery } from "@tanstack/react-query";
 
 const Jobdetail = () => {
   useEffect(() => {
@@ -17,6 +16,7 @@ const Jobdetail = () => {
       duration: 800,
     });
   }, []);
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const detalsofid = useLoaderData();
   const [name, setName] = useState("");
@@ -25,10 +25,13 @@ const Jobdetail = () => {
   //console.log(resume)
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
+    //name er value,email er value,ar resume er value append kore dicchi formData te
     formData.append("name", name);
     formData.append("email", email);
     formData.append("resume", resume);
+    // nicher 4 lines used to see console name email and resume
     for (const [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
@@ -41,8 +44,16 @@ const Jobdetail = () => {
         "Content-Type": "multipart/form-data",
       },
     });
+    // PATCH DATA FROM id
+
+    await axiosSecure.patch("/alljobs", {
+      jobId: detalsofid._id,
+    });
+    // Redirect to the applied jobs page with application data , { state: res.data.data }
+    navigate("/appliedjobs");
     console.log(res.data);
   };
+
   return (
     <div>
       <Navbar></Navbar>
@@ -165,9 +176,9 @@ const Jobdetail = () => {
               {/* Open the modal using document.getElementById('ID').showModal() method */}
               <button
                 className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
-                onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
-                }>
+                onClick={() => {
+                  document.getElementById("my_modal_1").showModal();
+                }}>
                 Apply Now
               </button>
 

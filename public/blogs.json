@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "5 Essential Tips for Acing Your Next Job Interview",
+    "author": "Sarah Johnson",
+    "author_img": "https://media.istockphoto.com/id/1587604256/photo/portrait-lawyer-and-black-woman-with-tablet-smile-and-happy-in-office-workplace-african.jpg?s=612x612&w=0&k=20&c=n9yulMNKdIYIQC-Qns8agFj6GBDbiKyPRruaUTh4MKs=",
+    "content_snippet": "Preparing for a job interview can be daunting. These five essential tips will help you make a lasting impression and secure your dream job.",
+    "full_content": "Preparing for an interview is crucial to standing out as a top candidate. Start by researching the company to understand its culture and values, then prepare answers for common questions like 'Tell me about yourself' and 'Why should we hire you?' Practice with a friend or in front of a mirror to build confidence. Make sure to dress professionally, arrive early, and bring extra copies of your resume. After the interview, follow up with a thank-you email to leave a positive, lasting impression.",
+    "date": "2024-11-01",
+    "tags": ["Interview", "Job Tips", "Career Advice"],
+    "thumbnail_url": "https://architecturesocial.com/wp-content/uploads/architecture-interview-tips.jpg"
+  },
+  {
+    "id": 2,
+    "title": "How to Build a Standout Resume in 2024",
+    "author": "David Chen",
+    "author_img": "https://img.freepik.com/free-photo/young-handsome-business-man-with-laptop-office_1303-21060.jpg",
+    "content_snippet": "Creating a standout resume in today's job market requires more than listing your past jobs. Here’s how to make your resume shine.",
+    "full_content": "A standout resume combines a clear layout, relevant keywords, and quantifiable achievements. Begin with a strong summary statement that highlights your strengths. Use bullet points to list achievements, not just duties, and quantify wherever possible (e.g., 'increased sales by 20%'). Tailor your resume for each job, incorporating keywords from the job description. Include relevant skills, tools, or certifications that align with the position. Finally, proofread carefully to ensure there are no typos or formatting errors.",
+    "date": "2024-10-15",
+    "tags": ["Resume", "Job Search", "Career Development"],
+    "thumbnail_url": "https://res.cloudinary.com/upskilled/image/fetch/w_600,h_400,c_crop,c_fill,g_face:auto,f_auto/https://www.upskilled.edu.au/getmedia%2F164d8e1f-58ea-42b7-9e5c-d6350271481f%2Fcareer-in-computer-networking-HERO.jpg%3B.aspx%3Fwidth%3D1000%26height%3D667%26ext%3D.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Networking Strategies for Remote Job Seekers",
+    "author": "Emily Rogers",
+    "author_img": "https://static.vecteezy.com/system/resources/previews/038/974/578/non_2x/ai-generated-professional-portrait-of-a-competent-woman-free-photo.jpg",
+    "content_snippet": "Networking is key to finding job opportunities, especially for remote roles. Here’s how to expand your professional network from home.",
+    "full_content": "Networking remotely requires strategic online engagement. Begin by optimizing your LinkedIn profile with a professional photo, headline, and summary. Join industry groups, participate in discussions, and connect with people you admire. Attend virtual conferences and webinars, where you can connect with attendees in follow-up messages. Consider scheduling informational interviews to learn about someone’s role or industry. Remember, building a network takes time, so stay consistent in your efforts.",
+    "date": "2024-09-28",
+    "tags": ["Networking", "Remote Work", "Job Search"],
+    "thumbnail_url": "https://www.paxus.com.au/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBOXFnQXc9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--d5716ea7f360ac8ac2a49e4c98e0f98853fa49a1/7%20tips%20for%20improving%20your%20professional%20netowking.png"
+  },
+  {
+    "id": 4,
+    "title": "Top 10 In-Demand Skills for 2024",
+    "author": "Michael Smith",
+    "author_img": "https://img.freepik.com/premium-photo/smiling-office-worker-man-with-open-laptop-his-hands-white-studio-background_88135-21345.jpg",
+    "content_snippet": "Wondering which skills will make you stand out in 2024? Check out our list of the top 10 in-demand skills that employers are looking for.",
+    "full_content": "In 2024, employers are looking for skills that balance technical proficiency with soft skills. Top technical skills include data analysis, artificial intelligence, cloud computing, and cybersecurity. For soft skills, adaptability, emotional intelligence, and communication are highly valued. Employers also seek candidates with project management experience and leadership qualities. Continuous learning and upskilling can help you stay competitive in the evolving job market.",
+    "date": "2024-08-30",
+    "tags": ["Skills", "Career Growth", "Job Market"],
+    "thumbnail_url": "https://imageio.forbes.com/specials-images/imageserve/630317507c39bc12ccfa8c6c/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds"
+  }
+]

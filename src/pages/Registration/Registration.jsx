@@ -1,13 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import "./Registration.css";
 import Footer from "../Shared/Footer/Footer";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import { sendEmailVerification, updateProfile } from "firebase/auth";
+
+import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 // import img from "../../assets/update-user.png";
 const Registration = () => {
-  const { createUser } = useContext(AuthContext);
+  <Helmet>
+    <title>Job seeker | Rgistration</title>
+  </Helmet>;
+  const navigate = useNavigate();
+  const { createUser, updateUserProfile, emailVerify, logOut } =
+    useContext(AuthContext);
   const handleRegistration = (e) => {
     e.preventDefault();
     console.log("all ok");
@@ -18,30 +25,52 @@ const Registration = () => {
     const photo = form.photo.value;
     console.log(name, email, password, photo);
     // ============ USER CREATE USING AUTHENTICATION ===================//
+    // ============ USER CREATE USING AUTHENTICATION ===================//
     createUser(email, password)
       .then((result) => {
-        sendEmailVerification(result.user)
-          .then((result) => {
-            console.log(result);
-            alert('check your email for verification')
-          })
-          .catch((error) => {
-            console.error(error.message);
-          });
         console.log(result.user);
-        updateProfile(result.user, {
-          displayName: name,
-          photoURL: photo,
-        })
-          .then((result) => {
-            console.log(result);
+
+        updateUserProfile(name, photo) // No destructuring here
+          .then(() => {
+            console.log("User profile updated successfully");
+            navigate("/");
           })
           .catch((error) => {
-            console.error(error.message);
+            console.error(
+              "Error during registration or profile update:",
+              error
+            );
+          });
+
+        emailVerify(email)
+          .then(() => {
+            console.log("result verification");
+            Swal.fire({
+              title: "Successfully Registered !!!",
+              showClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeInUp
+                  animate__faster
+                `,
+              },
+              hideClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeOutDown
+                  animate__faster
+                `,
+              },
+            });
+            logOut();
+            navigate("/login");
+          })
+          .catch((error) => {
+            console.log(error);
           });
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   };
   return (

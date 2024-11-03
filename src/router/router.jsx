@@ -13,6 +13,7 @@ import Myjobs from "../pages/Myjobs/Myjobs";
 import Appliedjob from "../pages/Appliedjob/Appliedjob";
 import Errorpage from "../pages/Errorpage/Errorpage";
 import PrivateRouter from "./PrivateRouter";
+import SingleBlog from "../pages/SingleBlog/SingleBlog";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,12 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
+      },
+      {
+        path: "/singleblog/:id",
+        element: <SingleBlog></SingleBlog>,
+        // loader diye just id ber korechi
+        loader: ({ params }) => fetch(`/public/blogs.json/${params.id}`),
       },
     ],
   },

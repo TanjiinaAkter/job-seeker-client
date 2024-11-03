@@ -5,7 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 const PrivateRouter = ({ children }) => {
   const { user, loader } = useContext(AuthContext);
   const location = useLocation();
-  //console.log(location);
+  console.log(location);
   if (loader) {
     return (
       <span className="mx-auto my-auto text-center w-fulln">
@@ -16,8 +16,8 @@ const PrivateRouter = ({ children }) => {
   if (user) {
     return children;
   }
-  return <Navigate state={location.state} to="/login" replace></Navigate>;
-  //   return <Navigate to="/login" state={{ from: location }} replace />;
+  return <Navigate state={{ from: location }} to="/login" replace></Navigate>;
+  //  from object er moddhe location ta send krotesi private route er
 };
 
 export default PrivateRouter;
