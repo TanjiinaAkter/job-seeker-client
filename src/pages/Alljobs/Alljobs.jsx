@@ -7,7 +7,7 @@ import "aos/dist/aos.css";
 import Pageheader from "../../components/Pageheader/Pageheader";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAlljobs from "../../hooks/useAlljobs";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Alljobs = () => {
   useEffect(() => {
@@ -103,25 +103,21 @@ const Alljobs = () => {
                   </div>
                 </td>
                 <td>
-                  <h3>12/12/2024</h3>
+                  <h3>{job.date}</h3>
                 </td>
                 <td>
-                  <h3>04/12/2024</h3>
+                  <h3>{job.deadline}</h3>
                 </td>
                 <td>
-                  <h3>$500</h3>
+                  <h3>{job.salary}</h3>
                 </td>
                 <th>
                   {user && user?.email ? (
-                    <button
-                      onClick={() =>
-                        navigate(`/jobdetail/${job._id}`, {
-                          state: { from: location },
-                        })
-                      }
-                      className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
-                      details
-                    </button>
+                    <Link to={`/jobdetail/${job._id}`}>
+                      <button className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
+                        details
+                      </button>
+                    </Link>
                   ) : (
                     <button
                       onClick={() =>

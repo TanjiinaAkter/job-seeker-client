@@ -7,30 +7,59 @@ import loti from "../../assets/Animation - 1726164735519.gif";
 import tickimg from "../../assets/Animation - 1726209450587.gif";
 import Footer from "../Shared/Footer/Footer";
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-
+//import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import useAlljobs from "../../hooks/useAlljobs";
 const Jobdetail = () => {
   useEffect(() => {
     AOS.init({
       duration: 800,
     });
   }, []);
+
+  const [applyBtn, setApplyBtn] = useState(true);
+  const [alljobs, refetch] = useAlljobs();
+  const { user } = useAuth();
+  const { id } = useParams();
+  //console.log(id, alljobs);
+  const [job, setJob] = useState(null);
+  useEffect(() => {
+    if (id) {
+      const job = alljobs.find((job) => job._id === id); // Compare as strings
+      console.log(job);
+      // Should give you the job details
+      setJob(job);
+    }
+  }, [alljobs, id]);
+  useEffect(() => {
+    if (job) {
+      // Set applyBtn to false if user has already applied, based on backend data
+      setApplyBtn(!job.isApplied); // Assume job.isApplied indicates application status
+    }
+  }, [job]);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
-  const detalsofid = useLoaderData();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+
+  const [name] = useState(user ? user.displayName : "");
+  const [email] = useState(user ? user.email : "");
   const [resume, setResume] = useState(null);
   //console.log(resume)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    //name er value,email er value,ar resume er value append kore dicchi formData te
+    //name er value,email er value,ar resume er value append kore dicchi formData te... key+value..."name"+ name
     formData.append("name", name);
     formData.append("email", email);
     formData.append("resume", resume);
+    // jei job er jonno apply kortesi setar info diye dicchi append kore
+    formData.append("jobId", job._id); // Job ID
+    formData.append("jobTitle", job.jobtitle); // Job title
+    formData.append("company", job.company); // Company name
+
     // nicher 4 lines used to see console name email and resume
     for (const [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
@@ -39,19 +68,42 @@ const Jobdetail = () => {
     console.log(formDataObj);
 
     // POST DATA FROM FORM
-    const res = await axiosSecure.post("/formapply", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    // PATCH DATA FROM id
+    if (user && user?.email) {
+      const res = await axiosSecure.post("/formapply", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-    await axiosSecure.patch("/alljobs", {
-      jobId: detalsofid._id,
-    });
-    // Redirect to the applied jobs page with application data , { state: res.data.data }
-    navigate("/appliedjobs");
-    console.log(res.data);
+      console.log(res.data);
+      if (res.data) {
+        setApplyBtn(false);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Applied successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        axiosSecure
+          .patch("/alljobs", {
+            jobId: job._id,
+          })
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.modifiedCount > 0) {
+              return refetch();
+            }
+          });
+
+        // Redirect to the applied jobs page with application data , { state: res.data.data },jobdetails name pathacchi amader specific id er info k applied job page e
+        //navigate("/appliedjobs");
+        console.log(res.data);
+      }
+    } else {
+      return navigate("/login");
+    }
   };
 
   return (
@@ -61,7 +113,7 @@ const Jobdetail = () => {
         <div className="flex justify-center items-center py-24">
           <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
           <p className="text-white font-semibold text-3xl md:text-5xl text-center">
-            Job Details : {detalsofid.jobtitle}
+            Job Details : {job?.jobtitle}
           </p>
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
         </div>
@@ -77,15 +129,15 @@ const Jobdetail = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <h3 className="text-3xl font-semibold">{detalsofid.jobtitle}</h3>
+            <h3 className="text-3xl font-semibold">{job?.jobtitle}</h3>
             <div className="flex items-center justify-start space-x-5 ">
               <div className="flex items-center justify-center gap-2 text-gray-500">
                 <IoMdTime className="text-lg" />
-                <p>{detalsofid.category}</p>
+                <p>{job?.category}</p>
               </div>
               <div className="flex items-center gap-2 text-gray-500">
                 <FaMoneyCheckDollar className="text-lg" />
-                <p>{detalsofid.salary}</p>
+                <p>{job?.salary}</p>
               </div>
             </div>
           </div>
@@ -98,7 +150,7 @@ const Jobdetail = () => {
               data-aos="fade-right">
               <img
                 className="w-full lg:w-[80%] rounded-sm"
-                src={detalsofid.photo}
+                src={job?.photo}
                 alt=""
               />
               <div></div>
@@ -124,7 +176,7 @@ const Jobdetail = () => {
                   data-aos="fade-left">
                   Title :
                   <span className="text-gray-500 font-normal pl-1">
-                    {detalsofid.jobtitle}
+                    {job?.jobtitle}
                   </span>
                 </h4>
               </div>
@@ -144,7 +196,27 @@ const Jobdetail = () => {
                   data-aos="fade-left">
                   Salary:
                   <span className="text-gray-500 font-normal pl-1">
-                    {detalsofid.salary}
+                    {job?.salary}
+                  </span>
+                </h4>
+              </div>
+              <div className=" flex justify-start  items-center gap-2">
+                <img
+                  data-aos="fade-left"
+                  src={tickimg}
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    fontWeight: "bold",
+                  }}
+                  alt=""
+                />
+                <h4
+                  className="font-semibold text-gray-500 text-lg "
+                  data-aos="fade-left">
+                  Company name :
+                  <span className="text-gray-500 font-normal pl-1">
+                    {job?.company}
                   </span>
                 </h4>
               </div>
@@ -164,7 +236,7 @@ const Jobdetail = () => {
                   data-aos="fade-left">
                   No. of Applicants :
                   <span className="text-gray-500 font-normal pl-1">
-                    {detalsofid.hiddenapplicationnumber}
+                    {job?.hiddenapplicationnumber}
                   </span>
                 </h4>
               </div>
@@ -174,14 +246,32 @@ const Jobdetail = () => {
                 </button>
               </div> */}
               {/* Open the modal using document.getElementById('ID').showModal() method */}
-              <button
+              {applyBtn ? (
+                <button
+                  className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
+                  onClick={() => {
+                    document.getElementById("my_modal_1").showModal();
+                  }}>
+                  Apply Now
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className="btn-sm  bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
+                  onClick={() => {
+                    document.getElementById("my_modal_1").showModal();
+                  }}>
+                  Applied
+                </button>
+              )}
+
+              {/* <button
                 className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
                 onClick={() => {
                   document.getElementById("my_modal_1").showModal();
                 }}>
                 Apply Now
-              </button>
-
+              </button> */}
               {/* //MODAL */}
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box max-h-fit">
@@ -193,10 +283,12 @@ const Jobdetail = () => {
                       <input
                         type="text"
                         name="name"
+                        // name field er value pawar jonno value={name} use hoyeche
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="name"
-                        className="input input-bordered"
+                        // set kore feltesi value ta name state e karon user change korlei seta update hoye state e set hobe
+                        // onChange={(e) => setName(e.target.value)}
+
+                        className="input input-bordered text-gray-600"
                         required
                       />
                     </div>
@@ -208,28 +300,33 @@ const Jobdetail = () => {
                         type="email"
                         name="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="email"
-                        className="input input-bordered"
+                        className="input input-bordered text-gray-600"
                         required
                       />
                     </div>
                     <div className="form-control">
+                      <label className="label">
+                        <span className="label-text text-red-600">
+                          Upload Your Resume*
+                        </span>
+                      </label>
                       <input
                         type="file"
                         accept=".pdf"
                         onChange={(e) => {
                           setResume(e.target.files[0]);
-
                           console.log(e.target.files[0]);
                         }}
                         name="file"
+                        // name="resume"
                         id=""
                       />
                     </div>
 
                     <div className="form-control mt-6">
-                      <button type="submit" className="btn btn-primary">
+                      <button
+                        type="submit"
+                        className="btn bg-gray-700 text-[17px] rounded-none text-white">
                         Submit apply
                       </button>
                     </div>
@@ -262,7 +359,7 @@ const Jobdetail = () => {
           <p>Job Description : </p>
         </div>
         <p className="p-4 text-gray-500">
-          Job Description : {detalsofid.description}
+          Job Description : {job?.description}
         </p>
       </div>
       <Footer></Footer>

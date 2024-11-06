@@ -10,10 +10,20 @@ import Registration from "../pages/Registration/Registration";
 import Home from "../pages/Home/Home/Home";
 import Jobdetail from "../pages/Jobdetail/Jobdetail";
 import Myjobs from "../pages/Myjobs/Myjobs";
-import Appliedjob from "../pages/Appliedjob/Appliedjob";
+// import Appliedjob from "../pages/Appliedjob/Appliedjob";
 import Errorpage from "../pages/Errorpage/Errorpage";
 import PrivateRouter from "./PrivateRouter";
 import SingleBlog from "../pages/SingleBlog/SingleBlog";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import Dashboard from "../Layout/Dashboard";
+import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
+import EditUserProfile from "../pages/Dashboard/UserProfile/EditUserProfile/EditUserProfile";
+import SavedJobs from "../pages/Dashboard/SavedJobs/SavedJobs";
+
+import Intereview from "../pages/Dashboard/Intereview/Intereview";
+import Recommendation from "../pages/Dashboard/Recommendation/Recommendation";
+import Appliedjob from "../pages/Dashboard/Appliedjob/Appliedjob";
+// import AppliedJobs from "../pages/Dashboard/AppliedJobs/AppliedJobs";
 
 const router = createBrowserRouter([
   {
@@ -67,23 +77,59 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/alljobs/${params.id}`),
       },
-      {
-        path: "/appliedjobs",
-        element: (
-          <PrivateRouter>
-            <Appliedjob></Appliedjob>
-          </PrivateRouter>
-        ),
-      },
+      // {
+      //   path: "/appliedjobs",
+      //   element: (
+      //     <PrivateRouter>
+      //       <Appliedjob></Appliedjob>
+      //     </PrivateRouter>
+      //   ),
+      // },
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
+      },
+      {
+        path: "/aboutus",
+        element: <AboutUs></AboutUs>,
       },
       {
         path: "/singleblog/:id",
         element: <SingleBlog></SingleBlog>,
         // loader diye just id ber korechi
         loader: ({ params }) => fetch(`/public/blogs.json/${params.id}`),
+      },
+    ],
+  },
+
+  //===========================  ADMIN DASHBOARD   ===============================//
+  {
+    path: "dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "userprofile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "edituserprofile",
+        element: <EditUserProfile></EditUserProfile>,
+      },
+      {
+        path: "savedjobs",
+        element: <SavedJobs></SavedJobs>,
+      },
+      {
+        path: "recommendation",
+        element: <Recommendation></Recommendation>,
+      },
+      {
+        path: "interview",
+        element: <Intereview></Intereview>,
+      },
+      {
+        path: "appliedjobs",
+        element: <Appliedjob></Appliedjob>,
       },
     ],
   },

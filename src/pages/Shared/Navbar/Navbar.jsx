@@ -8,7 +8,7 @@ const Navbar = () => {
   //console.log(location);
   const isHomeRoute = location.pathname === "/";
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
+  //console.log(user);
   const userLogOut = () => {
     logOut()
       .then(() => {})
@@ -42,47 +42,67 @@ const Navbar = () => {
           All jobs
         </NavLink>
       </li>
-      {user?.email?  <>
-        <li>
+      <li>
         <NavLink
-          to="/appliedjobs"
+          to="/aboutus"
           className={({ isActive }) =>
             isActive
               ? "text-[#ff4848] font-semibold underline  text-lg"
               : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
+              ? "text-white font-semibold text-lg "
+              : " text-black font-semibold text-lg"
           }>
-          Applied jobs
+          About us
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/addjob"
-          className={({ isActive }) =>
-            isActive
-              ? "text-[#ff4848] font-semibold underline  text-lg "
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
-          }>
-          Add a job
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/myjobs"
-          className={({ isActive }) =>
-            isActive
-              ? "text-[#ff4848] font-semibold underline  text-lg "
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
-          }>
-          My jobs
-        </NavLink>
-      </li>
-      </> : ''}
+      {user?.email ? (
+        <>
+          <li>
+            <NavLink
+              to="/appliedjobs"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#ff4848] font-semibold underline  text-lg"
+                  : isHomeRoute
+                  ? "text-white font-semibold text-lg"
+                  : " text-black font-semibold text-lg "
+              }>
+              Applied jobs
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/addjob"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#ff4848] font-semibold underline  text-lg "
+                  : isHomeRoute
+                  ? "text-white font-semibold text-lg"
+                  : " text-black font-semibold text-lg "
+              }>
+              Add a job
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/myjobs"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-[#ff4848] font-semibold underline  text-lg "
+                  : isHomeRoute
+                  ? "text-white font-semibold text-lg"
+                  : " text-black font-semibold text-lg "
+              }>
+              My jobs
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/userprofile"> Dashboard</NavLink>
+          </li>
+        </>
+      ) : (
+        ""
+      )}
       {/* <li>
         <NavLink
           to="/appliedjobs"

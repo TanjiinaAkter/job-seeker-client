@@ -45,6 +45,7 @@ const Addjob = () => {
       name: data.name,
       email: data.email,
       jobtitle: data.jobtitle,
+      company: data.company,
       category: data.category,
       salary: data.salary,
       photo: data.photo,
@@ -128,7 +129,20 @@ const Addjob = () => {
                 </span>
               )}
             </div>
-
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Company name</span>
+              </label>
+              <input
+                placeholder="company name"
+                {...register("company", { required: true })}
+                type="text"
+                className="input input-bordered focus:outline-none rounded-sm"
+              />
+              {errors.company && (
+                <span className="text-red-600">Name field is required</span>
+              )}
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Job Category</span>
@@ -264,11 +278,6 @@ const Addjob = () => {
               value="Add A Job"
               className="btn bg-[#ff4848] text-white"
             />
-            {/* <input
-                type="submit"
-                value="Add A Job"
-                className="btn bg-[#ff4848] text-white"
-              /> */}
           </form>
         </div>
       </div>

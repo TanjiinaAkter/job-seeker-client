@@ -5,7 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 const PrivateRouter = ({ children }) => {
   const { user, loader } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
+  //console.log(location);
   if (loader) {
     return (
       <span className="mx-auto my-auto text-center w-fulln">
