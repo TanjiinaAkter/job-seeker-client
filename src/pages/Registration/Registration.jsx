@@ -32,7 +32,7 @@ const Registration = () => {
       .then((result) => {
         console.log(result.user);
 
-        updateUserProfile({ name, photo }) // No destructuring here
+        updateUserProfile( name,  photo ) // No destructuring here
           .then(() => {
             console.log("User profile updated successfully");
             const userInfo = {

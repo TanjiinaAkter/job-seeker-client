@@ -19,32 +19,30 @@ const UserProfileEdit = () => {
   } = useForm();
   useEffect(() => {
     if (user) {
-      setValue("name", user.name);
+      setValue("name", user.displayName);
       setValue("email", user.email);
-      setValue("photo", user.photo);
+      setValue("photo", user.photoURL);
     }
   }, [user, setValue]);
 
   const onSubmit = async (data) => {
     const editProfile = {
       email: data.email || user.email,
-      name: data.name || user.name,
-      photo: data.photo || user.photo,
-      role: data.role || user.role,
-      phone: data.phone || user.phone,
-      location: data.location || user.location,
-      gender: data.gender || user.gender,
+      name: data.name || user.displayName,
+      photo: data.photo || user.photoURL,
+      role: data.role,
+      phone: data.phone,
+      location: data.location,
+      gender: data.gender,
     };
     console.log(editProfile);
     try {
-      await updateUserProfile({
-        email: data.email,
-        name: data.name,
-        photo: data.photo,
-      });
+      await updateUserProfile(data.name, data.photo).then((res) =>
+        console.log(res)
+      );
 
-      console.log(updateUserProfile);
-      console.log(user.name);
+      //console.log(updateUserProfile);
+      //console.log(user.name);
       const res = await axiosSecure.patch(
         `/users?email=${data?.email}`,
         editProfile

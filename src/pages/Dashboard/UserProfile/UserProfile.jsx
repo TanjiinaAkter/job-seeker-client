@@ -15,14 +15,14 @@ const UserProfile = () => {
       <div className="card m-3 bg-base-100 w-full md:w-1/3  mx-auto shadow-xl">
         <figure className="px-10 pt-10">
           <img
-            src={userProfileData[0]?.photo || user?.photo}
+            src={userProfileData[0]?.photo || user?.photoURL}
             alt="Shoes"
             className="rounded-full object-cover w-[10rem] h-[10rem]"
           />
         </figure>
         <div className="card-body items-center text-center">
           <h2 className="card-title">
-            {userProfileData[0]?.name || user?.name}
+            {userProfileData[0]?.name || user?.displayName}
           </h2>
           <p> {userProfileData[0]?.email || user?.email}</p>
         </div>
@@ -32,7 +32,7 @@ const UserProfile = () => {
           <div className="md:flex items-center justify-start gap-4 ">
             <h2 className="md:text-xl font-semibold">Full Name:</h2>
             <h2 className="md:text-xl text-gray-500">
-              {userProfileData[0]?.name || user?.name}
+              {userProfileData[0]?.name || user?.displayName}
             </h2>
           </div>
           <div className="md:flex items-center justify-start gap-4">

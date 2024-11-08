@@ -55,8 +55,17 @@ const AuthProvider = ({ children }) => {
   const updateUserProfile = (name, photo) => {
     setLoader(true);
     return updateProfile(auth.currentUser, {
-      name,
-       photo,
+      displayName: name,
+      photoURL: photo,
+    }).then(() => {
+      // setUser({ ...user, displayName: name, photoURL: photo });...first time user er name photo set kortesi, pore edit user er page e jokhn change korbo seta ekhan theke ager tar sathe new value add kore dibo
+
+      setUser((prevUser) => ({
+        ...prevUser,
+        displayName: name,
+        photoURL: photo,
+      }));
+      setLoader(false);
     });
   };
 
