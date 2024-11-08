@@ -7,11 +7,13 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 // import img from "../../assets/update-user.png";
 const Registration = () => {
   <Helmet>
-    <title>Job seeker | Rgistration</title>
+    <title>Job seeker | Registration</title>
   </Helmet>;
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { createUser, updateUserProfile, emailVerify, logOut } =
     useContext(AuthContext);
@@ -30,9 +32,28 @@ const Registration = () => {
       .then((result) => {
         console.log(result.user);
 
-        updateUserProfile(name, photo) // No destructuring here
+        updateUserProfile({ name, photo }) // No destructuring here
           .then(() => {
             console.log("User profile updated successfully");
+            const userInfo = {
+              email,
+              name,
+              photo,
+            };
+            console.log(userInfo);
+            axiosSecure.post("/users", userInfo).then((res) => {
+              console.log("user collection", res.data);
+              if (res.data.insertedId) {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title:
+                    "user profile created and (updated also first time in registration) successfully",
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+              }
+            });
             navigate("/");
           })
           .catch((error) => {

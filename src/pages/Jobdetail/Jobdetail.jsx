@@ -89,6 +89,7 @@ const Jobdetail = () => {
         axiosSecure
           .patch("/alljobs", {
             jobId: job._id,
+            status: "isApplied",
           })
           .then((res) => {
             console.log(res.data);

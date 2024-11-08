@@ -17,15 +17,16 @@ import SingleBlog from "../pages/SingleBlog/SingleBlog";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import Dashboard from "../Layout/Dashboard";
 import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
-import EditUserProfile from "../pages/Dashboard/UserProfile/EditUserProfile/EditUserProfile";
 import SavedJobs from "../pages/Dashboard/SavedJobs/SavedJobs";
 
 import Intereview from "../pages/Dashboard/Intereview/Intereview";
 import Recommendation from "../pages/Dashboard/Recommendation/Recommendation";
 import Appliedjob from "../pages/Dashboard/Appliedjob/Appliedjob";
+import UserProfileEdit from "../pages/Dashboard/UserProfileEdit/UserProfileEdit";
 // import AppliedJobs from "../pages/Dashboard/AppliedJobs/AppliedJobs";
 
 const router = createBrowserRouter([
+  //===========================  HOME DASHBOARD   ===============================//
   {
     path: "/",
     element: <Main></Main>,
@@ -112,8 +113,11 @@ const router = createBrowserRouter([
         element: <UserProfile></UserProfile>,
       },
       {
-        path: "edituserprofile",
-        element: <EditUserProfile></EditUserProfile>,
+        path: "userprofile/userprofileedit/:email",
+        element: <UserProfileEdit></UserProfileEdit>,
+        // ekhane loader dicchi karon er maddhome amra bujhte partesi kon email er route e jabe
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/users?email=${params.email}`),
       },
       {
         path: "savedjobs",

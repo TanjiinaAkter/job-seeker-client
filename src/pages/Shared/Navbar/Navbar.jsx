@@ -4,12 +4,14 @@ import img from "../../../assets/Untitled.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 const Navbar = () => {
+  
   const location = useLocation();
   //console.log(location);
   const isHomeRoute = location.pathname === "/";
   const { user, logOut } = useContext(AuthContext);
   //console.log(user);
   const userLogOut = () => {
+
     logOut()
       .then(() => {})
       .catch((error) => console.log(error));
@@ -57,19 +59,6 @@ const Navbar = () => {
       </li>
       {user?.email ? (
         <>
-          <li>
-            <NavLink
-              to="/appliedjobs"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#ff4848] font-semibold underline  text-lg"
-                  : isHomeRoute
-                  ? "text-white font-semibold text-lg"
-                  : " text-black font-semibold text-lg "
-              }>
-              Applied jobs
-            </NavLink>
-          </li>
           <li>
             <NavLink
               to="/addjob"
