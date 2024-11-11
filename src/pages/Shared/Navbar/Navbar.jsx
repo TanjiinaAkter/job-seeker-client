@@ -4,14 +4,12 @@ import img from "../../../assets/Untitled.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 const Navbar = () => {
-  
   const location = useLocation();
   //console.log(location);
   const isHomeRoute = location.pathname === "/";
   const { user, logOut } = useContext(AuthContext);
   //console.log(user);
   const userLogOut = () => {
-
     logOut()
       .then(() => {})
       .catch((error) => console.log(error));
@@ -199,13 +197,15 @@ const Navbar = () => {
           {user?.email ? (
             <div className="flex flex-row space-x-2 items-center justify-center ">
               <div className="relative z-10 ">
-                <img
-                  onMouseEnter={handlehover}
-                  onMouseLeave={handleNoHover}
-                  className="object-cover w-12 h-12 hover:border hover:border-white border-2 rounded-full"
-                  src={user?.photoURL}
-                  alt=""
-                />
+                <Link to={`dashboard/userprofile`}>
+                  <img
+                    onMouseEnter={handlehover}
+                    onMouseLeave={handleNoHover}
+                    className="object-cover w-12 h-12 hover:border hover:border-white border-2 rounded-full"
+                    src={user?.photoURL}
+                    alt=""
+                  />
+                </Link>
                 {Hovered ? (
                   <div>
                     <p className="absolute text-lime-400 font-bold bg-red  top-14 ">

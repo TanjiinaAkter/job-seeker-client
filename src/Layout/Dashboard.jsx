@@ -10,7 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdRecommend } from "react-icons/md";
 import { AiFillCalendar } from "react-icons/ai";
 const Dashboard = () => {
-  const { logOut } = useAuth();
+  const { logOut, user } = useAuth();
   return (
     <div className="flex flex-col md:flex-row ">
       {/* SIDEBAR CONTENT */}
@@ -22,7 +22,7 @@ const Dashboard = () => {
             </NavLink>
           </li>
           <li className=" text-[1rem]">
-            <NavLink to="/dashboard/appliedjobs">
+            <NavLink to={`/dashboard/appliedjobs/${user?.email}`}>
               <RiFileListLine className="text-2xl text-red-600" />
               Applied Jobs
             </NavLink>

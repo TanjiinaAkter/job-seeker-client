@@ -19,13 +19,16 @@ const UserProfileEdit = () => {
   } = useForm();
   useEffect(() => {
     if (user) {
+      // firebase theke new user er data directly ekhane set kortesi tai displayName disi name na likhe,same for photo
       setValue("name", user.displayName);
       setValue("email", user.email);
       setValue("photo", user.photoURL);
     }
+    // dependency diyechi karon user change hole jeno abar chole
   }, [user, setValue]);
 
   const onSubmit = async (data) => {
+    // user er data ar form er data deyar karon user first time thakle to kono edit data thakbe na tokhn jeno user er name photo show hoy
     const editProfile = {
       email: data.email || user.email,
       name: data.name || user.displayName,
@@ -34,13 +37,14 @@ const UserProfileEdit = () => {
       phone: data.phone,
       location: data.location,
       gender: data.gender,
+      skills: data.skills,
     };
     console.log(editProfile);
     try {
       await updateUserProfile(data.name, data.photo).then((res) =>
         console.log(res)
       );
-
+      refetch();
       //console.log(updateUserProfile);
       //console.log(user.name);
       const res = await axiosSecure.patch(
@@ -72,7 +76,9 @@ const UserProfileEdit = () => {
 
   return (
     <div>
-      <h2>Update profile</h2>
+      <h2 className="text-[rgb(255,0,0)]  text-center mt-4 mb-8 font-semibold text-lg md:text-5xl">
+        Update profile
+      </h2>
       <div className="card bg-base-100 w-[80%] mx-auto rounded-none  shadow-2xl my-6">
         <form onSubmit={handleSubmit(onSubmit)} className="card-body  p-6">
           <div className="flex gap-3 flex-wrap md:flex-nowrap ">
@@ -97,7 +103,8 @@ const UserProfileEdit = () => {
               <input
                 {...register("email", { required: true })}
                 type="email"
-                disabled
+                // disabled
+                readOnly
                 placeholder="email"
                 className="input input-bordered focus:outline-none rounded-sm "
               />
@@ -130,6 +137,9 @@ const UserProfileEdit = () => {
               <input
                 {...register("role", { required: true })}
                 type="text"
+                defaultValue={"user"}
+                // disabled
+                readOnly
                 placeholder="role"
                 className="input input-bordered focus:outline-none rounded-sm"
               />
@@ -175,19 +185,35 @@ const UserProfileEdit = () => {
               )}
             </div>
           </div>
-          <div className="form-control w-full mb-5">
-            <label className="label">
-              <span className="label-text font-medium">Gender</span>
-            </label>
-            <input
-              {...register("gender", { required: true })}
-              type="text"
-              placeholder="gender"
-              className="input input-bordered focus:outline-none rounded-sm"
-            />
-            {errors.gender && (
-              <span className="text-red-600">gender field is required</span>
-            )}
+          <div className="flex gap-3 flex-wrap md:flex-nowrap">
+            <div className="form-control w-full md:w-1/2 mb-5">
+              <label className="label">
+                <span className="label-text font-medium">Gender</span>
+              </label>
+              <input
+                {...register("gender", { required: true })}
+                type="text"
+                placeholder="gender"
+                className="input input-bordered focus:outline-none rounded-sm"
+              />
+              {errors.gender && (
+                <span className="text-red-600">gender field is required</span>
+              )}
+            </div>
+            <div className="form-control w-full md:w-1/2">
+              <label className="label">
+                <span className="label-text font-medium">User skills</span>
+              </label>
+              <input
+                placeholder="skills"
+                {...register("skills", { required: true })}
+                type="text"
+                className="input input-bordered focus:outline-none rounded-sm"
+              />
+              {errors.skills && (
+                <span className="text-red-600">Name field is required</span>
+              )}
+            </div>
           </div>
 
           <input

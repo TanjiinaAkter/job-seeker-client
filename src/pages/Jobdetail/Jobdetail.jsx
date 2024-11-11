@@ -20,12 +20,12 @@ const Jobdetail = () => {
     });
   }, []);
 
-  const [applyBtn, setApplyBtn] = useState(true);
   const [alljobs, refetch] = useAlljobs();
   const { user } = useAuth();
   const { id } = useParams();
   //console.log(id, alljobs);
   const [job, setJob] = useState(null);
+
   useEffect(() => {
     if (id) {
       const job = alljobs.find((job) => job._id === id); // Compare as strings
@@ -34,12 +34,12 @@ const Jobdetail = () => {
       setJob(job);
     }
   }, [alljobs, id]);
-  useEffect(() => {
-    if (job) {
-      // Set applyBtn to false if user has already applied, based on backend data
-      setApplyBtn(!job.isApplied); // Assume job.isApplied indicates application status
-    }
-  }, [job]);
+  // useEffect(() => {
+  //   if (job) {
+  //     // Set applyBtn to false if user has already applied, based on backend data
+  //     setApplyBtn(!job.isApplied); // Assume job.isApplied indicates application status
+  //   }
+  // }, [job]);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
@@ -77,7 +77,6 @@ const Jobdetail = () => {
 
       console.log(res.data);
       if (res.data) {
-        setApplyBtn(false);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -92,9 +91,10 @@ const Jobdetail = () => {
             status: "isApplied",
           })
           .then((res) => {
+            refetch();
             console.log(res.data);
             if (res.data.modifiedCount > 0) {
-              return refetch();
+              //
             }
           });
 
@@ -181,6 +181,27 @@ const Jobdetail = () => {
                   </span>
                 </h4>
               </div>
+              <div className=" flex justify-start  items-center gap-2 ">
+                <img
+                  data-aos="fade-left"
+                  src={tickimg}
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    fontWeight: "bold",
+                  }}
+                  alt=""
+                />
+
+                <h4
+                  className="font-semibold text-gray-500 text-lg "
+                  data-aos="fade-left">
+                  Posted By :
+                  <span className="text-gray-500 font-normal pl-1">
+                    {job?.name}
+                  </span>
+                </h4>
+              </div>
               <div className=" flex justify-start  items-center gap-2">
                 <img
                   data-aos="fade-left"
@@ -247,25 +268,14 @@ const Jobdetail = () => {
                 </button>
               </div> */}
               {/* Open the modal using document.getElementById('ID').showModal() method */}
-              {applyBtn ? (
-                <button
-                  className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
-                  onClick={() => {
-                    document.getElementById("my_modal_1").showModal();
-                  }}>
-                  Apply Now
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="btn-sm  bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
-                  onClick={() => {
-                    document.getElementById("my_modal_1").showModal();
-                  }}>
-                  Applied
-                </button>
-              )}
 
+              <button
+                className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
+                onClick={() => {
+                  document.getElementById("my_modal_1").showModal();
+                }}>
+                Apply Now
+              </button>
               {/* <button
                 className="btn-sm bg-[#ff4848] text-white font-bold rounded-sm  my-5 ml-3 md:text-base md:btn-md"
                 onClick={() => {
@@ -346,8 +356,8 @@ const Jobdetail = () => {
           </div>
         </div>
       </div>
-      <div className=" mx-auto m-4 w-full md:max-w-[75%]  border border-gray-200  bg-[#f8f9fa] ">
-        <div className="flex items-center  font-medium text-gray-500 text-lg">
+      <div className="mx-auto m-8 p-4 w-full md:max-w-[75%]  border border-gray-200  bg-[#f8f9fa] ">
+        <div className="flex items-center pb-3 font-medium text-gray-500 text-lg">
           <img
             src={tickimg}
             style={{
@@ -359,9 +369,37 @@ const Jobdetail = () => {
           />
           <p>Job Description : </p>
         </div>
-        <p className="p-4 text-gray-500">
-          Job Description : {job?.description}
-        </p>
+        <div className="px-4 space-y-2">
+          <p className=" text-gray-500 ">{job?.description}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-gray-500  font-semibold">Job Location : </p>
+            <p className=" text-gray-500 ">{job?.location}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <p className="text-gray-500  font-semibold">Vacancy : </p>
+            <p className=" text-gray-500 ">{job?.vacancy}</p>
+          </div>
+          <div className="flex flex-row  gap-4">
+            <p className="text-gray-500 pr-4 font-semibold">
+              Required skills :{" "}
+            </p>
+
+            <div>
+              <ul className="text-gray-500 ">
+                {/* split use korechi karon obj ,array na */}
+                {job?.skills.map((skill, index) => (
+                  <li key={index} className="list-disc">
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <p className="text-gray-500  font-semibold">Facilities: </p>
+            <p className=" text-gray-500 ">{job?.facilities}</p>
+          </div>
+        </div>
       </div>
       <Footer></Footer>
     </div>

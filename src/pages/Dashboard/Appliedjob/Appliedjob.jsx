@@ -8,6 +8,7 @@ import { useEffect } from "react";
 // import useAuth from "../../hooks/useAuth";
 import useAppliedjob from "../../../hooks/useAppliedjob";
 import useAuth from "../../../hooks/useAuth";
+import { useParams } from "react-router-dom";
 // import Navbar from "../../Shared/Navbar/Navbar";
 // import Pageheader from "../../../components/Pageheader/Pageheader";
 // import Footer from "../../Shared/Footer/Footer";
@@ -16,6 +17,8 @@ import useAuth from "../../../hooks/useAuth";
 const Appliedjob = () => {
   const { user } = useAuth();
   console.log(user);
+  const { id } = useParams();
+  console.log(user, id);
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -23,6 +26,7 @@ const Appliedjob = () => {
   }, []);
 
   const [applicationData] = useAppliedjob();
+  console.log("data of appliedjob", applicationData);
   return (
     <div>
       {/* <Navbar></Navbar>
@@ -32,8 +36,8 @@ const Appliedjob = () => {
       {/* Table */}
       <div
         data-aos="fade-left"
-        className="overflow-x-auto  mt-12 m-1 mx-auto card rounded-none md:w-[75%] shadow-xl w-[90%]  mb-12">
-        <table className="table ">
+        className="overflow-x-auto  mt-12 m-1 mx-auto card rounded-none md:w-[90%] shadow-xl w-[90%]  mb-12">
+        <table className="table w-full">
           {/* head#b0c5ca 353547*/}
           <thead className="bg-[#b0c5ca]">
             <tr className="text-lg font-base text-black ">
@@ -43,6 +47,7 @@ const Appliedjob = () => {
               <th>Job position</th>
               <th>Company</th>
               <th>Download summery</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody className="bg-white">
@@ -76,6 +81,9 @@ const Appliedjob = () => {
                     </a>
                   </td>
                 }
+                <td>
+                  <h3>pending</h3>
+                </td>
               </tr>
             ))}
           </tbody>

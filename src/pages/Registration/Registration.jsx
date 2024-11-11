@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import "./Registration.css";
 import Footer from "../Shared/Footer/Footer";
@@ -14,6 +14,7 @@ const Registration = () => {
     <title>Job seeker | Registration</title>
   </Helmet>;
   const axiosSecure = useAxiosSecure();
+
   const navigate = useNavigate();
   const { createUser, updateUserProfile, emailVerify, logOut } =
     useContext(AuthContext);
@@ -32,7 +33,7 @@ const Registration = () => {
       .then((result) => {
         console.log(result.user);
 
-        updateUserProfile( name,  photo ) // No destructuring here
+        updateUserProfile( name,  photo ) // No destructuring here, new user er first update hocche
           .then(() => {
             console.log("User profile updated successfully");
             const userInfo = {

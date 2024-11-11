@@ -132,8 +132,10 @@ const router = createBrowserRouter([
         element: <Intereview></Intereview>,
       },
       {
-        path: "appliedjobs",
+        path: "appliedjobs/:email",
         element: <Appliedjob></Appliedjob>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/applications?email=${params.email}`),
       },
     ],
   },

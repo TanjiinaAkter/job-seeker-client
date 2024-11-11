@@ -66,6 +66,12 @@ const UserProfile = () => {
               {userProfileData[0]?.gender || user?.gender}
             </h2>
           </div>
+          <div className="md:flex items-center justify-start gap-4">
+            <h2 className="md:text-xl font-semibold">Skills:</h2>
+            <h2 className=" text-lg text-gray-500">
+              {userProfileData[0]?.skills || user?.skills}
+            </h2>
+          </div>
 
           <div className="card-actions">
             <Link to={`userprofileedit/${user?.email}`}>

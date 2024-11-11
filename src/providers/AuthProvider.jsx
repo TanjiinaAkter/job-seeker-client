@@ -10,9 +10,12 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+
+import useAxiosPublic from "../hooks/useAxiosPublic";
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
+  const axiosPublic = useAxiosPublic();
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
 
@@ -34,12 +37,25 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       //console.log(currentUser);
       setUser(currentUser);
-      setLoader(false);
-      return () => {
-        return unSubscribe();
-      };
+
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          console.log(res.data);
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            setLoader(false);
+          }
+        });
+      } else {
+        localStorage.removeItem("access-token");
+        setLoader(false);
+      }
     });
-  }, []);
+    return () => {
+      return unSubscribe();
+    };
+  }, [axiosPublic]);
   //============ 4 . USER LOGOUT===============================//
   const logOut = () => {
     setLoader(true);
@@ -55,10 +71,11 @@ const AuthProvider = ({ children }) => {
   const updateUserProfile = (name, photo) => {
     setLoader(true);
     return updateProfile(auth.currentUser, {
+      // ki ki set korbo seta define kore dicchi and user er registration er pore update hocche forebase e
       displayName: name,
       photoURL: photo,
     }).then(() => {
-      // setUser({ ...user, displayName: name, photoURL: photo });...first time user er name photo set kortesi, pore edit user er page e jokhn change korbo seta ekhan theke ager tar sathe new value add kore dibo
+      // setUser({ ...user, displayName: name, photoURL: photo });...first time user er name photo set korechi, pore edit user er page e jokhn change korbo seta ekhan theke ager tar sathe new value add kore dibo
 
       setUser((prevUser) => ({
         ...prevUser,

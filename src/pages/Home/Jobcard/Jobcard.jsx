@@ -1,9 +1,28 @@
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaBookmark, FaCalendarAlt } from "react-icons/fa";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { IoMdTime } from "react-icons/io";
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAuth from "../../../hooks/useAuth";
+import { useEffect, useState } from "react";
 
+import { GrBookmark } from "react-icons/gr";
+import useSavedJobs from "../../../hooks/useSavedJobs";
 const Jobcard = ({ job }) => {
+  const [savedJobs, refetch] = useSavedJobs();
+   const { user } = useAuth();
+ const axiosPublic = useAxiosPublic();
+
+  // const { data: savedJobs = [], refetch } = useQuery({
+  //   queryKey: ["savedJobs", user?.email],
+
+  //   queryFn: async () => {
+  //     const res = await axiosPublic.get(`/savedJobs?email=${user?.email}`);
+  //     console.log(res.data);
+  //     return res.data;
+  //   },
+  // });
+
   const {
     photo,
     category,
@@ -16,6 +35,33 @@ const Jobcard = ({ job }) => {
     deadline,
     date,
   } = job;
+  const [isSaved, setIsSaved] = useState(false);
+  useEffect(() => {
+    if (savedJobs.length > 0) {
+      const jobIsSaved = savedJobs.some(
+        (savedJob) => savedJob.jobId === job._id
+      );
+      setIsSaved(jobIsSaved);
+    }
+  }, [job._id, savedJobs]);
+
+  const handleSavedJobs = async () => {
+    const savedjob = {
+      email: user.email,
+      jobId: job._id,
+    };
+    console.log("click");
+    try {
+      const res = await axiosPublic.post("/savedjobs", savedjob);
+      console.log(res.data);
+
+      setIsSaved(true);
+      refetch();
+    } catch (error) {
+      console.error("error in savedjob posting", error);
+    }
+  };
+
   return (
     <div
       data-aos="fade-left"
@@ -30,8 +76,30 @@ const Jobcard = ({ job }) => {
             />
           </div>
           <div className="flex flex-col space-y-2 space-x-2 md:space-x-0">
-            <h3 className="text-2xl md:text-3xl font-semibold">
+            <h3 className="text-2xl md:text-3xl font-semibold flex items-center">
               {job.jobtitle}
+
+              <button disabled={isSaved}>
+                <FaBookmark
+                  onClick={handleSavedJobs}
+                  className={`pl-3 text-[2rem] ${
+                    isSaved ? "text-red-600" : ""
+                  }`}
+                />
+              </button>
+              <p
+                className={`${
+                  isSaved ? (
+                    "bg-red-600"
+                  ) : (
+                    <GrBookmark className="bg-gray-200" />
+                  )
+                }`}></p>
+              {/* <button
+                disabled={isSaved}
+                className={`btn ml-4 ${isSaved ? "btn-disabled" : "btn-primary"}`}>
+                {isSaved ? "Saved" : "Save this Job"}
+              </button> */}
             </h3>
             <h3 className="text-gray-500 text-base text-center md:text-left">
               {name}
@@ -49,7 +117,7 @@ const Jobcard = ({ job }) => {
           </div>
         </div>
         <div className="flex flex-col items-center ">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center py-3">
             <Link to={`/jobdetail/${_id}`}>
               <button className="btn btn-md bg-red-600 text-white rounded-sm text-base">
                 <svg
