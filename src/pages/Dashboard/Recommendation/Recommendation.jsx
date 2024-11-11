@@ -8,18 +8,15 @@ const Recommendation = () => {
   const { user } = useAuth();
   const [userProfileData] = useAllUsers();
   const [alljobs] = useAlljobs();
-  console.log(userProfileData.location);
-  //  console.log(alljobs);
+
   useEffect(() => {
     if (user && userProfileData.length > 0) {
+      //skill khujbo tai age skill key niye nilam
       const userSkills = userProfileData[0].skills || [];
+
       const recommendation = alljobs.filter((job) => {
-        const jo = Object.entries(job);
-        console.log(jo);
         // amra obj er moddhe some() method use korte parbo na tai amra obj er key gulo niye  array baniye use kortesi
-        const hasMatchingSkills = Object.entries(job).some((jobSkill) =>
-          userSkills.includes(jobSkill)
-        );
+        const hasMatchingSkills = job.skills && job.skills.includes(userSkills);
         console.log(hasMatchingSkills);
         const locationMatch = job.location === userProfileData[0].location;
         return hasMatchingSkills || locationMatch;

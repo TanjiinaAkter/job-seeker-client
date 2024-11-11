@@ -4,6 +4,7 @@ import useAuth from "./useAuth";
 
 const useAppliedjob = () => {
   const { user } = useAuth();
+  
   console.log(user?.email)
   const axiosSecure = useAxiosSecure();
   const { data: applicationData = [], refetch } = useQuery({

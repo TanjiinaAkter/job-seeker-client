@@ -73,7 +73,7 @@ const Addjob = () => {
     console.log("form final info", forminfo);
     if (user && user?.email) {
       axiosPublic.post("/alljobs", forminfo).then((res) => {
-        console.log(res.data);
+        console.log('get information new',res.data);
       });
     }
   };
@@ -247,23 +247,17 @@ const Addjob = () => {
                 <option>$1000</option>
               </select> */}
               </div>
-              <div className="form-control  w-full flex-1">
-                <label className="label">
-                  <span className="label-text font-medium">Picture URL</span>
-                </label>
+              <div className="form-control w-full flex-1">
+                {/* Job Applicants Number */}
                 <input
-                  {...register("photo", { required: true })}
-                  type="text"
-                  placeholder="picture URL"
                   className="input input-bordered focus:outline-none rounded-sm"
-                  required
+                  {...register("hiddenapplicationnumber", { required: true })}
+                  type="number"
+                  name="applicantsNumber"
+                  value="0"
                 />
-                {errors.photo && (
-                  <span className="text-red-600">
-                    job title field is required
-                  </span>
-                )}
               </div>
+
               <div className="form-control  w-full flex-1">
                 <label className="label">
                   <span className="label-text font-medium">Vacancy</span>
@@ -372,14 +366,22 @@ const Addjob = () => {
                 )}
               </div>
             </div>
-            <div className="form-control w-full flex-1">
-              {/* Job Applicants Number */}
+            <div className="form-control  w-full flex-1">
+              <label className="label">
+                <span className="label-text font-medium">Picture URL</span>
+              </label>
               <input
-                {...register("hiddenapplicationnumber", { required: true })}
-                type="hidden"
-                name="applicantsNumber"
-                value="0"
+                {...register("photo", { required: true })}
+                type="text"
+                placeholder="picture URL"
+                className="input input-bordered focus:outline-none rounded-sm"
+                required
               />
+              {errors.photo && (
+                <span className="text-red-600">
+                  job title field is required
+                </span>
+              )}
             </div>
             <div className="form-control w-full flex-1">
               <label className="label">

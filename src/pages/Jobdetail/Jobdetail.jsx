@@ -322,6 +322,7 @@ const Jobdetail = () => {
                         </span>
                       </label>
                       <input
+                        required
                         type="file"
                         accept=".pdf"
                         onChange={(e) => {
