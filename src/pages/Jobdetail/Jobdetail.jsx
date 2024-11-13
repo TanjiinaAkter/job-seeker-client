@@ -388,7 +388,7 @@ const Jobdetail = () => {
             <div>
               <ul className="text-gray-500 ">
                 {/* split use korechi karon obj ,array na */}
-                {job?.skills.map((skill, index) => (
+                {job?.skills?.map((skill, index) => (
                   <li key={index} className="list-disc">
                     {skill}
                   </li>

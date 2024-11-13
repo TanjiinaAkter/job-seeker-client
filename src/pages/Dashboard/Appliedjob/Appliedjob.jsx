@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import useAppliedjob from "../../../hooks/useAppliedjob";
 import useAuth from "../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
+import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
 // import Navbar from "../../Shared/Navbar/Navbar";
 // import Pageheader from "../../../components/Pageheader/Pageheader";
 // import Footer from "../../Shared/Footer/Footer";
@@ -29,6 +30,10 @@ const Appliedjob = () => {
   console.log("data of appliedjob", applicationData);
   return (
     <div>
+      <div>
+        <UserPageHeader
+          userheading={`Applied Jobs : ${applicationData.length} `}></UserPageHeader>
+      </div>
       {/* <Navbar></Navbar>
 
       <Pageheader
@@ -36,8 +41,8 @@ const Appliedjob = () => {
       {/* Table */}
       <div
         data-aos="fade-left"
-        className="overflow-x-auto  mt-12 m-1 mx-auto card rounded-none md:w-[90%] shadow-xl w-[90%]  mb-12">
-        <table className="table w-full">
+        className="overflow-x-auto  mt-12 m-1 mx-auto card rounded-md md:w-[90%] shadow-xl w-[90%]  mb-12">
+        <table className="table w-full p-8">
           {/* head#b0c5ca 353547*/}
           <thead className="bg-[#b0c5ca]">
             <tr className="text-lg font-base text-black ">

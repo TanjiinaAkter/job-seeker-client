@@ -1,54 +1,4 @@
-import { FaBriefcase } from "react-icons/fa";
-import { SlCalender } from "react-icons/sl";
-import useAlljobs from "../../../hooks/useAlljobs";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import useSavedJobs from "../../../hooks/useSavedJobs";
-import Swal from "sweetalert2";
-import Aos from "aos";
-import "aos/dist/aos.css";
-import { BsFillArrowRightSquareFill } from "react-icons/bs";
-import { MdBookmarkRemove } from "react-icons/md";
-const SavedJobDetail = ({ job, style }) => {
-  useEffect(() => {
-    Aos.init({
-      duration: 1200,
-    });
-  }, []);
-
-  const [, refetch] = useSavedJobs();
-  const axiosPublic = useAxiosPublic();
-  const [jobDetail, setJobDetail] = useState([]);
-  console.log(jobDetail);
-  const [alljobs] = useAlljobs();
-  const { jobId, _id, email } = job;
-  //console.log(job, alljobs);
-  useEffect(() => {
-    if (jobId) {
-      const getDetailFromJobId = alljobs.find((job) => job._id === jobId);
-
-      return setJobDetail(getDetailFromJobId);
-    }
-  }, [alljobs, jobId]);
-
-  const handleDeleteSavedJobs = async () => {
-    const res = await axiosPublic.delete(`/savedJobs/${job._id}`);
-    console.log(res.data);
-    if (res.data.deletedCount > 0) {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: `${jobDetail?.jobtitle} is deleted`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      refetch();
-    }
-
-    return res.data;
-  };
-
+const singleRecommandation = () => {
   return (
     <div
       data-aos="fade-left"
@@ -99,4 +49,4 @@ const SavedJobDetail = ({ job, style }) => {
   );
 };
 
-export default SavedJobDetail;
+export default singleRecommandation;

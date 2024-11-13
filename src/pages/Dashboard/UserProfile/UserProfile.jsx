@@ -11,7 +11,7 @@ const UserProfile = () => {
 
   console.log(userProfileData);
   return (
-    <div className="md:px-20 px-3 md:py-12 flex flex-col md:flex-row justify-between gap-2 md:gap-6 items-center">
+    <div className="md:px-20 px-3 md:py-4 flex flex-col md:flex-row justify-between gap-2 md:gap-6 items-center">
       <div className="card m-3 bg-base-100 w-full md:w-1/3  mx-auto shadow-xl">
         <figure className="px-10 pt-10">
           <img
