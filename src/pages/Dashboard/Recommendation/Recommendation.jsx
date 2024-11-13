@@ -3,6 +3,7 @@ import useAlljobs from "../../../hooks/useAlljobs";
 import useAllUsers from "../../../hooks/useAllUsers";
 import useAuth from "../../../hooks/useAuth";
 import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
+import SingleRecommandation from "../SingleRecommandation/SingleRecommandation";
 
 const Recommendation = () => {
   const [recommendation, setRecommendation] = useState([]);
@@ -56,21 +57,12 @@ const Recommendation = () => {
   }, [user, userProfileData, alljobs]);
   console.log(recommendation);
   return (
-    <div>
-      <UserPageHeader
-        userheading={`Recommended Jobs for ${user?.displayName || "user"}: ${
-          recommendation.length
-        }`}
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div className="md:max-w-[80%] w-[90%] mx-auto">
+  
+      <div className="grid  grid-cols-1 mx-auto w-full md:grid-cols-2 gap-8">
         {/* Render the recommended jobs here */}
         {recommendation.map((job) => (
-          <div key={job._id}>
-            <h3>{job.title}</h3>
-            <h3>{job.totalMatchPercentage} %</h3>
-            <p>Matched Skills: {job.matchedSkills.join(", ")} </p>
-            <p>total match skills :{job.matchedSkills.length}</p>
-          </div>
+          <SingleRecommandation key={job._id} job={job}></SingleRecommandation>
         ))}
       </div>
     </div>
