@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import Navbar from "../Shared/Navbar/Navbar";
 import "react-datepicker/dist/react-datepicker.css";
-import Footer from "../Shared/Footer/Footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Pageheader from "../../components/Pageheader/Pageheader";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAuth from "../../../hooks/useAuth";
 import { ImCross } from "react-icons/im";
+import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
 const Addjob = () => {
   useEffect(() => {
     AOS.init({
@@ -73,7 +71,7 @@ const Addjob = () => {
     console.log("form final info", forminfo);
     if (user && user?.email) {
       axiosPublic.post("/alljobs", forminfo).then((res) => {
-        console.log('get information new',res.data);
+        console.log("get information new", res.data);
       });
     }
   };
@@ -93,9 +91,9 @@ const Addjob = () => {
 
   return (
     <div className=" ">
-      <Navbar></Navbar>
-
-      <Pageheader heading={"Add A Job"}></Pageheader>
+   <div>
+      <UserPageHeader userheading={"Add job"}></UserPageHeader>
+    </div>
       <div data-aos="fade-left">
         <div className="card w-full mx-auto my-12 md:w-[76%] bg-base-100 rounded-sm border border-gray-200">
           <h3 className="text-2xl my-6 mx-8 md:text-2xl text-[#ff4848] font-semibold">
@@ -407,7 +405,6 @@ const Addjob = () => {
           </form>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

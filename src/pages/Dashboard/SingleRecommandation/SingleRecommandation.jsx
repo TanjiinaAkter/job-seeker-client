@@ -65,21 +65,17 @@ const SingleRecommandation = ({ job }) => {
           <h2 className="text-base group-hover:text-white text-gray-500 mb-1">
             Skilled Matched : {job.matchedSkills.join(" , ")}
           </h2>
+          <h2 className="text-base group-hover:text-white text-gray-500 mb-1">
+            Location Matched : {job.locationMatch ? job.location : ""}
+          </h2>
         </div>
         <div className="">
-          {/* <progress
-            className="progress progress-ring progress-info w-64"
-            value={job.totalMatchPercentage}
-            max="100"></progress> */}
-          {/* <p>If a dog chews shoes whose shoes does he choose?</p> */}
-         
           <div className="card-actions justify-end">
             <Link to={`/jobdetail/${job?._id}`}>
               <div>
                 <BsFillArrowRightSquareFill className="text-3xl group-hover:text-white  rounded-full" />
               </div>
             </Link>
-            
           </div>
         </div>
       </div>

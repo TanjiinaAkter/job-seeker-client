@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 // import Home from "../../pages/Home/Home";
 import Alljobs from "../pages/Alljobs/Alljobs";
-import Addjob from "../pages/Addjob/Addjob";
+
 import Blogs from "../pages/Blogs/Blogs";
 import Login from "../pages/Login/Login";
 import Registration from "../pages/Registration/Registration";
@@ -18,15 +18,20 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import Dashboard from "../Layout/Dashboard";
 import UserProfile from "../pages/Dashboard/UserProfile/UserProfile";
 import SavedJobs from "../pages/Dashboard/SavedJobs/SavedJobs";
-
+import Addjob from "../pages/Dashboard/Addjob/Addjob";
 import Intereview from "../pages/Dashboard/Intereview/Intereview";
 import Recommendation from "../pages/Dashboard/Recommendation/Recommendation";
 import Appliedjob from "../pages/Dashboard/Appliedjob/Appliedjob";
 import UserProfileEdit from "../pages/Dashboard/UserProfileEdit/UserProfileEdit";
+import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
+import Stats from "../pages/Dashboard/Stats/Stats";
+import Manageusers from "../pages/Dashboard/Manageusers/Manageusers";
+import Managejob from "../pages/Dashboard/Managejob/Managejob";
+import Applicants from "../pages/Dashboard/Applicants/Applicants";
 // import AppliedJobs from "../pages/Dashboard/AppliedJobs/AppliedJobs";
 
 const router = createBrowserRouter([
-  //===========================  HOME DASHBOARD   ===============================//
+  //===========================  HOME    ===============================//
   {
     path: "/",
     element: <Main></Main>,
@@ -108,6 +113,33 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard></Dashboard>,
     children: [
+      // admin sidebar
+
+      {
+        path: "adminhome",
+        element: <AdminHome></AdminHome>,
+      },
+      {
+        path: "stats",
+        element: <Stats></Stats>,
+      },
+      {
+        path: "addjob",
+        element: <Addjob></Addjob>,
+      },
+      {
+        path: "managejob",
+        element: <Managejob></Managejob>,
+      },
+      {
+        path: "applications",
+        element: <Applicants></Applicants>,
+      },
+      {
+        path: "manageusers",
+        element:<Manageusers></Manageusers>,
+      },
+      // user sidebar
       {
         path: "userprofile",
         element: <UserProfile></UserProfile>,

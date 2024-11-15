@@ -57,19 +57,7 @@ const Navbar = () => {
       </li>
       {user?.email ? (
         <>
-          <li>
-            <NavLink
-              to="/addjob"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#ff4848] font-semibold underline  text-lg "
-                  : isHomeRoute
-                  ? "text-white font-semibold text-lg"
-                  : " text-black font-semibold text-lg "
-              }>
-              Add a job
-            </NavLink>
-          </li>
+        
           <li>
             <NavLink
               to="/myjobs"
