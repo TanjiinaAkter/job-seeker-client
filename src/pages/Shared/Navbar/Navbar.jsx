@@ -57,7 +57,6 @@ const Navbar = () => {
       </li>
       {user?.email ? (
         <>
-        
           <li>
             <NavLink
               to="/myjobs"
@@ -72,7 +71,10 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/userprofile"> Dashboard</NavLink>
+            <NavLink to={`/dashboard/userprofile/${user?.email}`}>
+              {" "}
+              Dashboard
+            </NavLink>
           </li>
         </>
       ) : (
@@ -185,7 +187,7 @@ const Navbar = () => {
           {user?.email ? (
             <div className="flex flex-row space-x-2 items-center justify-center ">
               <div className="relative z-10 ">
-                <Link to={`dashboard/userprofile`}>
+                <Link to={`dashboard/userprofile/${user?.email}`}>
                   <img
                     onMouseEnter={handlehover}
                     onMouseLeave={handleNoHover}

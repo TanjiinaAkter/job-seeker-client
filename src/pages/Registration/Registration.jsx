@@ -1,4 +1,4 @@
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import "./Registration.css";
 import Footer from "../Shared/Footer/Footer";
@@ -33,13 +33,14 @@ const Registration = () => {
       .then((result) => {
         console.log(result.user);
 
-        updateUserProfile( name,  photo ) // No destructuring here, new user er first update hocche
+        updateUserProfile(name, photo) // No destructuring here, new user er first update hocche
           .then(() => {
             console.log("User profile updated successfully");
             const userInfo = {
               email,
               name,
               photo,
+              role: "user",
             };
             console.log(userInfo);
             axiosSecure.post("/users", userInfo).then((res) => {

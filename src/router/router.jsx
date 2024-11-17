@@ -113,7 +113,7 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard></Dashboard>,
     children: [
-      // admin sidebar
+      // ==================  ADMIN  SIDEBAR ==================//
 
       {
         path: "adminhome",
@@ -137,15 +137,16 @@ const router = createBrowserRouter([
       },
       {
         path: "manageusers",
-        element:<Manageusers></Manageusers>,
+        element: <Manageusers></Manageusers>,
       },
-      // user sidebar
+      // ==================  USER SIDEBAR ==================//
       {
-        path: "userprofile",
+        path: "userprofile/:email",
         element: <UserProfile></UserProfile>,
+        loader: ({ params }) => fetch(`http://localhost:5000/${params.email}`),
       },
       {
-        path: "userprofile/userprofileedit/:email",
+        path: "userprofileedit/:email",
         element: <UserProfileEdit></UserProfileEdit>,
         // ekhane loader dicchi karon er maddhome amra bujhte partesi kon email er route e jabe
         loader: ({ params }) =>

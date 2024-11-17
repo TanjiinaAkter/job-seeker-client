@@ -10,15 +10,15 @@ const Recommendation = () => {
   const { user } = useAuth();
   const [userProfileData] = useAllUsers();
   const [alljobs] = useAlljobs();
-
+  console.log(userProfileData.length);
   useEffect(() => {
-    if (user && userProfileData.length > 0) {
-      const userSkills = userProfileData[0].skills || [];
+    if (user && userProfileData ) {
+      const userSkills = userProfileData.skills || [];
       const userSkillsArray =
         typeof userSkills === "string"
           ? userSkills.split(",").map((skill) => skill.trim())
           : userSkills;
-      const userLocation = userProfileData[0].location;
+      const userLocation = userProfileData.location;
 
       const recommendation = alljobs
         .map((job) => {

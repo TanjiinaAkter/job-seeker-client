@@ -32,51 +32,51 @@ const UserProfile = () => {
           <div className="md:flex items-center justify-start gap-4 ">
             <h2 className="md:text-xl font-semibold">Full Name:</h2>
             <h2 className="md:text-xl text-gray-500">
-              {userProfileData[0]?.name || user?.displayName}
+              {userProfileData?.name ||user?.displayName }
             </h2>
           </div>
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold"> Email: </h2>
             <h2 className=" text-lg text-gray-500">
-              {userProfileData[0]?.email || user?.email}
+             { userProfileData?.email || user?.email}
             </h2>
           </div>
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold"> Role :</h2>
             <h2 className=" text-lg text-gray-500">
-              {userProfileData[0]?.role || user?.role}
+              {userProfileData?.role}
             </h2>
           </div>
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold"> Contact no. :</h2>
             <h2 className=" text-lg text-gray-500">
-              {userProfileData[0]?.phone || user?.phone}
+              {userProfileData?.phone }
             </h2>
           </div>
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold"> Location :</h2>
             <h2 className=" text-lg text-gray-500">
-              {userProfileData[0]?.location || user?.location}
+              {userProfileData?.location }
             </h2>
           </div>
 
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold"> Gender :</h2>
             <h2 className=" text-lg text-gray-500">
-              {userProfileData[0]?.gender || user?.gender}
+              {userProfileData?.gender}
             </h2>
           </div>
           <div className="md:flex items-center justify-start gap-4">
             <h2 className="md:text-xl font-semibold">Skills:</h2>
             <h2 className=" text-lg text-gray-500">
-              {userProfileData[0]?.skills || user?.skills}
+              {userProfileData?.skills }
             </h2>
           </div>
 
           <div className="card-actions">
-            <Link to={`userprofileedit/${user?.email}`}>
+            <Link to={`/dashboard/userprofileedit/${user?.email}`}>
               <button className="btn px-12 bg-black text-white rounded-sm">
-                Edit
+                Edit profile
               </button>
             </Link>
           </div>

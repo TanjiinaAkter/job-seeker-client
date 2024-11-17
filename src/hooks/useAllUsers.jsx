@@ -9,7 +9,7 @@ const useAllUsers = () => {
     queryKey: ["userProfileData", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users?email=${user.email}`);
-      //console.log(res.data);
+      console.log(res.data);
       // ekhane fetch kora result ta userprofile e giye set hocche
       return res.data;
     },

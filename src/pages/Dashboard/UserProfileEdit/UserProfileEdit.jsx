@@ -20,9 +20,9 @@ const UserProfileEdit = () => {
   useEffect(() => {
     if (user) {
       // firebase theke new user er data directly ekhane set kortesi tai displayName disi name na likhe,same for photo
-      setValue("name", user.displayName);
-      setValue("email", user.email);
-      setValue("photo", user.photoURL);
+      setValue("name", user?.displayName);
+      setValue("email", user?.email);
+      setValue("photo", user?.photoURL);
     }
     // dependency diyechi karon user change hole jeno abar chole
   }, [user, setValue]);
@@ -30,29 +30,27 @@ const UserProfileEdit = () => {
   const onSubmit = async (data) => {
     // user er data ar form er data deyar karon user first time thakle to kono edit data thakbe na tokhn jeno user er name photo show hoy
     const editProfile = {
-      email: data.email || user.email,
-      name: data.name || user.displayName,
-      photo: data.photo || user.photoURL,
+      email: data.email,
+      name: data.name ,
+      photo: data.photo,
       role: data.role,
       phone: data.phone,
       location: data.location,
       gender: data.gender,
       skills: data.skills,
     };
-    console.log(editProfile);
+    console.log(data.name);
     try {
-      await updateUserProfile(data.name, data.photo).then((res) =>
-        console.log(res)
-      );
+      await updateUserProfile(data.name, data.photo);
       refetch();
       //console.log(updateUserProfile);
       //console.log(user.name);
-      const res = await axiosSecure.patch(
+      const updateres = await axiosSecure.patch(
         `/users?email=${data?.email}`,
         editProfile
       );
-      console.log(res.data);
-      if (res.data.modifiedCount > 0) {
+      console.log("data pacchi", updateres.data);
+      if (updateres.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
           position: "top-end",

@@ -7,13 +7,13 @@ import useAuth from "../hooks/useAuth";
 import { RiFileListLine } from "react-icons/ri";
 import { BsBookmarkCheckFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { MdOutlineWork, MdRecommend, MdWorkOutline } from "react-icons/md";
+import { MdOutlineWork, MdRecommend } from "react-icons/md";
 import { AiFillCalendar } from "react-icons/ai";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 const Dashboard = () => {
   const { logOut, user } = useAuth();
 
-  const isAdmin = true;
+  const isAdmin = false;
   return (
     <div className="flex flex-col md:flex-row ">
       {/* SIDEBAR CONTENT */}
@@ -60,7 +60,7 @@ const Dashboard = () => {
           ) : (
             <>
               <li className=" text-[1rem]">
-                <NavLink to="/dashboard/userprofile">
+                <NavLink to={`/dashboard/userprofile/${user?.email}`}>
                   <CgProfile className="text-2xl text-red-600" /> User Profile
                 </NavLink>
               </li>
