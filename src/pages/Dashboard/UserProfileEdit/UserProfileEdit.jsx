@@ -12,6 +12,8 @@ const UserProfileEdit = () => {
   const { user, updateUserProfile } = useAuth();
   const [, refetch] = useAllUsers();
   const axiosSecure = useAxiosSecure();
+
+  // single user data pete amra first e all users get kore nibo then amra jekhane single lagbe oikhane single get korbo new route diye
   const { data: singleUser = {} } = useQuery({
     queryKey: ["singleUser", user?.email],
     queryFn: async () => {
@@ -42,7 +44,7 @@ const UserProfileEdit = () => {
     // user er data ar form er data deyar karon user first time thakle to kono edit data thakbe na tokhn jeno user er name photo show hoy
     const editProfile = {
       email: data.email,
-      name: data.name ,
+      name: data.name,
       photo: data.photo,
       role: data.role,
       phone: data.phone,
@@ -57,7 +59,7 @@ const UserProfileEdit = () => {
       //console.log(updateUserProfile);
       //console.log(user.name);
       const updateres = await axiosSecure.patch(
-        `/users?email=${data?.email}`,
+        `/users/single?email=${user?.email}`,
         editProfile
       );
       console.log("data pacchi", updateres.data);

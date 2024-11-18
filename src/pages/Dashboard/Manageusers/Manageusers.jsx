@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos";
 import { MdDelete } from "react-icons/md";
-import {  FaUsers } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 const Manageusers = () => {
   useEffect(() => {
@@ -47,6 +47,7 @@ const Manageusers = () => {
       }
     });
   };
+
 
   const handleMakeAdmin = (user) => {
     ///users/admin/:id
