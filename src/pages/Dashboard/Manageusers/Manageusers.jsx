@@ -85,7 +85,7 @@ const Manageusers = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {users.map((user, index) => (
+            {users?.map((user, index) => (
               <tr key={user._id} className="group">
                 <th>{index + 1}</th>
                 <td>

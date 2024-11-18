@@ -5,12 +5,23 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 // import { updateUserProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 import useAllUsers from "../../../hooks/useAllUsers";
+import { useQuery } from "@tanstack/react-query";
 
 const UserProfileEdit = () => {
-  const axiosSecure = useAxiosSecure();
+  // const axiosSecure = useAxiosSecure();
   const { user, updateUserProfile } = useAuth();
   const [, refetch] = useAllUsers();
-  //console.log(user.displayName);
+  const axiosSecure = useAxiosSecure();
+  const { data: singleUser = {} } = useQuery({
+    queryKey: ["singleUser", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/single?email=${user?.email}`);
+      console.log("in user profile page", res.data);
+      return res.data;
+    },
+    enabled: !!user?.email, // Fetch only when email is available
+  });
+  console.log(singleUser);
   const {
     register,
     handleSubmit,

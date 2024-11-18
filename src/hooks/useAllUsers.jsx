@@ -1,20 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "./useAuth";
+// import useAuth from "./useAuth";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useAllUsers = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: userProfileData = [], refetch } = useQuery({
-    queryKey: ["userProfileData", user?.email],
+  const { data: allUsers = [], refetch } = useQuery({
+    queryKey: ["allUsers"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users?email=${user.email}`);
+      const res = await axiosSecure.get("/users");
       console.log(res.data);
-      // ekhane fetch kora result ta userprofile e giye set hocche
       return res.data;
     },
   });
-  return [userProfileData, refetch];
+  return [allUsers, refetch];
 };
 
 export default useAllUsers;
