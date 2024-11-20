@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 const UserProfile = () => {
   const { user } = useAuth();
   console.log(user);
+
   const axiosSecure = useAxiosSecure();
   const { data: singleUser = {} } = useQuery({
     queryKey: ["singleUser", user?.email],
@@ -20,6 +21,7 @@ const UserProfile = () => {
     enabled: !!user?.email, // Fetch only when email is available
   });
   console.log("singleUser is", singleUser);
+
   return (
     <div className="md:px-20 px-3 md:py-4 flex flex-col md:flex-row justify-between gap-2 md:gap-6 items-center">
       <div className="card m-3 bg-base-100 w-full md:w-1/3  mx-auto shadow-xl">

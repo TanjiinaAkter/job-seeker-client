@@ -1,4 +1,3 @@
-
 import { createBrowserRouter } from "react-router-dom";
 
 import Main from "../Layout/Main";
@@ -10,7 +9,7 @@ import Login from "../pages/Login/Login";
 import Registration from "../pages/Registration/Registration";
 import Home from "../pages/Home/Home/Home";
 import Jobdetail from "../pages/Jobdetail/Jobdetail";
-import Myjobs from "../pages/Myjobs/Myjobs";
+// import Myjobs from "../pages/Myjobs/Myjobs";
 // import Appliedjob from "../pages/Appliedjob/Appliedjob";
 import Errorpage from "../pages/Errorpage/Errorpage";
 import PrivateRouter from "./PrivateRouter";
@@ -29,6 +28,7 @@ import Stats from "../pages/Dashboard/Stats/Stats";
 import Manageusers from "../pages/Dashboard/Manageusers/Manageusers";
 import Managejob from "../pages/Dashboard/Managejob/Managejob";
 import Applicants from "../pages/Dashboard/Applicants/Applicants";
+import EditJob from "../pages/Dashboard/EditJob/EditJob";
 // import AppliedJobs from "../pages/Dashboard/AppliedJobs/AppliedJobs";
 
 const router = createBrowserRouter([
@@ -54,14 +54,7 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
-      {
-        path: "/myjobs",
-        element: (
-          <PrivateRouter>
-            <Myjobs></Myjobs>
-          </PrivateRouter>
-        ),
-      },
+  
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
@@ -135,6 +128,10 @@ const router = createBrowserRouter([
       {
         path: "applications",
         element: <Applicants></Applicants>,
+      },
+      {
+        path: "editjob",
+        element: <EditJob></EditJob>,
       },
       {
         path: "manageusers",

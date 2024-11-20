@@ -13,7 +13,7 @@ import { HiOutlineDocumentAdd } from "react-icons/hi";
 const Dashboard = () => {
   const { logOut, user } = useAuth();
 
-  const isAdmin = true;
+  const isAdmin = false;
   return (
     <div className="flex flex-col md:flex-row ">
       {/* SIDEBAR CONTENT */}

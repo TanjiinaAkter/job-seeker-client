@@ -1,100 +1,87 @@
-import { useEffect, useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { useForm } from "react-hook-form";
-import DatePicker from "react-datepicker";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import useAuth from "../../../hooks/useAuth";
-import { ImCross } from "react-icons/im";
 import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
-const Addjob = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1200,
-    });
-  }, []);
-  // use state e new date ditesi mane ajke jei tarikh  eitai amra date parameter hishbe pacchi
-  const [skills, setSkills] = useState([]);
+import useAuth from "../../../hooks/useAuth";
+import { useLocation } from "react-router-dom";
+import { ImCross } from "react-icons/im";
+import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+
+const EditJob = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const [newSkills, setNewSkills] = useState([]);
   const [skillInput, setSkillInput] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [deadLine, setDeadline] = useState(new Date());
-  const axiosPublic = useAxiosPublic();
-  //REACT HOOK FORM
+  console.log("dekhi newSkills value ki ki ache", newSkills);
+  //initially current date thakbe
+  const [newDeadLine, setNewDeadline] = useState(new Date());
+  const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth()).padStart(2, "0");
+    const year = String(date.getYear());
+    return `${day}/${month}/${year}`;
+  };
+  console.log(formatDate(newDeadLine));
+  const addSkill = () => {
+    if (skillInput?.trim()) {
+      setNewSkills([...newSkills, skillInput]);
+      setSkillInput("");
+    }
+  };
+  const removeSkill = (index) => {
+    const getWithOutRemove = newSkills.filter((_, i) => i !== index);
+    setNewSkills(getWithOutRemove);
+  };
+
+  const location = useLocation();
+  const jobdetail = location?.state?.job;
+  //   const { id } = job;
+  console.log("state e kore job details peyechi", jobdetail,'job owner email',jobdetail.email);
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm();
-  // amra date er data k nijeer moto kore pacchi sob na niye
-  const formatDate = (date) => {
-    // day te 2 number er hoy tai..ar day jodi 5 hoy age 05 dibe
-    const day = String(date.getDate()).padStart(2, "0");
-    // month e 0-11 index e 12 mash hishab kora hoy, so +1 kore 1,2 eivabe dibe
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = String(date.getFullYear());
-    return `${day}/${month}/${year}`;
-  };
-  const { user } = useAuth();
-  console.log(user);
 
-  const addSkill = () => {
-    if (skillInput?.trim()) {
-      setSkills([...skills, skillInput]);
-      setSkillInput("");
-    }
-  };
-  const removeSkill = (index) => {
-    //mane jei index select kortesi oita bade notun array banai dibe
-    const updatedSkills = skills.filter((_, i) => i !== index);
-    setSkills(updatedSkills);
-  };
   const onSubmit = (data) => {
-    const forminfo = {
-      name: data.name,
-      email: data.email,
-      jobtitle: data.jobtitle,
-      company: data.company,
-      category: data.category,
-      salary: data.salary,
-      photo: data.photo,
-      date: formatDate(startDate),
-      deadline: formatDate(deadLine),
-      hiddenapplicationnumber: parseInt(data.hiddenapplicationnumber),
-      description: data.description,
-      location: data.location,
-      vacancy: data.vacancy,
-      skills,
-      facilities: data.facilities,
-    };
-    console.log("form final info", forminfo);
-    if (user && user?.email) {
-      axiosPublic.post("/alljobs", forminfo).then((res) => {
-        console.log("get information new", res.data);
-      });
-    }
+    console.log("all data", data);
+    
+    axiosSecure.patch(`/alljobs/${jobdetail._id}`, data).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Job details edit saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
-  useEffect(() => {
-    setValue("skills", skills);
-  }, [skills, setValue]);
-  useEffect(() => {
-    // setvalue ditesi jeno amader date 2 ta registered hoye jay..icchemoto nam eikhane diyechi input e lagbe na date er khetre
-    setValue("date", startDate);
-  }, [startDate, setValue]);
 
   useEffect(() => {
-    setValue("deadline", deadLine);
-  }, [deadLine, setValue]);
-
-  //console.log(watch("example")); // watch input value by passing the name of it
+    setValue("deadline", formatDate(newDeadLine));
+  }, [newDeadLine, setValue]);
+  // initially skills er man na thakle default ta dicchi, jehetu direct nite pare na value react hook form
+  useEffect(() => {
+    if (jobdetail?.skills) {
+      setNewSkills(jobdetail.skills);
+    }
+  }, [jobdetail]);
+  useEffect(() => {
+    setValue("skills", newSkills);
+  }, [setValue, newSkills, jobdetail]);
 
   return (
-    <div className=" ">
-      <div>
-        <UserPageHeader userheading={"Add job"}></UserPageHeader>
+    <div>
+      <div className="mb-12 mt-4">
+        <UserPageHeader
+          userheading={`Edit Job : ${jobdetail.jobtitle}`}></UserPageHeader>
       </div>
-      <div data-aos="fade-left">
+      <div className="overflow-hidden">
         <div className="card w-full mx-auto my-12 md:w-[76%] bg-base-100 rounded-sm border border-gray-200">
           <h3 className="text-2xl my-6 mx-8 md:text-2xl text-[#ff4848] font-semibold">
             Job Details__
@@ -129,7 +116,7 @@ const Addjob = () => {
                   type="email"
                   readOnly
                   defaultValue={user?.email}
-                  placeholder="email"
+                  placeholder={user?.email}
                   className="input input-bordered focus:outline-none rounded-sm"
                 />
                 {errors.email && (
@@ -144,7 +131,8 @@ const Addjob = () => {
                 <input
                   {...register("jobtitle", { required: true })}
                   type="text"
-                  placeholder="title"
+                  defaultValue={jobdetail.jobtitle}
+                  placeholder={jobdetail.jobtitle}
                   className="input input-bordered focus:outline-none rounded-sm"
                 />
                 {errors.jobtitle && (
@@ -161,13 +149,16 @@ const Addjob = () => {
                   <span className="label-text font-medium">Company name</span>
                 </label>
                 <input
-                  placeholder="company name"
+                  defaultValue={jobdetail.company}
+                  placeholder={jobdetail.company}
                   {...register("company", { required: true })}
                   type="text"
                   className="input input-bordered focus:outline-none rounded-sm"
                 />
                 {errors.company && (
-                  <span className="text-red-600">Name field is required</span>
+                  <span className="text-red-600">
+                    Company name field is required
+                  </span>
                 )}
               </div>
               <div className="form-control  w-full flex-1">
@@ -178,11 +169,12 @@ const Addjob = () => {
                   {...register("location", { required: true })}
                   type="text"
                   placeholder="location"
-                  className="input input-bordered focus:outline-none rounded-sm"
+                  defaultValue={jobdetail.location}
+                  className="input input-bordered  focus:outline-none rounded-sm"
                 />
                 {errors.location && (
                   <span className="text-red-600">
-                    job title field is required
+                    job location field is required
                   </span>
                 )}
               </div>
@@ -191,6 +183,7 @@ const Addjob = () => {
                   <span className="label-text font-medium">Job Category</span>
                 </label>
                 <select
+                  defaultValue={jobdetail.category}
                   className="select select-bordered rounded-sm focus:outline-none w-full max-w-full"
                   {...register("category", { required: true })}>
                   <option value="fulltime">Full time</option>
@@ -198,20 +191,11 @@ const Addjob = () => {
                   <option value="hybrid">Hybrid</option>
                   <option value="parttime">Remote</option>
                 </select>
-                {errors.jobtitle && (
+                {errors.category && (
                   <span className="text-red-600">
-                    job title field is required
+                    job category field is required
                   </span>
                 )}
-                {/* <select className="select select-bordered rounded-sm focus:outline-none w-full max-w-full">
-                <option disabled selected>
-                  select job type
-                </option>
-                <option>Full time</option>
-                <option>Part time</option>
-                <option>Hybrid</option>
-                <option>Remote</option>
-              </select> */}
               </div>
             </div>
             {/* ROW-3*/}
@@ -222,6 +206,7 @@ const Addjob = () => {
                 </label>
 
                 <select
+                  defaultValue={jobdetail.salary}
                   className="select select-bordered rounded-sm focus:outline-none w-full max-w-full"
                   {...register("salary", { required: true })}>
                   <option value="$300">$300</option>
@@ -231,28 +216,24 @@ const Addjob = () => {
                 </select>
                 {errors.salary && (
                   <span className="text-red-600">
-                    job title field is required
+                    job salary field is required
                   </span>
                 )}
-
-                {/* <select className="select select-bordered focus:outline-none rounded-sm w-full max-w-full">
-                <option disabled selected>
-                  select range
-                </option>
-                <option>$300</option>
-                <option>$350</option>
-                <option>$550</option>
-                <option>$1000</option>
-              </select> */}
               </div>
               <div className="form-control w-full flex-1">
                 {/* Job Applicants Number */}
+                <label className="label">
+                  <span className="label-text font-medium">
+                    Job Applicants Number
+                  </span>
+                </label>
                 <input
+                  readOnly
                   className="input input-bordered focus:outline-none rounded-sm"
                   {...register("hiddenapplicationnumber", { required: true })}
                   type="number"
                   name="applicantsNumber"
-                  value="0"
+                  defaultValue={jobdetail.hiddenapplicationnumber}
                 />
               </div>
 
@@ -265,14 +246,15 @@ const Addjob = () => {
                   type="number"
                   name="vacancy"
                   min={0}
-                  placeholder="vacancy"
+                  defaultValue={jobdetail.vacancy}
+                  placeholder={jobdetail.vacancy}
                   id=""
                   {...register("vacancy", { required: true })}
                   className="input input-bordered focus:outline-none rounded-sm"
                 />
                 {errors.vacancy && (
                   <span className="text-red-600">
-                    job title field is required
+                    job vacancy field is required
                   </span>
                 )}
               </div>
@@ -286,13 +268,12 @@ const Addjob = () => {
                     Job Posting Date
                   </span>
                 </label>
-                <DatePicker
-                  className="input-bordered border  rounded-sm focus:outline-none w-full max-w-full"
-                  showIcon
-                  //that means if startdate is 12/12/21 then it will be shown in input box
-                  selected={startDate}
-                  //when a user clicks on a date in the date picker, that date is passed to the onChange function, which then updates the deadLine state with the selected date. This keeps your component state in sync with the user's selection.
-                  onChange={(date) => setStartDate(date)}
+                <input
+                  {...register("date")}
+                  defaultValue={jobdetail.date}
+                  type="text"
+                  className="input input-bordered focus:outline-none rounded-sm"
+                  readOnly
                 />
               </div>
               {/* DatePicker-2 */}
@@ -305,8 +286,8 @@ const Addjob = () => {
                 <DatePicker
                   className="input-bordered border  rounded-sm focus:outline-none w-full max-w-full"
                   showIcon
-                  selected={deadLine}
-                  onChange={(date) => setDeadline(date)}
+                  selected={newDeadLine}
+                  onChange={(date) => setNewDeadline(date)}
                 />
               </div>
             </div>
@@ -319,7 +300,8 @@ const Addjob = () => {
                 <input
                   {...register("facilities", { required: true })}
                   type="text"
-                  placeholder="facilities"
+                  defaultValue={jobdetail.facilities}
+                  placeholder={jobdetail.facilities}
                   className="input input-bordered focus:outline-none rounded-sm"
                 />
                 {errors.facilities && (
@@ -328,7 +310,7 @@ const Addjob = () => {
                   </span>
                 )}
               </div>
-              {/* SKILLS*/}
+              {/* REQUIRED SKILLS*/}
               <div className="form-control w-full flex-1 ">
                 <label className="label">
                   <span className="label-text font-medium">
@@ -336,6 +318,28 @@ const Addjob = () => {
                   </span>
                 </label>
                 <ul className="flex">
+                  {newSkills.map((skill, index) => (
+                    <li key={index}>
+                      {skill}
+                      <button onClick={() => removeSkill(index)}>
+                        <ImCross className="text-[10px] mx-2 text-red-600" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <input
+                  type="text"
+                  defaultValue={jobdetail.skills}
+                  className="input input-bordered focus:outline-none text-gray-400 rounded-sm"
+                  // placeholder={jobdetail.skills}
+                  onChange={(e) => setSkillInput(e.target.value)}
+                />
+                <button
+                  onClick={addSkill}
+                  className="btn flex justify-center items-center my-3">
+                  Add Skill
+                </button>
+                {/* <ul className="flex">
                   {skills.map((skill, index) => (
                     <li key={index}>
                       {skill}
@@ -353,12 +357,12 @@ const Addjob = () => {
                   type="text"
                   value={skillInput}
                   onChange={(e) => setSkillInput(e.target.value)}
-                  placeholder=" add a skill"
+                  placeholder={jobdetail.skills}
                   className="input input-bordered focus:outline-none rounded-sm"
                 />
                 <button type="button" onClick={addSkill}>
                   add skill
-                </button>
+                </button> */}
                 {errors.skills && (
                   <span className="text-red-600">skills field is required</span>
                 )}
@@ -371,13 +375,14 @@ const Addjob = () => {
               <input
                 {...register("photo", { required: true })}
                 type="text"
-                placeholder="picture URL"
+                defaultValue={jobdetail.photo}
+                placeholder={jobdetail.photo}
                 className="input input-bordered focus:outline-none rounded-sm"
                 required
               />
               {errors.photo && (
                 <span className="text-red-600">
-                  job title field is required
+                  job photo field is required
                 </span>
               )}
             </div>
@@ -388,8 +393,9 @@ const Addjob = () => {
               <input
                 {...register("description", { required: true })}
                 type="text"
-                placeholder="description"
-                className="input input-bordered focus:outline-none rounded-sm"
+                placeholder={jobdetail.description}
+                defaultValue={jobdetail.description}
+                className="input placeholder:text-[#374151] input-bordered focus:outline-none rounded-sm"
               />
               {errors.description && (
                 <span className="text-red-600">
@@ -399,7 +405,7 @@ const Addjob = () => {
             </div>
             <input
               type="submit"
-              value="Add A Job"
+              value="Edit Job"
               className="btn bg-[#ff4848] text-white"
             />
           </form>
@@ -409,4 +415,4 @@ const Addjob = () => {
   );
 };
 
-export default Addjob;
+export default EditJob;

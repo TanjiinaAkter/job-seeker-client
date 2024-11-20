@@ -59,6 +59,7 @@ const Recommendation = () => {
   console.log(recommendation);
   return (
     <div className="md:max-w-[80%] w-[90%] mx-auto">
+      <h2>sd</h2>
       <div className="grid  grid-cols-1 mx-auto w-full md:grid-cols-2 gap-8">
         {/* Render the recommended jobs here */}
         {recommendation.map((job) => (
