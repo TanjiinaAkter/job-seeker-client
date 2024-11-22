@@ -1,20 +1,13 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-// import Navbar from "../Shared/Navbar/Navbar";
-// import Footer from "../Shared/Footer/Footer";
-// import Pageheader from "../../components/Pageheader/Pageheader";
-
-// import useAuth from "../../hooks/useAuth";
 import useAppliedjob from "../../../hooks/useAppliedjob";
 import useAuth from "../../../hooks/useAuth";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
-// import Navbar from "../../Shared/Navbar/Navbar";
-// import Pageheader from "../../../components/Pageheader/Pageheader";
-// import Footer from "../../Shared/Footer/Footer";
-// import useAppliedjob from "../../hooks/useAppliedjob";
-
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import { FaDownload } from "react-icons/fa";
 const Appliedjob = () => {
   const { user } = useAuth();
   console.log(user);
@@ -25,19 +18,29 @@ const Appliedjob = () => {
       duration: 1200,
     });
   }, []);
-
+  // ekhane sob jobseeker er applied job ache
   const [applicationData] = useAppliedjob();
   console.log("data of appliedjob", applicationData);
+  const axiosSecure = useAxiosSecure();
+  // ekhane specific single jobseeker er applied job ache
+  const { data: singleApplicantsData = [] } = useQuery({
+    queryKey: ["singleApplicantsData", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/applications/single?email=${user?.email}`
+      );
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  console.log(singleApplicantsData);
   return (
     <div>
       <div>
         <UserPageHeader
-          userheading={`Applied Jobs : ${applicationData.length} `}></UserPageHeader>
+          userheading={`Applied Jobs : ${singleApplicantsData.length} `}></UserPageHeader>
       </div>
-      {/* <Navbar></Navbar>
 
-      <Pageheader
-        heading={`Applied Jobs : ${applicationData.length}`}></Pageheader> */}
       {/* Table */}
       <div
         data-aos="fade-left"
@@ -51,13 +54,13 @@ const Appliedjob = () => {
               <th>Resume</th>
               <th>Job position</th>
               <th>Company</th>
-              <th>Download summery</th>
+
               <th>Status</th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {/* row 1 */}
-            {applicationData.map((data) => (
+            {singleApplicantsData.map((data) => (
               <tr key={data._id}>
                 <td>
                   <h3>{data.name}</h3>
@@ -75,19 +78,41 @@ const Appliedjob = () => {
                 <td>
                   <h3>{data.company}</h3>
                 </td>
-                {
+                {/* {
                   <td>
                     <a
                       href={`http://localhost:5000/uploads/${data.resume}`} // Link to download the resume
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn bg-[#b7e4a5] text-black text-base btn-sm rounded-full">
-                      Download
+                      className="btn  text-[#447de6] btn-sm rounded-full">
+                     <FaDownload></FaDownload> 
                     </a>
                   </td>
-                }
+                } */}
                 <td>
-                  <h3>pending</h3>
+                  {data?.status?.status ||
+                    (data?.status === "accepted" && (
+                      <Link to='/dashboard/interview'>
+                        <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-green-500 text-white  ">
+                          {data?.status?.status || data?.status}
+                        </button>
+                      </Link>
+                    ))}
+                  {data?.status?.status ||
+                    (data?.status === "rejected" && (
+                      <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-[#ff0000] text-white  ">
+                        {data?.status?.status || data?.status}
+                      </button>
+                    ))}
+                  {data?.status?.status || data?.status === "pending" || "" ? (
+                    <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-[#ff0000] text-white  ">
+                      pending
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                  {/* // <button className="badge py-3 px-4 font-semibold bg-green-500 text-white  ">{data?.status?.status || data.status || 'pending'}</button> */}
+                  {/* <h3 >{data?.status?.status || data.status}</h3> */}
                 </td>
               </tr>
             ))}

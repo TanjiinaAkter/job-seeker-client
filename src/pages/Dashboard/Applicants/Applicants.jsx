@@ -6,8 +6,10 @@ import "aos/dist/aos.css";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import useAppliedjob from "../../../hooks/useAppliedjob";
 import { LuDownload } from "react-icons/lu";
-// import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+// import { MdScheduleSend } from "react-icons/md";
+// import { useQuery } from "@tanstack/react-query";
 
 const Applicants = () => {
   useEffect(() => {
@@ -15,8 +17,9 @@ const Applicants = () => {
       duration: 1200,
     });
   }, []);
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  // ekhane sob jobseeker er applied job ache (/applications) route
   const [applicationData, refetch] = useAppliedjob();
   console.log(applicationData);
 
@@ -38,10 +41,10 @@ const Applicants = () => {
   //     }
   // })
   console.log(applicationData);
-
+  // ekahne status k parameter e kore pacchi
   const updateStatus = async (job_id, status) => {
     console.log(job_id, status);
-    // only  to specific job in application route
+    // only  to specific job in /applications route.. application route holo total jobseekers appliedjob niye baniyechi, ekhn specific job seeker k accept or reject korar jonno ekta put operation kore status add kore setake update(accept/reject) kore dicchi..put use korechi karon onek job jokhn apply hoye create korechilam oigulay status kichu kichu te chilo and kichu te chilo na tai..thakle update hobe noyto add hobe
     axiosSecure.get(`/applications/${job_id}`);
     const res = await axiosSecure.put(`/applications/${job_id}`, {
       status: status,
@@ -105,7 +108,7 @@ const Applicants = () => {
 
                 <td>
                   <div className="flex items-center justify-center space-x-1">
-                    {/* =================== STATUS PENDING WITH BOTH ACCEPT AND REJECT ICONS  ==================*/}
+                    {/* =================== STATUS PENDING WITH BOTH ACCEPT AND REJECT ICONS(pending thakle duita icon e dekhabo)  ==================*/}
                     {data?.status?.status ||
                       (data.status === "pending" && (
                         <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
@@ -142,6 +145,16 @@ const Applicants = () => {
                           <FaTimesCircle className=" text-2xl text-[#ff4848]" />
                         </div>
                       ))}
+
+                    {/* {data?.status?.status ||
+                      (data.status === "accepted" && (
+                        <div
+                          data-tip="make schedule"
+                          className="bg-pink-600 rounded-badge flex items-center tooltip text-center badge-secondary font-semibold py-1 text-[13px] pl-1">
+                       
+                          Schedule <MdScheduleSend></MdScheduleSend>
+                        </div>
+                      ))} */}
                     {/* <div className=" p-2 rounded-md hover:bg-[#d3cccc]">
                       <FaTimesCircle
                         onClick={() => updateStatus(data._id, "rejected")}

@@ -1,25 +1,39 @@
-
 import { useEffect, useState } from "react";
 import useAlljobs from "../../../hooks/useAlljobs";
-import useAllUsers from "../../../hooks/useAllUsers";
 import useAuth from "../../../hooks/useAuth";
 
 import SingleRecommandation from "../SingleRecommandation/SingleRecommandation";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
 
 const Recommendation = () => {
   const [recommendation, setRecommendation] = useState([]);
   const { user } = useAuth();
-  const [userProfileData] = useAllUsers();
+  const axiosSecure = useAxiosSecure();
+  //const [userProfileData] = useAllUsers();
+  const { data: singleApplicantsData = [] } = useQuery({
+    queryKey: ["singleApplicantsData", user?.email],
+    // user email thakle e only query run korbe
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/single?email=${user?.email}`);
+      console.log(res.data);
+      return res.data;
+    },
+  });
+  console.log("user data is", singleApplicantsData);
+  //  ========== sob jobs data pacchi ================//
   const [alljobs] = useAlljobs();
-  console.log(userProfileData.length);
+  //console.log(userProfileData.length, userProfileData);
   useEffect(() => {
-    if (user && userProfileData ) {
-      const userSkills = userProfileData.skills || [];
+    if (user && singleApplicantsData) {
+      const userSkills = singleApplicantsData.skills || [];
       const userSkillsArray =
         typeof userSkills === "string"
           ? userSkills.split(",").map((skill) => skill.trim())
           : userSkills;
-      const userLocation = userProfileData.location;
+      const userLocation = singleApplicantsData.location;
 
       const recommendation = alljobs
         .map((job) => {
@@ -55,12 +69,15 @@ const Recommendation = () => {
       setRecommendation(recommendation);
       console.log(recommendation);
     }
-  }, [user, userProfileData, alljobs]);
-  console.log(recommendation);
+  }, [user, singleApplicantsData, alljobs]);
+  // console.log(recommendation);
   return (
-    <div className="md:max-w-[80%] w-[90%] mx-auto">
-      <h2>sd</h2>
-      <div className="grid  grid-cols-1 mx-auto w-full md:grid-cols-2 gap-8">
+    <div className="md:max-w-[80%] w-[90%] mx-auto ">
+      <div className="">
+        <UserPageHeader
+          userheading={`Applied Jobs : ${recommendation.length} `}></UserPageHeader>
+      </div>
+      <div className="grid  grid-cols-1 mx-auto w-full md:grid-cols-2 gap-8 ">
         {/* Render the recommended jobs here */}
         {recommendation.map((job) => (
           <SingleRecommandation key={job._id} job={job}></SingleRecommandation>

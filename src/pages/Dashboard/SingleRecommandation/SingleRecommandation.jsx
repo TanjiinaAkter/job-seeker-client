@@ -8,6 +8,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 import { Link } from "react-router-dom";
 
+
 const SingleRecommandation = ({ job }) => {
   useEffect(() => {
     Aos.init({
@@ -16,6 +17,7 @@ const SingleRecommandation = ({ job }) => {
   }, []);
   return (
     <div className="" data-aos="fade-left">
+       
       <div className="card hover:transition hover:ease hover:scale-95 hover:duration-1000  group hover:bg-[#353447] shadow-xl rounded-none p-3 border-gray-200 border">
         <div className="flex justify-around items-center">
           <h2 className=" text-3xl font-semibold group-hover:text-white text-gray-600">
@@ -38,22 +40,22 @@ const SingleRecommandation = ({ job }) => {
           />
         </div>
         <div className="flex justify-between items-center flex-wrap gap-2">
-          <p className="flex group-hover:text-white  items-center justify-start gap-3 px-4  text-gray-500">
+          <p className="flex group-hover:text-white  items-center justify-start gap-3    text-gray-500">
             <BiSolidInstitution className="text-xl" />
             {job.company} |
           </p>
-          <p className="flex  group-hover:text-white  items-center justify-start gap-3 px-4 text-gray-500">
+          <p className="flex  group-hover:text-white  items-center justify-start gap-3   text-gray-500">
             <SlCalender className="text-xl" />
             {job.category} |
           </p>
-          <p className="flex group-hover:text-white  items-center justify-start gap-3 px-4 text-gray-500">
+          <p className="flex group-hover:text-white  items-center justify-start gap-3   text-gray-500">
             <CiLocationOn className="text-xl" />
             {job.location} |
           </p>
         </div>
 
         <div className="divider"></div>
-        <div className="px-4 pb-2">
+        <div className="  pb-2 space-y-4">
           <h2 className="text-lg group-hover:text-white text-gray-500">
             job percentage based on your
             <span className="text-[#f99615] font-semibold "> Skill</span> and
