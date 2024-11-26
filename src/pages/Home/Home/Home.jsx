@@ -16,15 +16,16 @@ import "react-slideshow-image/dist/styles.css";
 import NavTop from "../NavTop/NavTop";
 import { useLocation } from "react-router-dom";
 import useAlljobs from "../../../hooks/useAlljobs";
-import { useEffect } from "react";
-import AOS from "aos";
 import "aos/dist/aos.css";
+import SearchResult from "../SearchResult/SearchResult";
+import SearchCart from "../SearchCart/SearchCart";
+import { useState } from "react";
 const Home = () => {
-
   const location = useLocation();
   console.log(location.pathname);
   // const isHome = location.pathname === "/";
   const [alljobs] = useAlljobs();
+  const [filteredJobs, setFilteredJobs] = useState([]);
   return (
     <div className="overflow-hidden w-full mx-auto">
       <Helmet>
@@ -36,48 +37,19 @@ const Home = () => {
         <NavTop></NavTop>
         <Navbar></Navbar>
 
-        <div  className="design max-h-screen mt-16 md:mt-16 text-center md:text-justify px-2 w-full md:w-[75%] z-20 absolute text-white">
+        <div className="design max-h-screen mt-16 md:mt-16 text-center md:text-justify px-2 w-full md:w-[75%] z-20 absolute text-white">
           <div className="mt-24 md:mt-0">
             <h2 className="text-white text-2xl font-bold md:font-medium md:text-6xl ">
               <span className="text-red-600 font-bold md:font-semibold">
                 <CountUp delay={2} end={alljobs.length} />+
               </span>
-               Browse Jobs
+              Browse Jobs
             </h2>
             <p className="my-2 text-base md:text-xl">
               Find Jobs, Employment & Career Opportunities
             </p>
           </div>
-          <div className="flex relative w-full flex-col gap-3 p-4 md:p-10 my-12 lg:flex-row  bg-[#ffffff24] text-white">
-            <input
-              type="text"
-              placeholder="keyword(Job title)"
-              className="input input-bordered  text-gray-700 rounded-sm border-none "
-            />
-            <div className="relative w-full">
-              <select className="select   text-gray-700 rounded-sm border-none w-full">
-                <option disabled selected>
-                  select Location
-                </option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
-              </select>
-            </div>
-            <div className="relative w-full">
-              <select className="select  text-gray-700 rounded-sm border-none w-full ">
-                <option disabled selected>
-                  select Category
-                </option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
-              </select>
-            </div>
-            <div>
-              <button className="btn border-none rounded-sm pl-4 btn-sm md:btn-md  bg-red-600 text-white hover:bg-black">
-                Search
-              </button>
-            </div>
-          </div>
+          <SearchResult setFilteredJobs={setFilteredJobs}></SearchResult>
         </div>
         <Zoom
           indicators
@@ -123,7 +95,7 @@ const Home = () => {
           </div>
         </Zoom>
       </div>
-
+      <SearchCart jobs={filteredJobs}></SearchCart>
       <Reacttab></Reacttab>
       <Sectionone></Sectionone>
       <Sectiontwo></Sectiontwo>

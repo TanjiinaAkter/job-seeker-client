@@ -13,6 +13,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAlljobs from "../../hooks/useAlljobs";
+import NavTop from "../Home/NavTop/NavTop";
 const Jobdetail = () => {
   useEffect(() => {
     AOS.init({
@@ -109,11 +110,12 @@ const Jobdetail = () => {
 
   return (
     <div>
+      <NavTop></NavTop>
       <Navbar></Navbar>
-      <div className="addjob-img sm:h-auto bg-scroll space-y-28 relative">
+      <div className="addjob-img sm:h-auto bg-scroll space-y-28 pt-12 relative">
         <div className="flex justify-center items-center py-24">
           <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
-          <p className="text-white font-semibold text-3xl md:text-5xl text-center">
+          <p className="text-white font-semibold text-3xl md:text-4xl text-center">
             Job Details : {job?.jobtitle}
           </p>
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />

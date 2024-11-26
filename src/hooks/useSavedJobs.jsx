@@ -11,7 +11,7 @@ const useSavedJobs = () => {
 
     queryFn: async () => {
       const res = await axiosPublic.get(`/savedJobs?email=${user?.email}`);
-      console.log(res.data);
+      //console.log(res.data);
       return res.data;
     },
   });
