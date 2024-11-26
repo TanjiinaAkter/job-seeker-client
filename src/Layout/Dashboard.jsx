@@ -13,8 +13,8 @@ import { HiOutlineDocumentAdd } from "react-icons/hi";
 const Dashboard = () => {
   const { logOut, user } = useAuth();
 
-const isAdmin = true;
-  //const isAdmin = false;
+// const isAdmin = false;
+  const isAdmin = true;
   return (
     <div className="flex flex-col md:flex-row ">
       {/* SIDEBAR CONTENT */}
@@ -24,7 +24,7 @@ const isAdmin = true;
             <>
               <li className=" text-[1rem]">
                 <NavLink to="/dashboard/adminhome">
-                  <CgProfile className="text-2xl text-red-600" /> Admin Profile
+                  <CgProfile className="text-2xl text-red-600" /> Admin Home
                 </NavLink>
               </li>
               <li className=" text-[1rem]">

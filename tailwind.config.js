@@ -4,9 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
+        roboto: ["Montserrat", "sans-serif"],
       },
     },
   },
   plugins: [require("daisyui")],
 };
+// font-family: "Montserrat", sans-serif;

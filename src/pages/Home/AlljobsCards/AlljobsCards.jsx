@@ -12,7 +12,7 @@ const AlljobsCards = ({ alljobs }) => {
         <div
           onClick={() => setShowLess(alljobs.length)}
           className="flex justify-center items-center">
-          <button className="btn btn-success text-white text-lg">
+          <button className="btn bg-black rounded-sm text-white text-lg">
             See more
           </button>
         </div>

@@ -4,6 +4,7 @@ import Footer from "../Shared/Footer/Footer";
 import Navbar from "../Shared/Navbar/Navbar";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import NavTop from "../Home/NavTop/NavTop";
 const AboutUs = () => {
   useEffect(() => {
     AOS.init({
@@ -12,6 +13,7 @@ const AboutUs = () => {
   }, []);
   return (
     <div>
+      <NavTop></NavTop>
       <Navbar></Navbar>
       <Pageheader heading={"About Us"}></Pageheader>
       <div className="relative flex flex-col md:flex-row my-12 mx-auto max-w-6xl justify-between items-center gap-8">

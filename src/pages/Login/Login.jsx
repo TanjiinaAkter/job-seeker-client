@@ -6,6 +6,7 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import NavTop from "../Home/NavTop/NavTop";
 
 const Login = () => {
   const [open, setOpen] = useState(false);
@@ -112,11 +113,12 @@ const Login = () => {
       <Helmet>
         <title>Job seeker | Login</title>
       </Helmet>
+      <NavTop></NavTop>
       <Navbar></Navbar>
       <hr />
-      <div className="reg-img  relative md:mb-[25rem]">
+      <div className="reg-img  relative md:mb-[25rem] pt-20">
         <div className="flex w-1/2 mx-auto reg-img  items-center pt-12 justify-start flex-col space-y-4">
-          <h2 className="text-xl  text-white md:text-xl text-center font-semibold">
+          <h2 className="text-xl  text-white md:text-3xl text-center font-semibold">
             Account Login
           </h2>
           <hr className="h-[2px] w-[30px] md:w-[50px] border-none  bg-red-600" />

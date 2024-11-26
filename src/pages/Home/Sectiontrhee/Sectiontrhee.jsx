@@ -1,7 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import img from "../../../assets/luca-bravo-9l_326FISzk-unsplash.jpg";
-import img2 from "../../../assets/slider11.png";
-import img3 from "../../../assets/hero_1.jpg";
+
 import "./Sectiontrhee.css";
 // Import Swiper styles
 import "swiper/css";
@@ -9,8 +7,19 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination } from "swiper/modules";
-
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const Sectiontrhee = () => {
+  const axiosPublic = useAxiosPublic();
+  const { data: testimonial = [] } = useQuery({
+    queryKey: ["testimonial"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/testimonial");
+
+      return res.data;
+    },
+  });
+  console.log(testimonial);
   return (
     <div className="mx-auto w-full md:w-[90%] lg:w-[80%] mb-12">
       <h2 className="text-gray-500 text-xl px-2">Testimonials</h2>
@@ -41,206 +50,29 @@ const Sectiontrhee = () => {
           },
         }}
         className="mySwiper mb-12 mySwipergo ">
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
+        <div className="">
+          {testimonial.map((test) => (
+            <SwiperSlide key={test._id}>
+              <div className=" border-r-2  h-auto">
+                <div className="card rounded-none">
+                  <div className="card-body p-[1rem]">
+                    <p>{test.review}</p>
+                    <div className="card-actions justify-start items-center mt-8">
+                      <div className="">
+                        <img
+                          src={test.image}
+                          className="w-12 h-12 rounded-full object-cover"
+                          alt=""
+                        />
+                      </div>
+                      <h2>{test.name}</h2>
+                    </div>
                   </div>
-                  <h2>ishehrin islam</h2>
                 </div>
               </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none ">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img3}
-                      className="w-12 h-12 rounded-full object-cover "
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none ">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img2}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none ">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img3}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none ">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img2}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none ">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img3}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className=" border-r-2  h-auto">
-            <div className="card rounded-none ">
-              <div className="card-body p-[1rem]">
-                <p>
-                  Thanks to all, I found my dream job! The platform made it easy
-                  to apply for positions, and the detailed job descriptions
-                  helped me understand exactly what employers were looking for.
-                  The whole process was smooth, and I landed a job faster than I
-                  expected.
-                </p>
-                <div className="card-actions justify-start items-center mt-8">
-                  <div className="">
-                    <img
-                      src={img2}
-                      className="w-12 h-12 rounded-full object-cover"
-                      alt=""
-                    />
-                  </div>
-                  <h2>ishehrin islam</h2>
-                </div>
-              </div>
-            </div>
-          </div>
-        </SwiperSlide>
+            </SwiperSlide>
+          ))}
+        </div>
       </Swiper>
     </div>
   );

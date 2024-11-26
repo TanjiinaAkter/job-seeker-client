@@ -12,6 +12,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { MdScheduleSend } from "react-icons/md";
 import { useForm } from "react-hook-form";
+import { AiOutlineCalendar } from "react-icons/ai";
 
 const Managejob = () => {
   useEffect(() => {
@@ -24,11 +25,33 @@ const Managejob = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState("");
   const { user } = useAuth();
+  const [selectedJob, setSelectedJob] = useState(null);
+  console.log(selectedJob);
   const axiosSecure = useAxiosSecure();
+  // job er details ta niye nicchi modal open er sathe sathe
+  const openModal = (job) => {
+    setSelectedJob(job);
+    document.getElementById("my_modal_1").showModal();
+    if (job) {
+      setValue("email", job.email || "");
+      setValue("jobid", job._id || "");
+      setValue("name", job.name || "");
+      setValue("jobtitle", job.jobtitle || "");
+      setValue("jobLocation", job.jobLocation || "");
+    }
+  };
+  // close korle details abar null kore dicchi
+  const closeModal = () => {
+    reset();
+    setSelectedJob(null);
+
+    document.getElementById("my_modal_1").close();
+  };
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -42,12 +65,31 @@ const Managejob = () => {
         jobLocation: data.jobLocation,
         date: data.date,
         time: data.time,
+        name: data.name,
       })
       .then((res) => {
         console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `schedule for ${data.jobtitle} has been saved`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+
+        // reset();
       });
   };
-
+  useEffect(() => {
+    if (selectedJob) {
+      setValue("email", selectedJob.email);
+      setValue("jobid", selectedJob._id);
+      setValue("jobtitle", selectedJob.jobtitle);
+      setValue("name", selectedJob.name);
+    }
+  }, [selectedJob, setValue]);
   useEffect(() => {
     setValue("jobLocation", jobLocation);
   }, [setValue, jobLocation]);
@@ -155,21 +197,25 @@ const Managejob = () => {
                           onClick={() => permissionDeniedtoDelete(job)}
                           className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-red-600"></MdDelete>
                       )}
-                      {job.email ? (
+                      {job.email === user?.email ? (
                         <>
                           {/* Open the modal using document.getElementById('ID').showModal() method */}
                           <button
-                            className="btn"
-                            onClick={() =>
-                              document.getElementById("my_modal_1").showModal()
-                            }>
-                            <MdScheduleSend className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-[#c237c2]"></MdScheduleSend>
+                            className="btn tooltip-right"
+                            data-tip="hello"
+                            onClick={() => openModal(job)}>
+                            <AiOutlineCalendar
+                              data-tip="schedule interview"
+                              className="text-4xl  hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-blue-500"></AiOutlineCalendar>
                           </button>
                           <dialog id="my_modal_1" className="modal">
                             <div className="modal-box">
+                              <h3 className="text-2xl text-center font-semibold text-red-500 ">
+                                Schedule interview
+                              </h3>
                               {/* ======================================================== */}
                               {/* ==================== FORM DESIGN PART ================== */}
-                              {/* ======================================================== */}
+                              {/* ===========job.email   ============================================= */}
 
                               <form
                                 onSubmit={handleSubmit(onSubmit)}
@@ -183,9 +229,28 @@ const Managejob = () => {
                                       required: true,
                                     })}
                                     type="email"
-                                    defaultValue={job?.email}
+                                    value={selectedJob?.email || ""}
                                     readOnly
                                     placeholder="email"
+                                    className="input input-bordered"
+                                    required
+                                  />
+                                  {errors.email && (
+                                    <span>This field is required</span>
+                                  )}
+                                </div>
+                                <div className="form-control">
+                                  <label className="label">
+                                    <span className="label-text"> Name</span>
+                                  </label>
+                                  <input
+                                    {...register("name", {
+                                      required: true,
+                                    })}
+                                    type="text"
+                                    value={selectedJob?.name || ""}
+                                    readOnly
+                                    placeholder="name"
                                     className="input input-bordered"
                                     required
                                   />
@@ -202,7 +267,7 @@ const Managejob = () => {
                                       required: true,
                                     })}
                                     type="text"
-                                    defaultValue={job?._id}
+                                    defaultValue={selectedJob?._id || ""}
                                     readOnly
                                     placeholder="job id"
                                     className="input input-bordered"
@@ -223,7 +288,7 @@ const Managejob = () => {
                                       required: true,
                                     })}
                                     type="text"
-                                    defaultValue={job?.jobtitle}
+                                    defaultValue={selectedJob?.jobtitle || ""}
                                     readOnly
                                     placeholder="job Title"
                                     className="input input-bordered"
@@ -247,7 +312,9 @@ const Managejob = () => {
                                     onChange={(e) =>
                                       setJobLocation(e.target.value)
                                     }
-                                    placeholder="Enter job location"
+                                    placeholder={
+                                      jobLocation || "enter a location"
+                                    }
                                     className="input input-bordered"
                                   />
                                   {errors.jobLocation && (
@@ -277,7 +344,9 @@ const Managejob = () => {
                                 </div>
                                 <div className="form-control">
                                   <label className="label">
-                                    <span className="label-text">Job Id</span>
+                                    <span className="label-text">
+                                      Interview time
+                                    </span>
                                   </label>
                                   <input
                                     {...register("time", {
@@ -305,24 +374,19 @@ const Managejob = () => {
                               <div className="modal-action">
                                 <form method="dialog">
                                   {/* if there is a button in form, it will close the modal */}
-                                  <button className="btn">Close</button>
+                                  <button onClick={closeModal} className="btn">
+                                    Close
+                                  </button>
                                 </form>
                               </div>
                             </div>
                           </dialog>
                         </>
                       ) : (
-                        // <MdScheduleSend
-                        //   onClick={() => handleDelete(job)}
-                        //   className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-[#c237c2]"></MdScheduleSend>
                         <MdScheduleSend
                           onClick={() => permissionDeniedtoInterview(job)}
-                          className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-[#c237c2]"></MdScheduleSend>
+                          className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-blue-500"></MdScheduleSend>
                       )}
-
-                      {/* <MdDelete
-                        onClick={() => handleDelete(job)}
-                        className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-red-600"></MdDelete> */}
                     </div>
                   </td>
                 </tr>

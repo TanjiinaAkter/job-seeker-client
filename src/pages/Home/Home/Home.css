@@ -14,11 +14,7 @@
     rgba(0, 0, 0, 0.6)
   );*/
 .bg-img::before {
-  background: linear-gradient(
-    to left,
-    #00023ba3,
-    rgba(0, 0, 0, 0.76)
-  );
+  background: linear-gradient(to left, #00023ba3, rgba(0, 0, 0, 0.76));
   content: "";
   height: 100%;
   left: 0;
@@ -27,3 +23,10 @@
   width: 100%;
   z-index: -100;
 }
+.design {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

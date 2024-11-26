@@ -21,9 +21,9 @@ const Reacttab = () => {
   const parttime = alljobs.filter((job) => job.category === "parttime");
   const hybrid = alljobs.filter((job) => job.category === "hybrid");
   return (
-    <div className="my-12 lg:mx-auto max-w-6xl overflow-hidden mx-7">
+    <div className="mb-12 mt-[7rem] md:mt-7 lg:mx-auto max-w-6xl overflow-hidden mx-7">
       <h2 className="text-[#ff4848] text-center text-2xl md:text-4xl font-semibold mt-4 mb-8 ">
-        Job by Category: {alljobs.length}
+        Found {alljobs.length} jobs
       </h2>
       <hr className="mb-2 h-1 w-[10%] mx-auto bg-[#ff4848]" />
       <Tabs className="line">

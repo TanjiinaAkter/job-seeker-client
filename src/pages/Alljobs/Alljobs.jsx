@@ -8,6 +8,7 @@ import Pageheader from "../../components/Pageheader/Pageheader";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAlljobs from "../../hooks/useAlljobs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import NavTop from "../Home/NavTop/NavTop";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Alljobs = () => {
   useEffect(() => {
@@ -44,10 +45,9 @@ const Alljobs = () => {
 
   return (
     <div className="">
+      <NavTop></NavTop>
       <Navbar></Navbar>
-      <div className="addjob-img  bg-scroll space-y-28 relative">
-        <Pageheader heading={"All Job Page"}></Pageheader>
-      </div>
+      <Pageheader heading={'Add job'}></Pageheader>
       <div className="flex flex-wrap space-y-3 justify-center space-x-2 items-center md:justify-between my-12 mx-auto w-[90%] md:w-[75%]">
         <h3 className="text-3xl text-[#ff4848] font-semibold">
           Job Vacancies :

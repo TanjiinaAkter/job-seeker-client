@@ -1,7 +1,7 @@
 import "./Pageheader.css";
 const Pageheader = ({heading}) => {
   return (
-    <div className="addjob-img  bg-scroll space-y-28 relative">
+    <div className="addjob-img  bg-scroll space-y-28 pt-12 relative">
       <div className="flex justify-center items-center py-24">
         <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
         <p

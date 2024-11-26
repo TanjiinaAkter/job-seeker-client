@@ -60,7 +60,7 @@ const Appliedjob = () => {
           </thead>
           <tbody className="bg-white">
             {/* row 1 */}
-            {singleApplicantsData.map((data) => (
+            {Object.values(singleApplicantsData).map((data) => (
               <tr key={data._id}>
                 <td>
                   <h3>{data.name}</h3>
@@ -92,7 +92,7 @@ const Appliedjob = () => {
                 <td>
                   {data?.status?.status ||
                     (data?.status === "accepted" && (
-                      <Link to='/dashboard/interview'>
+                      <Link to="/dashboard/interview">
                         <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-green-500 text-white  ">
                           {data?.status?.status || data?.status}
                         </button>
@@ -111,8 +111,6 @@ const Appliedjob = () => {
                   ) : (
                     ""
                   )}
-                  {/* // <button className="badge py-3 px-4 font-semibold bg-green-500 text-white  ">{data?.status?.status || data.status || 'pending'}</button> */}
-                  {/* <h3 >{data?.status?.status || data.status}</h3> */}
                 </td>
               </tr>
             ))}
@@ -121,8 +119,6 @@ const Appliedjob = () => {
           {/* foot */}
         </table>
       </div>
-
-      {/* <Footer></Footer> */}
     </div>
   );
 };

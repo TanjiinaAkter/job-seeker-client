@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import Pageheader from "../../components/Pageheader/Pageheader";
 import BlogDetails from "../BlogDetails/BlogDetails";
+import NavTop from "../Home/NavTop/NavTop";
 const Blogs = () => {
   useEffect(() => {
     AOS.init({
@@ -22,6 +23,7 @@ const Blogs = () => {
   console.log(blogs);
   return (
     <div className="overflow-hidden ">
+         <NavTop></NavTop>
       <Navbar></Navbar>
       <Pageheader heading={"Blog"}></Pageheader>
       {/* MAIN PART */}

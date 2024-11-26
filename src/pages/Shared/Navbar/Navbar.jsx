@@ -3,10 +3,18 @@ import "./Navbar.css";
 import img from "../../../assets/Untitled.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const Navbar = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+    });
+  }, []);
   const location = useLocation();
   //console.log(location);
-  const isHomeRoute = location.pathname === "/";
+  // const isHomeRoute = location.pathname === "/";
   const { user, logOut } = useContext(AuthContext);
   //console.log(user);
   const userLogOut = () => {
@@ -22,9 +30,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-[#ff4848] font-semibold underline  text-lg"
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
+              : " text-white font-semibold text-lg "
           }>
           home
         </NavLink>
@@ -35,9 +41,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-[#ff4848] font-semibold underline  text-lg"
-              : isHomeRoute
-              ? "text-white font-semibold text-lg "
-              : " text-black font-semibold text-lg"
+              : " text-white font-semibold text-lg "
           }>
           All jobs
         </NavLink>
@@ -48,31 +52,26 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-[#ff4848] font-semibold underline  text-lg"
-              : isHomeRoute
-              ? "text-white font-semibold text-lg "
-              : " text-black font-semibold text-lg"
+              : " text-white font-semibold text-lg "
           }>
           About us
         </NavLink>
       </li>
       {user?.email ? (
         <>
-          <li>
+          {/* <li>
             <NavLink
               to="/myjobs"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#ff4848] font-semibold underline  text-lg "
-                  : isHomeRoute
-                  ? "text-white font-semibold text-lg"
-                  : " text-black font-semibold text-lg "
+                  ? "text-[#ff4848] font-semibold underline  text-lg"
+                  : " text-white font-semibold text-lg "
               }>
               My jobs
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          <li className="text-white font-semibold   text-lg">
             <NavLink to={`/dashboard/userprofile/${user?.email}`}>
-              {" "}
               Dashboard
             </NavLink>
           </li>
@@ -125,9 +124,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive
               ? "text-[#ff4848] font-semibold underline  text-lg"
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
+              : " text-white font-semibold text-lg "
           }>
           Blogs
         </NavLink>
@@ -142,9 +139,11 @@ const Navbar = () => {
   const handleNoHover = () => {
     setHovered(false);
   };
+
   return (
-    <div className=" bg-white md:bg-transparent mx-auto max-w-6xl">
-      <div className=" flex flex-col md:flex-row navbar pt-4 ">
+    //bg-white
+    <div  className="mx-auto absolute top-[8%] md:top-7 left-0 right-0 z-50  max-w-[95%] bg-transparent">
+      <div  className=" flex flex-col md:flex-row navbar pt-[2.4rem]  ">
         <div className="md:navbar-start w-full flex justify-between items-center">
           <div className="dropdown">
             <div
@@ -215,7 +214,9 @@ const Navbar = () => {
               </button>
             </div>
           ) : (
-            <Link to="/login" className="button  bg-[#ff4848] ">
+            <Link
+              to="/login"
+              className="text-white px-8 text-lg py-2 text-semibold rounded-none  bg-[#ff4848] ">
               Login
             </Link>
           )}

@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import { SlCalender } from "react-icons/sl";
 import Footer from "../Shared/Footer/Footer";
+import NavTop from "../Home/NavTop/NavTop";
 const SingleBlog = () => {
   const [content, setContent] = useState(null);
   const { id } = useParams();
@@ -24,10 +25,18 @@ const SingleBlog = () => {
 
   return (
     <div>
-      <Navbar></Navbar>
+      {/*       
+      <Navbar></Navbar> */}
       {content ? (
-        <div className="mx-auto w-full max-w-7xl p-4 md:p-0 ">
-          <h1 className="text-center my-3 md:my-12 text-3xl md:text-6xl font-semibold">
+        <div className="mx-auto   w-full max-w-7xl p-4 md:p-0 ">
+          <div>
+            <Link to='/blogs'>
+              <button className="text-white bg-black px-5 py-2 mt-5 font-semibold hover:bg-red-600 ">
+                Go back
+              </button>
+            </Link>
+          </div>
+          <h1 className="text-center text-black my-3 md:my-12 text-3xl md:text-6xl font-semibold">
             Blog Details
           </h1>
           <p className="md:text-center text-gray-500 text-lg text-justify w-full md:w-[50%]  mx-auto my-4 font-semibold">
@@ -52,10 +61,10 @@ const SingleBlog = () => {
               <h2>{content.date}</h2>
             </div>
           </div>
-          <p className="text-lg text-gray-500 mb-4">
+          <p className="text-lg font-semibold text-gray-500 mb-4">
             {content.content_snippet}
           </p>
-          <p className=" mb-4">{content.full_content}</p>
+          <p className="font-semibold mb-4">{content.full_content}</p>
         </div>
       ) : (
         <p className="text-center my-4 font-semibold">Loading...</p>
