@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
-import useAxiosPublic from "./useAxiosPublic";
+// import useAxiosPublic from "./useAxiosPublic";
+import useAxiosSecure from "./useAxiosSecure";
 
 const useSavedJobs = () => {
   const { user } = useAuth();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: savedJobs = [], refetch } = useQuery({
     queryKey: ["savedJobs", user?.email],
 
     queryFn: async () => {
-      const res = await axiosPublic.get(`/savedJobs?email=${user?.email}`);
+      const res = await axiosSecure.get(`/savedJobs?email=${user?.email}`);
       //console.log(res.data);
       return res.data;
     },

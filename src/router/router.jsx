@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 // import Home from "../../pages/Home/Home";
 import Alljobs from "../pages/Alljobs/Alljobs";
-
+import AdminRoute from "./AdminRoute";
 import Blogs from "../pages/Blogs/Blogs";
 import Login from "../pages/Login/Login";
 import Registration from "../pages/Registration/Registration";
@@ -29,6 +29,7 @@ import Manageusers from "../pages/Dashboard/Manageusers/Manageusers";
 import Managejob from "../pages/Dashboard/Managejob/Managejob";
 import Applicants from "../pages/Dashboard/Applicants/Applicants";
 import EditJob from "../pages/Dashboard/EditJob/EditJob";
+import AdminProfile from "../pages/Dashboard/AdminProfile/AdminProfile";
 // import AppliedJobs from "../pages/Dashboard/AppliedJobs/AppliedJobs";
 
 const router = createBrowserRouter([
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
-  
+
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
@@ -105,13 +106,22 @@ const router = createBrowserRouter([
   //===========================  ADMIN DASHBOARD   ===============================//
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRouter>
+        <Dashboard></Dashboard>
+      </PrivateRouter>
+    ),
     children: [
       // ==================  ADMIN  SIDEBAR ==================//
 
       {
         path: "adminhome",
         element: <AdminHome></AdminHome>,
+      },
+      {
+        path: "adminprofile/:email",
+        element: <AdminProfile></AdminProfile>,
+        // loader: ({ params }) => fetch(`http://localhost:5000/users/${params.email}`),
       },
       {
         path: "stats",
@@ -141,7 +151,7 @@ const router = createBrowserRouter([
       {
         path: "userprofile/:email",
         element: <UserProfile></UserProfile>,
-        loader: ({ params }) => fetch(`http://localhost:5000/${params.email}`),
+        // loader: ({ params }) => fetch(`http://localhost:5000/${params.email}`),
       },
       {
         path: "userprofileedit/:email",

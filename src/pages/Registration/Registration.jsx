@@ -7,14 +7,14 @@ import { AuthContext } from "../../providers/AuthProvider";
 
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import NavTop from "../Home/NavTop/NavTop";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 // import img from "../../assets/update-user.png";
 const Registration = () => {
   <Helmet>
     <title>Job seeker | Registration</title>
   </Helmet>;
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
   const navigate = useNavigate();
   const { createUser, updateUserProfile, emailVerify, logOut } =
@@ -44,7 +44,7 @@ const Registration = () => {
               role: "user",
             };
             console.log(userInfo);
-            axiosSecure.post("/users", userInfo).then((res) => {
+            axiosPublic.post("/users", userInfo).then((res) => {
               console.log("user collection", res.data);
               if (res.data.insertedId) {
                 Swal.fire({

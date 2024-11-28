@@ -18,7 +18,7 @@ const SavedJobs = () => {
       </div>
       {/* <div className="divider text-red-600 text-3xl  my-6 mx-auto w-full md:w-2/3">
         <h3 className="text-black text-4xl font-semibold ">
-          Saved job : {savedJobs.length}
+          Saved job : {savedJobs.length}r
         </h3>
         <FaBookmark></FaBookmark>
       </div> */}

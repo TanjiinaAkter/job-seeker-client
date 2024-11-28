@@ -10,11 +10,14 @@ import { CgProfile } from "react-icons/cg";
 import { MdOutlineWork, MdRecommend } from "react-icons/md";
 import { AiFillCalendar } from "react-icons/ai";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
+import useAdmin from "../hooks/useAdmin";
+// import useAdmin from "../hooks/useAdmin";
 const Dashboard = () => {
   const { logOut, user } = useAuth();
-
-// const isAdmin = false;
-  const isAdmin = true;
+   const [isAdmin] = useAdmin();
+  // const isAdmin = true;
+  // const isAdmin = false;
+  // const isAdmin = isAdmin;
   return (
     <div className="flex flex-col md:flex-row ">
       {/* SIDEBAR CONTENT */}
@@ -23,7 +26,7 @@ const Dashboard = () => {
           {isAdmin ? (
             <>
               <li className=" text-[1rem]">
-                <NavLink to="/dashboard/adminhome">
+                <NavLink to={`/dashboard/adminprofile/${user?.email}`}>
                   <CgProfile className="text-2xl text-red-600" /> Admin Home
                 </NavLink>
               </li>

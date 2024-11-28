@@ -6,12 +6,16 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import useAdmin from "../../../hooks/useAdmin";
 const Navbar = () => {
   useEffect(() => {
     AOS.init({
       duration: 1200,
     });
   }, []);
+  // const isAdmin = true;
+  const [isAdmin] = useAdmin();
+  // console.log("admin value",isAdmin)
   const location = useLocation();
   //console.log(location);
   // const isHomeRoute = location.pathname === "/";
@@ -57,67 +61,21 @@ const Navbar = () => {
           About us
         </NavLink>
       </li>
-      {user?.email ? (
-        <>
-          {/* <li>
-            <NavLink
-              to="/myjobs"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#ff4848] font-semibold underline  text-lg"
-                  : " text-white font-semibold text-lg "
-              }>
-              My jobs
-            </NavLink>
-          </li> */}
-          <li className="text-white font-semibold   text-lg">
-            <NavLink to={`/dashboard/userprofile/${user?.email}`}>
-              Dashboard
-            </NavLink>
-          </li>
-        </>
-      ) : (
-        ""
+      {user && isAdmin && (
+        <li className="text-white font-semibold   text-lg">
+          <NavLink to={`/dashboard/adminprofile/${user?.email}`}>
+            admin Dashboard
+          </NavLink>
+        </li>
       )}
-      {/* <li>
-        <NavLink
-          to="/appliedjobs"
-          className={({ isActive }) =>
-            isActive
-              ? "text-[#ff4848] font-semibold underline  text-lg"
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
-          }>
-          Applied jobs
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/addjob"
-          className={({ isActive }) =>
-            isActive
-              ? "text-[#ff4848] font-semibold underline  text-lg "
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
-          }>
-          Add a job
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/myjobs"
-          className={({ isActive }) =>
-            isActive
-              ? "text-[#ff4848] font-semibold underline  text-lg "
-              : isHomeRoute
-              ? "text-white font-semibold text-lg"
-              : " text-black font-semibold text-lg "
-          }>
-          My jobs
-        </NavLink>
-      </li> */}
+      {user && !isAdmin && (
+        <li className="text-white font-semibold   text-lg">
+          <NavLink to={`/dashboard/userprofile/${user?.email}`}>
+            user Dashboard
+          </NavLink>
+        </li>
+      )}
+
       <li>
         <NavLink
           to="/blogs"
@@ -142,8 +100,8 @@ const Navbar = () => {
 
   return (
     //bg-white
-    <div  className="mx-auto absolute top-[8%] md:top-7 left-0 right-0 z-50  max-w-[95%] bg-transparent">
-      <div  className=" flex flex-col md:flex-row navbar pt-[2.4rem]  ">
+    <div className="mx-auto absolute top-[8%] md:top-7 left-0 right-0 z-50  max-w-[95%] bg-transparent">
+      <div className=" flex flex-col md:flex-row navbar pt-[2.4rem]  ">
         <div className="md:navbar-start w-full flex justify-between items-center">
           <div className="dropdown">
             <div
@@ -182,11 +140,11 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex ">
           <ul className="menu  px-1">{links}</ul>
         </div>
-        <div className="md:navbar-end  space-y-2 sm:space-y-0 lg:space-x-4 mt-3 md:mt-0 md:pl-4 ">
-          {user?.email ? (
+        <div className="md:navbar-end space-y-2 sm:space-y-0 lg:space-x-4 mt-3 md:mt-0 md:pl-4 ">
+          {user && isAdmin ? (
             <div className="flex flex-row space-x-2 items-center justify-center ">
-              <div className="relative z-10 ">
-                <Link to={`dashboard/userprofile/${user?.email}`}>
+           <div className=" flex justify-between items-center gap-3 z-10 ">
+                <Link to={`dashboard/adminprofile/${user?.email}`}>
                   <img
                     onMouseEnter={handlehover}
                     onMouseLeave={handleNoHover}
@@ -197,21 +155,51 @@ const Navbar = () => {
                 </Link>
                 {Hovered ? (
                   <div>
-                    <p className="absolute text-lime-400 font-bold bg-red  top-14 ">
+                 <p className="absolute text-lime-400 right-[10%] font-bold bg-red  top-24 ">
                       {user?.displayName}
                     </p>
                   </div>
                 ) : (
                   ""
                 )}
+                <button
+                  onClick={userLogOut}
+                  className="button lg:btn-sm  bg-[#ff4848] ">
+                  Logout
+                </button>
               </div>
 
               {/* <p className="text-red-600 lg:hidden">{user?.displayName}</p> */}
-              <button
-                onClick={userLogOut}
-                className="button lg:btn-sm  bg-[#ff4848] ">
-                Logout
-              </button>
+            </div>
+          ) : user && !isAdmin ? (
+            <div className="flex flex-row space-x-2 items-center justify-center ">
+              <div className=" flex justify-between items-center gap-3 z-10 ">
+                <Link to={`dashboard/userprofile/${user?.email}`}>
+                  <img
+                    onMouseEnter={handlehover}
+                    onMouseLeave={handleNoHover}
+                    className="object-cover  w-12 h-12 hover:border hover:border-white border-2 rounded-full"
+                    src={user?.photoURL}
+                    alt=""
+                  />
+                </Link>
+                {Hovered ? (
+                  <div>
+                    <p className="absolute text-lime-400 right-[10%] font-bold bg-red  top-24 ">
+                      {user?.displayName}
+                    </p>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <button
+                  onClick={userLogOut}
+                  className="button lg:btn-sm  bg-[#ff4848] ">
+                  Logout
+                </button>
+              </div>
+
+              {/* <p className="text-red-600 lg:hidden">{user?.displayName}</p> */}
             </div>
           ) : (
             <Link

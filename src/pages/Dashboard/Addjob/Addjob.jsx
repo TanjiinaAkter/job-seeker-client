@@ -8,6 +8,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import { ImCross } from "react-icons/im";
 import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const Addjob = () => {
   useEffect(() => {
     AOS.init({
@@ -19,7 +20,7 @@ const Addjob = () => {
   const [skillInput, setSkillInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [deadLine, setDeadline] = useState(new Date());
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   //REACT HOOK FORM
   const {
     register,
@@ -70,7 +71,7 @@ const Addjob = () => {
     };
     console.log("form final info", forminfo);
     if (user && user?.email) {
-      axiosPublic.post("/alljobs", forminfo).then((res) => {
+      axiosSecure.post("/alljobs", forminfo).then((res) => {
         console.log("get information new", res.data);
       });
     }

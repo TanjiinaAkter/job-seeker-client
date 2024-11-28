@@ -2,16 +2,17 @@ import { FaBookmark, FaCalendarAlt } from "react-icons/fa";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { IoMdTime } from "react-icons/io";
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import { useEffect, useState } from "react";
 
 import { GrBookmark } from "react-icons/gr";
 import useSavedJobs from "../../../hooks/useSavedJobs";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const Jobcard = ({ job }) => {
   const [savedJobs, refetch] = useSavedJobs();
-   const { user } = useAuth();
- const axiosPublic = useAxiosPublic();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   // const { data: savedJobs = [], refetch } = useQuery({
   //   queryKey: ["savedJobs", user?.email],
@@ -52,7 +53,7 @@ const Jobcard = ({ job }) => {
     };
     console.log("click");
     try {
-      const res = await axiosPublic.post("/savedjobs", savedjob);
+      const res = await axiosSecure.post("/savedjobs", savedjob);
       console.log(res.data);
 
       setIsSaved(true);

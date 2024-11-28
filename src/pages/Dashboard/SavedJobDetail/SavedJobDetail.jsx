@@ -3,13 +3,14 @@ import { SlCalender } from "react-icons/sl";
 import useAlljobs from "../../../hooks/useAlljobs";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useSavedJobs from "../../../hooks/useSavedJobs";
 import Swal from "sweetalert2";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 import { MdBookmarkRemove } from "react-icons/md";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const SavedJobDetail = ({ job, style }) => {
   useEffect(() => {
     Aos.init({
@@ -18,7 +19,7 @@ const SavedJobDetail = ({ job, style }) => {
   }, []);
 
   const [, refetch] = useSavedJobs();
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [jobDetail, setJobDetail] = useState([]);
   console.log(jobDetail);
   const [alljobs] = useAlljobs();
@@ -33,7 +34,7 @@ const SavedJobDetail = ({ job, style }) => {
   }, [alljobs, jobId]);
 
   const handleDeleteSavedJobs = async () => {
-    const res = await axiosPublic.delete(`/savedJobs/${job._id}`);
+    const res = await axiosSecure.delete(`/savedJobs/${job._id}`);
     console.log(res.data);
     if (res.data.deletedCount > 0) {
       Swal.fire({
