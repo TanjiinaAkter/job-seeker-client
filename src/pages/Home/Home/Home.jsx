@@ -25,9 +25,9 @@ const Home = () => {
   console.log(location.pathname);
   // const isHome = location.pathname === "/";
   const [alljobs] = useAlljobs();
+  // matched job gulo ashbe
   const [filteredJobs, setFilteredJobs] = useState([]);
-  // const [hasSearched, setHasSearched] = useState(false);
-  // ekhane matching job gula ache, kintu jehetu initially kichui show korabbo na tai false state(setHasSearched) ekhane disi
+  // no search text initially false
   const [insidePutSearched, setInsidePutSearched] = useState(false);
   return (
     <div className="overflow-hidden w-full mx-auto">

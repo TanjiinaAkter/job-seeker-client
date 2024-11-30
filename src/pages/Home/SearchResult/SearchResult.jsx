@@ -26,6 +26,7 @@ const SearchResult = ({ setFilteredJobs, setInsidePutSearched }) => {
       );
     });
     setFilteredJobs(matchingJobs);
+    // serach e click korle true kortesi jate no seach text ta initially na thake, true kora mane search e click hoise
     setInsidePutSearched(true);
   };
   return (
