@@ -26,6 +26,9 @@ const Home = () => {
   // const isHome = location.pathname === "/";
   const [alljobs] = useAlljobs();
   const [filteredJobs, setFilteredJobs] = useState([]);
+  // const [hasSearched, setHasSearched] = useState(false);
+  // ekhane matching job gula ache, kintu jehetu initially kichui show korabbo na tai false state(setHasSearched) ekhane disi
+  const [insidePutSearched, setInsidePutSearched] = useState(false);
   return (
     <div className="overflow-hidden w-full mx-auto">
       <Helmet>
@@ -49,7 +52,9 @@ const Home = () => {
               Find Jobs, Employment & Career Opportunities
             </p>
           </div>
-          <SearchResult setFilteredJobs={setFilteredJobs}></SearchResult>
+          <SearchResult
+            setInsidePutSearched={setInsidePutSearched}
+            setFilteredJobs={setFilteredJobs}></SearchResult>
         </div>
         <Zoom
           indicators
@@ -95,7 +100,9 @@ const Home = () => {
           </div>
         </Zoom>
       </div>
-      <SearchCart jobs={filteredJobs}></SearchCart>
+      <SearchCart
+        hasSearched={insidePutSearched}
+        jobs={filteredJobs}></SearchCart>
       <Reacttab></Reacttab>
       <Sectionone></Sectionone>
       <Sectiontwo></Sectiontwo>

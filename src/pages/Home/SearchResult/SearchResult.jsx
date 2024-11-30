@@ -1,16 +1,18 @@
 import { useForm } from "react-hook-form";
 import useAlljobs from "../../../hooks/useAlljobs";
+
 // import { useState } from "react";
 
-const SearchResult = ({ setFilteredJobs }) => {
+const SearchResult = ({ setFilteredJobs, setInsidePutSearched }) => {
+  // only form er kaj korechi ekhane
   const [alljobs] = useAlljobs();
-  console.log(alljobs);
 
+  console.log(alljobs);
+  // console.log(insidePutSearched);
   // console.log(filteredJobs);
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -24,6 +26,7 @@ const SearchResult = ({ setFilteredJobs }) => {
       );
     });
     setFilteredJobs(matchingJobs);
+    setInsidePutSearched(true);
   };
   return (
     <div>
@@ -53,7 +56,9 @@ const SearchResult = ({ setFilteredJobs }) => {
           <select
             {...register("jobCategory", { required: true })}
             className="select  text-gray-700 rounded-sm border-none w-full ">
-            <option disabled>select Category</option>
+            <option disabled selected>
+              select Category
+            </option>
             <option value={"fulltime"}>Full Time</option>
             <option value={"parttime"}>Part Time</option>
             <option value={"hybrid"}>Hybrid</option>
