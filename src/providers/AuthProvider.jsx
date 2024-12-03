@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
           console.log("axiosPublic changes useEffect:", res.data);
           if (res.data.token) {
             localStorage.setItem("access-token", res.data.token);
-            console.log(res.data.token);
+           // console.log(res.data.token);
             setLoader(false);
           }
         });
@@ -63,10 +63,10 @@ const AuthProvider = ({ children }) => {
   }, [axiosPublic]);
   //============ 4 . USER LOGOUT===============================//
   const logOut = () => {
-    console.log("logOut", {
-      user,
-      prevT: localStorage.getItem("access-token"),
-    });
+   // console.log("logOut", {
+      //user,
+      //prevT: localStorage.getItem("access-token"),
+    //});
     setLoader(true);
     localStorage.removeItem("access-token");
     return signOut(auth);

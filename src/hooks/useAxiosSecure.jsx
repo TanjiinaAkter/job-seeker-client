@@ -14,11 +14,11 @@ const useAxiosSecure = () => {
   axiosSecure.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem("access-token");
-      console.log("request begin:", {
-        url: config.url,
-        token,
-        user,
-      });
+      // console.log("request begin:", {
+      //   url: config.url,
+      //   token,
+      //   user,
+      // });
       if (token) {
         config.headers.authorization = `Bearer ${token}`;
       } else {
@@ -36,11 +36,11 @@ const useAxiosSecure = () => {
       if (user) {
         const status = error.response?.status;
         if (status === 401 || status === 403) {
-          console.log("Logging out due to failed auth from api call::", {
-            status,
-            user,
-            url: error.config.url,
-          });
+          // console.log("Logging out due to failed auth from api call::", {
+          //   status,
+          //   user,
+          //   url: error.config.url,
+          // });
           await logOut();
           navigate("/login");
         }

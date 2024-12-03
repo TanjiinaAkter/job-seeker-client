@@ -78,14 +78,7 @@ const router = createBrowserRouter([
         // loader: ({ params }) =>
         //   fetch(`http://localhost:5000/alljobs/${params.id}`),
       },
-      // {
-      //   path: "/appliedjobs",
-      //   element: (
-      //     <PrivateRouter>
-      //       <Appliedjob></Appliedjob>
-      //     </PrivateRouter>
-      //   ),
-      // },
+     
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
@@ -165,21 +158,38 @@ const router = createBrowserRouter([
       },
       {
         path: "editjob",
-        element: <EditJob></EditJob>,
+        element: (
+          <AdminRoute>
+            <EditJob></EditJob>
+          </AdminRoute>
+        ),
       },
       {
         path: "manageusers",
-        element: <Manageusers></Manageusers>,
+        element: (
+          <AdminRoute>
+            <Manageusers></Manageusers>
+          </AdminRoute>
+        ),
       },
       // ==================  USER SIDEBAR ==================//
       {
         path: "userprofile/:email",
-        element: <UserProfile></UserProfile>,
+        element: (
+          <PrivateRouter>
+            <UserProfile></UserProfile>
+          </PrivateRouter>
+        ),
         // loader: ({ params }) => fetch(`http://localhost:5000/${params.email}`),
       },
       {
         path: "userprofileedit/:email",
-        element: <UserProfileEdit></UserProfileEdit>,
+        element: (
+          <PrivateRouter>
+          
+            <UserProfileEdit></UserProfileEdit>
+          </PrivateRouter>
+        ),
         // ekhane loader dicchi karon er maddhome amra bujhte partesi kon email er route e jabe
         loader: ({ params }) =>
           fetch(`http://localhost:5000/users?email=${params.email}`),
@@ -194,15 +204,27 @@ const router = createBrowserRouter([
       },
       {
         path: "recommendation",
-        element: <Recommendation></Recommendation>,
+        element: (
+          <PrivateRouter>
+            <Recommendation></Recommendation>
+          </PrivateRouter>
+        ),
       },
       {
         path: "interview",
-        element: <Intereview></Intereview>,
+        element: (
+          <PrivateRouter>
+            <Intereview></Intereview>
+          </PrivateRouter>
+        ),
       },
       {
         path: "appliedjobs/:email",
-        element: <Appliedjob></Appliedjob>,
+        element: (
+          <PrivateRouter>
+            <Appliedjob></Appliedjob>
+          </PrivateRouter>
+        ),
         loader: ({ params }) =>
           fetch(`http://localhost:5000/applications?email=${params.email}`),
       },

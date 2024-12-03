@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 const AdminRoute = ({ children }) => {
   const location = useLocation();
 
-  const { user, loader } = useAuth();
+  const { user, loader, logOut } = useAuth();
   const [isAdmin, isAdminLoading] = useAdmin();
   if (loader || isAdminLoading) {
     return <span className="loading loading-spinner loading-lg"></span>;
@@ -15,8 +15,8 @@ const AdminRoute = ({ children }) => {
     return children;
   }
   if (user && !isAdmin) {
-    // logOut(); Uncomment if session cleanup is needed
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    logOut(); //Uncomment if session cleanup is needed replace state={{ from: location }}
+    return <Navigate to="/login" />;
   }
 
   return <Navigate to="/" replace />;

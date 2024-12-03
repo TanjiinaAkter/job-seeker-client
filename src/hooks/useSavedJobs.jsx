@@ -9,13 +9,14 @@ const useSavedJobs = () => {
   const { data: savedJobs = [], refetch } = useQuery({
     queryKey: [user?.email, "savedJobs"],
     enabled: !!user?.email,
+  
     queryFn: async () => {
-      const token = localStorage.getItem("access-token");
+     // const token = localStorage.getItem("access-token");
 
-      console.log("useSavedJobs before request:", {
-        user,
-        token,
-      });
+      //console.log("useSavedJobs before request:", {
+       // user,
+        //token,
+     // });
       const res = await axiosSecure.get(`/savedjobs?email=${user?.email}`);
       //console.log(res.data);
       return res.data;
