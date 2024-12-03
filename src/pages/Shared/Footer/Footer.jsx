@@ -62,16 +62,7 @@ const Footer = () => {
             className="link link-hover text-white font-semibold">
             Applied Jobs
           </Link>
-          <Link
-            to="/myjobs"
-            className="link link-hover text-white font-semibold">
-            My Jobs
-          </Link>
-          <Link
-            to="/addjob"
-            className="link link-hover text-white font-semibold">
-            Add a job
-          </Link>
+
           <Link
             to="/blogs"
             className="link link-hover text-white font-semibold">

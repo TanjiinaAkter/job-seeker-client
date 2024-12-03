@@ -47,7 +47,7 @@ const Alljobs = () => {
     <div className="">
       <NavTop></NavTop>
       <Navbar></Navbar>
-      <Pageheader heading={'Add job'}></Pageheader>
+      <Pageheader heading={'All job'}></Pageheader>
       <div className="flex flex-wrap space-y-3 justify-center space-x-2 items-center md:justify-between my-12 mx-auto w-[90%] md:w-[75%]">
         <h3 className="text-3xl text-[#ff4848] font-semibold">
           Job Vacancies :
