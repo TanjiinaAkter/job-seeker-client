@@ -31,7 +31,7 @@ const Jobdetail = () => {
   useEffect(() => {
     if (id) {
       const job = alljobs.find((job) => job._id === id); // Compare as strings
-      console.log(job);
+      //console.log(job);
       // Should give you the job details
       setJob(job);
     }

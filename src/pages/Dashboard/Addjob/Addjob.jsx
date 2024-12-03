@@ -38,7 +38,7 @@ const Addjob = () => {
     return `${day}/${month}/${year}`;
   };
   const { user } = useAuth();
-  console.log(user);
+  //console.log(user);
 
   const addSkill = () => {
     if (skillInput?.trim()) {

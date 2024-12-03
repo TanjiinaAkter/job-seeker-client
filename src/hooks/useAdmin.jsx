@@ -13,7 +13,7 @@ const useAdmin = () => {
     queryFn: async () => {
       // admin check korar jonnno route nicchi
       const res = await axiosSecure.get(`/users/admin/${user?.email}`);
-      console.log("admin kina", res.data);
+      //console.log("admin kina", res.data);
       return res.data?.admin;
     },
   });

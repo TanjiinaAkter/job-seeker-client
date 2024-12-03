@@ -21,7 +21,7 @@ const Stats = () => {
   const [data, setData] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [applicationData] = useAppliedjob();
-  console.log(data);
+  //console.log(data);
   useEffect(() => {
     if (alljobs || applicationData) {
       const newData = alljobs.map((job) => ({

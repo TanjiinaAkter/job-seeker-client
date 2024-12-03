@@ -5,19 +5,19 @@ import useAuth from "../../../hooks/useAuth";
 
 const AdminProfile = () => {
   const { user } = useAuth();
-  console.log(user);
+  //console.log(user);
 
   const axiosSecure = useAxiosSecure();
   const { data: singleUser = {} } = useQuery({
     queryKey: ["singleUser", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/single?email=${user?.email}`);
-      console.log("in user profile page", res.data);
+      //console.log("in user profile page", res.data);
       return res.data;
     },
     enabled: !!user?.email, // Fetch only when email is available
   });
-  console.log("singleUser is", singleUser);
+  //console.log("singleUser is", singleUser);
 
   return (
     <div className="md:px-20 px-3 md:py-4 flex flex-col md:flex-row justify-between gap-2 md:gap-6 items-center">
