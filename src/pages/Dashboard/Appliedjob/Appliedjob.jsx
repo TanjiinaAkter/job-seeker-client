@@ -78,7 +78,7 @@ const Appliedjob = () => {
                 {/* {
                   <td>
                     <a
-                      href={`http://localhost:5000/uploads/${data.resume}`} // Link to download the resume
+                      href={`https://job-seeker-server-gamma.vercel.app/uploads/${data.resume}`} // Link to download the resume
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn  text-[#447de6] btn-sm rounded-full">

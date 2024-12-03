@@ -76,9 +76,9 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
         // loader: ({ params }) =>
-        //   fetch(`http://localhost:5000/alljobs/${params.id}`),
+        //   fetch(`https://job-seeker-server-gamma.vercel.app/alljobs/${params.id}`),
       },
-     
+
       {
         path: "/blogs",
         element: <Blogs></Blogs>,
@@ -122,7 +122,7 @@ const router = createBrowserRouter([
             <AdminProfile></AdminProfile>
           </AdminRoute>
         ),
-        // loader: ({ params }) => fetch(`http://localhost:5000/users/${params.email}`),
+        // loader: ({ params }) => fetch(`https://job-seeker-server-gamma.vercel.app/users/${params.email}`),
       },
       {
         path: "stats",
@@ -180,19 +180,20 @@ const router = createBrowserRouter([
             <UserProfile></UserProfile>
           </PrivateRouter>
         ),
-        // loader: ({ params }) => fetch(`http://localhost:5000/${params.email}`),
+        // loader: ({ params }) => fetch(`https://job-seeker-server-gamma.vercel.app/${params.email}`),
       },
       {
         path: "userprofileedit/:email",
         element: (
           <PrivateRouter>
-          
             <UserProfileEdit></UserProfileEdit>
           </PrivateRouter>
         ),
         // ekhane loader dicchi karon er maddhome amra bujhte partesi kon email er route e jabe
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/users?email=${params.email}`),
+          fetch(
+            `https://job-seeker-server-gamma.vercel.app/users?email=${params.email}`
+          ),
       },
       {
         path: "savedjobs",
@@ -226,7 +227,9 @@ const router = createBrowserRouter([
           </PrivateRouter>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/applications?email=${params.email}`),
+          fetch(
+            `https://job-seeker-server-gamma.vercel.app/applications?email=${params.email}`
+          ),
       },
     ],
   },
