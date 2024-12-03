@@ -2,44 +2,55 @@ import axios from "axios";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 
-
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
 });
+
 const useAxiosSecure = () => {
   const navigate = useNavigate();
-  const { logOut } = useAuth();
-  axiosSecure.interceptors.request.use(
-    function (config) {
-      const token = localStorage.getItem("access-token");
+  const { logOut, user } = useAuth();
 
-      config.headers.authorization = `Barear ${token}`;
-      //console.log(config.headers.authorization)
+  // Request interceptor
+  axiosSecure.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("access-token");
+      console.log("request begin:", {
+        url: config.url,
+        token,
+        user,
+      });
+      if (token) {
+        config.headers.authorization = `Bearer ${token}`;
+      } else {
+        throw new Error("no auth token");
+      }
       return config;
     },
-    function (error) {
-      return Promise.reject(error);
-    }
+    (error) => Promise.reject(error)
   );
 
+  // Response interceptor
   axiosSecure.interceptors.response.use(
-    function (response) {
-      return response;
-    },
+    (response) => response,
     async (error) => {
-      const status = error.response.status;
-      console.log("status errror is", status);
-
-      if (status === 401 || status === 403) {
-        navigate("/login");
-        await logOut();
-       
+      if (user) {
+        const status = error.response?.status;
+        if (status === 401 || status === 403) {
+          console.log("Logging out due to failed auth from api call::", {
+            status,
+            user,
+            url: error.config.url,
+          });
+          await logOut();
+          navigate("/login");
+        }
       }
+
       return Promise.reject(error);
     }
   );
-    
-  return axiosSecure;
 
-}
+  return axiosSecure;
+};
+
 export default useAxiosSecure;

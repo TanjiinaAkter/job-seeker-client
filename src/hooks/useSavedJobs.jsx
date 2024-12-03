@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
-// import useAxiosPublic from "./useAxiosPublic";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useSavedJobs = () => {
@@ -8,10 +7,16 @@ const useSavedJobs = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: savedJobs = [], refetch } = useQuery({
-    queryKey: ["savedJobs", user?.email],
-
+    queryKey: [user?.email, "savedJobs"],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/savedJobs?email=${user?.email}`);
+      const token = localStorage.getItem("access-token");
+
+      console.log("useSavedJobs before request:", {
+        user,
+        token,
+      });
+      const res = await axiosSecure.get(`/savedjobs?email=${user?.email}`);
       //console.log(res.data);
       return res.data;
     },

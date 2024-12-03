@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
+// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAuth from "../../../hooks/useAuth";
 import { ImCross } from "react-icons/im";
 import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
@@ -70,11 +70,11 @@ const Addjob = () => {
       facilities: data.facilities,
     };
     console.log("form final info", forminfo);
-    if (user && user?.email) {
+   
       axiosSecure.post("/alljobs", forminfo).then((res) => {
         console.log("get information new", res.data);
       });
-    }
+    
   };
   useEffect(() => {
     setValue("skills", skills);

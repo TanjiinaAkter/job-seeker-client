@@ -34,9 +34,10 @@ const SavedJobDetail = ({ job, style }) => {
   }, [alljobs, jobId]);
 
   const handleDeleteSavedJobs = async () => {
-    const res = await axiosSecure.delete(`/savedJobs/${job._id}`);
+    const res = await axiosSecure.delete(`/savedjobs/${job._id}`);
     console.log(res.data);
     if (res.data.deletedCount > 0) {
+      refetch();
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -44,7 +45,7 @@ const SavedJobDetail = ({ job, style }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-      refetch();
+     
     }
 
     return res.data;

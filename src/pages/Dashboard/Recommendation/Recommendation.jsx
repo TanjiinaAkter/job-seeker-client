@@ -75,7 +75,7 @@ const Recommendation = () => {
     <div className="md:max-w-[80%] w-[90%] mx-auto ">
       <div className="">
         <UserPageHeader
-          userheading={`Applied Jobs : ${recommendation.length} `}></UserPageHeader>
+          userheading={`Recommanded Jobs : ${recommendation.length} `}></UserPageHeader>
       </div>
       <div className="grid  grid-cols-1 mx-auto w-full md:grid-cols-2 gap-8 ">
         {/* Render the recommended jobs here */}

@@ -13,7 +13,7 @@ const Login = () => {
   const [noemail, setNoEmail] = useState("");
   const { login, logOut, resetPassword } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
+  //console.log(location);
   const from = location.state?.from.pathname || "/";
   const navigate = useNavigate();
 
@@ -46,6 +46,8 @@ const Login = () => {
               `,
             },
           });
+          console.log("Navigating to:", from);
+
           navigate(from, { replace: true });
         } else {
           Swal.fire({
@@ -74,11 +76,11 @@ const Login = () => {
       });
   };
   const emailRef = useRef(null);
-  console.log(emailRef);
+  //console.log(emailRef);
   const handleReset = () => {
-    setNoEmail('');
+    setNoEmail("");
     const email = emailRef.current.value;
-    console.log("yyyyyyyyyy", email);
+    // console.log("yyyyyyyyyy", email);
     if (!email) {
       return setNoEmail("email requied");
     }

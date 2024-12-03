@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import img from "../../../assets/Untitled.png";
 import { useContext, useState } from "react";
@@ -16,7 +16,7 @@ const Navbar = () => {
   // const isAdmin = true;
   const [isAdmin] = useAdmin();
   // console.log("admin value",isAdmin)
-  const location = useLocation();
+  // const location = useLocation();
   //console.log(location);
   // const isHomeRoute = location.pathname === "/";
   const { user, logOut } = useContext(AuthContext);
@@ -61,7 +61,7 @@ const Navbar = () => {
           About us
         </NavLink>
       </li>
-      {user && isAdmin && (
+      {isAdmin && (
         <li className="text-white font-semibold   text-lg">
           <NavLink to={`/dashboard/adminprofile/${user?.email}`}>
             admin Dashboard
@@ -141,10 +141,10 @@ const Navbar = () => {
           <ul className="menu  px-1">{links}</ul>
         </div>
         <div className="md:navbar-end space-y-2 sm:space-y-0 lg:space-x-4 mt-3 md:mt-0 md:pl-4 ">
-          {user && isAdmin ? (
+          { isAdmin ? (
             <div className="flex flex-row space-x-2 items-center justify-center ">
            <div className=" flex justify-between items-center gap-3 z-10 ">
-                <Link to={`dashboard/adminprofile/${user?.email}`}>
+                <Link to={`/dashboard/adminprofile/${user?.email}`}>
                   <img
                     onMouseEnter={handlehover}
                     onMouseLeave={handleNoHover}
@@ -171,10 +171,10 @@ const Navbar = () => {
 
               {/* <p className="text-red-600 lg:hidden">{user?.displayName}</p> */}
             </div>
-          ) : user && !isAdmin ? (
+          ) : user?.email?  (
             <div className="flex flex-row space-x-2 items-center justify-center ">
               <div className=" flex justify-between items-center gap-3 z-10 ">
-                <Link to={`dashboard/userprofile/${user?.email}`}>
+                <Link to={`/dashboard/userprofile/${user?.email}`}>
                   <img
                     onMouseEnter={handlehover}
                     onMouseLeave={handleNoHover}

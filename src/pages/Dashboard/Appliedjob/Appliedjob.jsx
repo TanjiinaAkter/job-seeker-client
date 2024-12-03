@@ -51,7 +51,7 @@ const Appliedjob = () => {
             <tr className="text-lg font-base text-black ">
               <th>Name</th>
               <th>Email</th>
-              <th>Resume</th>
+
               <th>Job position</th>
               <th>Company</th>
 
@@ -67,9 +67,6 @@ const Appliedjob = () => {
                 </td>
                 <td>
                   <h3>{data.email}</h3>
-                </td>
-                <td>
-                  <h3>{data.resume}</h3>
                 </td>
 
                 <td>
@@ -105,7 +102,7 @@ const Appliedjob = () => {
                       </button>
                     ))}
                   {data?.status?.status || data?.status === "pending" || "" ? (
-                    <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-[#ff0000] text-white  ">
+                    <button className="badge py-4 px-3 font-semibold hover:scale-105 hover:bg-gray-700 bg-yellow-500 text-white  ">
                       pending
                     </button>
                   ) : (

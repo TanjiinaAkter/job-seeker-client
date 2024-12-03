@@ -7,7 +7,7 @@ const SearchResult = ({ setFilteredJobs, setInsidePutSearched }) => {
   // only form er kaj korechi ekhane
   const [alljobs] = useAlljobs();
 
-  console.log(alljobs);
+  //console.log(alljobs);
   // console.log(insidePutSearched);
   // console.log(filteredJobs);
   const {
@@ -17,7 +17,7 @@ const SearchResult = ({ setFilteredJobs, setInsidePutSearched }) => {
   } = useForm();
   const onSubmit = (data) => {
     const { jobTitle, jobCategory, jobLocation } = data;
-    console.log("here is", data);
+    //console.log("here is", data);
     const matchingJobs = alljobs.filter((job) => {
       return (
         job.jobtitle.toLowerCase().includes(jobTitle.toLowerCase()) &&
@@ -57,9 +57,7 @@ const SearchResult = ({ setFilteredJobs, setInsidePutSearched }) => {
           <select
             {...register("jobCategory", { required: true })}
             className="select  text-gray-700 rounded-sm border-none w-full ">
-            <option disabled selected>
-              select Category
-            </option>
+            <option disabled>select Category</option>
             <option value={"fulltime"}>Full Time</option>
             <option value={"parttime"}>Part Time</option>
             <option value={"hybrid"}>Hybrid</option>

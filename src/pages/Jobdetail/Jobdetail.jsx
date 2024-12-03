@@ -14,6 +14,7 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAlljobs from "../../hooks/useAlljobs";
 import NavTop from "../Home/NavTop/NavTop";
+import { useRef } from "react";
 const Jobdetail = () => {
   useEffect(() => {
     AOS.init({
@@ -35,22 +36,20 @@ const Jobdetail = () => {
       setJob(job);
     }
   }, [alljobs, id]);
-  // useEffect(() => {
-  //   if (job) {
-  //     // Set applyBtn to false if user has already applied, based on backend data
-  //     setApplyBtn(!job.isApplied); // Assume job.isApplied indicates application status
-  //   }
-  // }, [job]);
+
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
   const [name] = useState(user ? user.displayName : "");
   const [email] = useState(user ? user.email : "");
   const [resume, setResume] = useState(null);
+  const inputRes = useRef(null);
   //console.log(resume)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const resumeInput = inputRes.current.value;
+    console.log("hu", resumeInput);
+    setResume(resumeInput);
     const formData = new FormData();
     //name er value,email er value,ar resume er value append kore dicchi formData te... key+value..."name"+ name
     formData.append("name", name);
@@ -66,15 +65,11 @@ const Jobdetail = () => {
       console.log(`${key}:`, value);
     }
     const formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
+    console.log("here is", formDataObj);
 
     // POST DATA FROM FORM
     if (user && user?.email) {
-      const res = await axiosSecure.post("/formapply", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axiosSecure.post("/applications", formDataObj);
 
       console.log(res.data);
       if (res.data) {
@@ -317,23 +312,19 @@ const Jobdetail = () => {
                         required
                       />
                     </div>
+                    {/* //////////// */}
                     <div className="form-control">
                       <label className="label">
                         <span className="label-text text-red-600">
-                          Upload Your Resume*
+                          Upload Your Resume Link*
                         </span>
                       </label>
                       <input
-                        required
-                        type="file"
-                        accept=".pdf"
-                        onChange={(e) => {
-                          setResume(e.target.files[0]);
-                          console.log(e.target.files[0]);
-                        }}
-                        name="file"
-                        // name="resume"
+                        className="input input-bordered text-gray-600"
+                        type="text"
+                        name="resume"
                         id=""
+                        ref={inputRes}
                       />
                     </div>
 

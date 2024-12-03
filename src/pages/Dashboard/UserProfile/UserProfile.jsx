@@ -13,6 +13,7 @@ const UserProfile = () => {
   const axiosSecure = useAxiosSecure();
   const { data: singleUser = {} } = useQuery({
     queryKey: ["singleUser", user?.email],
+    
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/single?email=${user?.email}`);
       console.log("in user profile page", res.data);

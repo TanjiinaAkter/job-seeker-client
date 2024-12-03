@@ -8,6 +8,7 @@ import useAppliedjob from "../../../hooks/useAppliedjob";
 import { LuDownload } from "react-icons/lu";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 // import { MdScheduleSend } from "react-icons/md";
 // import { useQuery } from "@tanstack/react-query";
 
@@ -94,12 +95,12 @@ const Applicants = () => {
 
                 {
                   <td className="flex justify-center items-center">
-                    <a
-                      className="flex items-center flex-col space-x-2"
-                      href={`http://localhost:5000/uploads/${data.resume}`}>
-                      <LuDownload className=" font-semibold text-xl text-blue-500"></LuDownload>
-                      <span className="text-blue-500">Download</span>
-                    </a>
+                    <Link to={data.resume}>
+                      <button className="flex items-center flex-col space-x-2">
+                        <LuDownload className=" font-semibold text-xl text-blue-500"></LuDownload>
+                        <span className="text-blue-500">Download</span>
+                      </button>
+                    </Link>
                   </td>
                 }
                 <td>

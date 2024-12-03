@@ -7,6 +7,7 @@ const useSingleApplicantsData = () => {
   const axiosSecure = useAxiosSecure();
   const { data: singleApplicantsData = [], refetch } = useQuery({
     queryKey: ["singleApplicantsData", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/applications/single?email=${user?.email}`

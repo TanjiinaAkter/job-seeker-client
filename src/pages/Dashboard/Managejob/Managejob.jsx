@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { MdScheduleSend } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { AiOutlineCalendar } from "react-icons/ai";
+import useAdmin from "../../../hooks/useAdmin";
 
 const Managejob = () => {
   useEffect(() => {
@@ -20,6 +21,7 @@ const Managejob = () => {
       duration: 1200,
     });
   }, []);
+  const [isAdmin] = useAdmin();
   const [alljobs, refetch] = useAlljobs();
   const [jobLocation, setJobLocation] = useState("");
   const [date, setDate] = useState(new Date());
@@ -161,236 +163,239 @@ const Managejob = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {alljobs.map((job, index) => (
-                <tr key={job._id}>
-                  <th>{index + 1}</th>
-                  <td>{job.jobtitle}</td>
-                  <td>{job.company}</td>
+              {isAdmin &&
+                alljobs.map((job, index) => (
+                  <tr key={job._id}>
+                    <th>{index + 1}</th>
+                    <td>{job.jobtitle}</td>
+                    <td>{job.company}</td>
 
-                  <td>{job.email}</td>
-                  <td>
-                    <div className="flex justify-items-center gap-3  items-center">
-                      <Link to={`/jobdetail/${job._id}`}>
-                        <FaEye className="text-4xl text-green-500 hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500"></FaEye>
-                      </Link>
-
-                      {job.email === user?.email ? (
-                        <Link to="/dashboard/editjob" state={{ job: job }}>
-                          <FaRegEdit className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-orange-400"></FaRegEdit>
+                    <td>{job.email}</td>
+                    <td>
+                      <div className="flex justify-items-center gap-3  items-center">
+                        <Link to={`/jobdetail/${job._id}`}>
+                          <FaEye className="text-4xl text-green-500 hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500"></FaEye>
                         </Link>
-                      ) : (
-                        <button onClick={() => permissionDenied(job)}>
-                          <FaRegEdit className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-orange-400"></FaRegEdit>
-                        </button>
-                      )}
 
-                      {/* <Link to="/dashboard/editjob" state={{ job: job }}>
+                        {job.email === user?.email ? (
+                          <Link to="/dashboard/editjob" state={{ job: job }}>
+                            <FaRegEdit className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-orange-400"></FaRegEdit>
+                          </Link>
+                        ) : (
+                          <button onClick={() => permissionDenied(job)}>
+                            <FaRegEdit className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-orange-400"></FaRegEdit>
+                          </button>
+                        )}
+
+                        {/* <Link to="/dashboard/editjob" state={{ job: job }}>
                         <FaRegEdit className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-orange-400"></FaRegEdit>
                       </Link> */}
 
-                      {job.email === user?.email ? (
-                        <MdDelete
-                          onClick={() => handleDelete(job)}
-                          className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-red-600"></MdDelete>
-                      ) : (
-                        <MdDelete
-                          onClick={() => permissionDeniedtoDelete(job)}
-                          className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-red-600"></MdDelete>
-                      )}
-                      {job.email === user?.email ? (
-                        <>
-                          {/* Open the modal using document.getElementById('ID').showModal() method */}
-                          <button
-                            className="btn tooltip-right"
-                            data-tip="hello"
-                            onClick={() => openModal(job)}>
-                            <AiOutlineCalendar
-                              data-tip="schedule interview"
-                              className="text-4xl  hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-blue-500"></AiOutlineCalendar>
-                          </button>
-                          <dialog id="my_modal_1" className="modal">
-                            <div className="modal-box">
-                              <h3 className="text-2xl text-center font-semibold text-red-500 ">
-                                Schedule interview
-                              </h3>
-                              {/* ======================================================== */}
-                              {/* ==================== FORM DESIGN PART ================== */}
-                              {/* ===========job.email   ============================================= */}
+                        {job.email === user?.email ? (
+                          <MdDelete
+                            onClick={() => handleDelete(job)}
+                            className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-red-600"></MdDelete>
+                        ) : (
+                          <MdDelete
+                            onClick={() => permissionDeniedtoDelete(job)}
+                            className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-red-600"></MdDelete>
+                        )}
+                        {job.email === user?.email ? (
+                          <>
+                            {/* Open the modal using document.getElementById('ID').showModal() method */}
+                            <button
+                              className="btn tooltip-right"
+                              data-tip="hello"
+                              onClick={() => openModal(job)}>
+                              <AiOutlineCalendar
+                                data-tip="schedule interview"
+                                className="text-4xl  hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-blue-500"></AiOutlineCalendar>
+                            </button>
+                            <dialog id="my_modal_1" className="modal">
+                              <div className="modal-box">
+                                <h3 className="text-2xl text-center font-semibold text-red-500 ">
+                                  Schedule interview
+                                </h3>
+                                {/* ======================================================== */}
+                                {/* ==================== FORM DESIGN PART ================== */}
+                                {/* ===========job.email   ============================================= */}
 
-                              <form
-                                onSubmit={handleSubmit(onSubmit)}
-                                className="card-body">
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text">Email</span>
-                                  </label>
-                                  <input
-                                    {...register("email", {
-                                      required: true,
-                                    })}
-                                    type="email"
-                                    value={selectedJob?.email || ""}
-                                    readOnly
-                                    placeholder="email"
-                                    className="input input-bordered"
-                                    required
-                                  />
-                                  {errors.email && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text"> Name</span>
-                                  </label>
-                                  <input
-                                    {...register("name", {
-                                      required: true,
-                                    })}
-                                    type="text"
-                                    value={selectedJob?.name || ""}
-                                    readOnly
-                                    placeholder="name"
-                                    className="input input-bordered"
-                                    required
-                                  />
-                                  {errors.email && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text">Job Id</span>
-                                  </label>
-                                  <input
-                                    {...register("jobid", {
-                                      required: true,
-                                    })}
-                                    type="text"
-                                    defaultValue={selectedJob?._id || ""}
-                                    readOnly
-                                    placeholder="job id"
-                                    className="input input-bordered"
-                                    required
-                                  />
-                                  {errors.jobid && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text">
-                                      Job Title
-                                    </span>
-                                  </label>
-                                  <input
-                                    {...register("jobtitle", {
-                                      required: true,
-                                    })}
-                                    type="text"
-                                    defaultValue={selectedJob?.jobtitle || ""}
-                                    readOnly
-                                    placeholder="job Title"
-                                    className="input input-bordered"
-                                    required
-                                  />
-                                  {errors.jobtitle && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text">
-                                      Job Location
-                                    </span>
-                                  </label>
-                                  <input
-                                    {...register("jobLocation", {
-                                      required: true,
-                                    })}
-                                    value={jobLocation}
-                                    onChange={(e) =>
-                                      setJobLocation(e.target.value)
-                                    }
-                                    placeholder={
-                                      jobLocation || "enter a location"
-                                    }
-                                    className="input input-bordered"
-                                  />
-                                  {errors.jobLocation && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text">
-                                      Interview Date**
-                                    </span>
-                                  </label>
-                                  <input
-                                    {...register("date", {
-                                      required: true,
-                                    })}
-                                    value={date}
-                                    type="date"
-                                    onChange={(e) => setDate(e.target.value)}
-                                    placeholder="job Title"
-                                    className="input input-bordered"
-                                    required
-                                  />
-                                  {errors.date && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control">
-                                  <label className="label">
-                                    <span className="label-text">
-                                      Interview time
-                                    </span>
-                                  </label>
-                                  <input
-                                    {...register("time", {
-                                      required: true,
-                                    })}
-                                    type="time"
-                                    value={time}
-                                    onChange={(e) => setTime(e.target.value)}
-                                    placeholder="time"
-                                    className="input input-bordered"
-                                    required
-                                  />
-                                  {errors.time && (
-                                    <span>This field is required</span>
-                                  )}
-                                </div>
-                                <div className="form-control mt-6">
-                                  <input
-                                    className="bg-red-600 py-3 font-semibold text-white rounded-none"
-                                    type="submit"
-                                    value="Schedule interview"
-                                  />
-                                </div>
-                              </form>
-                              <div className="modal-action">
-                                <form method="dialog">
-                                  {/* if there is a button in form, it will close the modal */}
-                                  <button onClick={closeModal} className="btn">
-                                    Close
-                                  </button>
+                                <form
+                                  onSubmit={handleSubmit(onSubmit)}
+                                  className="card-body">
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text">Email</span>
+                                    </label>
+                                    <input
+                                      {...register("email", {
+                                        required: true,
+                                      })}
+                                      type="email"
+                                      value={selectedJob?.email || ""}
+                                      readOnly
+                                      placeholder="email"
+                                      className="input input-bordered"
+                                      required
+                                    />
+                                    {errors.email && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text"> Name</span>
+                                    </label>
+                                    <input
+                                      {...register("name", {
+                                        required: true,
+                                      })}
+                                      type="text"
+                                      value={selectedJob?.name || ""}
+                                      readOnly
+                                      placeholder="name"
+                                      className="input input-bordered"
+                                      required
+                                    />
+                                    {errors.email && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text">Job Id</span>
+                                    </label>
+                                    <input
+                                      {...register("jobid", {
+                                        required: true,
+                                      })}
+                                      type="text"
+                                      defaultValue={selectedJob?._id || ""}
+                                      readOnly
+                                      placeholder="job id"
+                                      className="input input-bordered"
+                                      required
+                                    />
+                                    {errors.jobid && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text">
+                                        Job Title
+                                      </span>
+                                    </label>
+                                    <input
+                                      {...register("jobtitle", {
+                                        required: true,
+                                      })}
+                                      type="text"
+                                      defaultValue={selectedJob?.jobtitle || ""}
+                                      readOnly
+                                      placeholder="job Title"
+                                      className="input input-bordered"
+                                      required
+                                    />
+                                    {errors.jobtitle && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text">
+                                        Job Location
+                                      </span>
+                                    </label>
+                                    <input
+                                      {...register("jobLocation", {
+                                        required: true,
+                                      })}
+                                      value={jobLocation}
+                                      onChange={(e) =>
+                                        setJobLocation(e.target.value)
+                                      }
+                                      placeholder={
+                                        jobLocation || "enter a location"
+                                      }
+                                      className="input input-bordered"
+                                    />
+                                    {errors.jobLocation && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text">
+                                        Interview Date**
+                                      </span>
+                                    </label>
+                                    <input
+                                      {...register("date", {
+                                        required: true,
+                                      })}
+                                      value={date}
+                                      type="date"
+                                      onChange={(e) => setDate(e.target.value)}
+                                      placeholder="job Title"
+                                      className="input input-bordered"
+                                      required
+                                    />
+                                    {errors.date && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control">
+                                    <label className="label">
+                                      <span className="label-text">
+                                        Interview time
+                                      </span>
+                                    </label>
+                                    <input
+                                      {...register("time", {
+                                        required: true,
+                                      })}
+                                      type="time"
+                                      value={time}
+                                      onChange={(e) => setTime(e.target.value)}
+                                      placeholder="time"
+                                      className="input input-bordered"
+                                      required
+                                    />
+                                    {errors.time && (
+                                      <span>This field is required</span>
+                                    )}
+                                  </div>
+                                  <div className="form-control mt-6">
+                                    <input
+                                      className="bg-red-600 py-3 font-semibold text-white rounded-none"
+                                      type="submit"
+                                      value="Schedule interview"
+                                    />
+                                  </div>
                                 </form>
+                                <div className="modal-action">
+                                  <form method="dialog">
+                                    {/* if there is a button in form, it will close the modal */}
+                                    <button
+                                      onClick={closeModal}
+                                      className="btn">
+                                      Close
+                                    </button>
+                                  </form>
+                                </div>
                               </div>
-                            </div>
-                          </dialog>
-                        </>
-                      ) : (
-                        <MdScheduleSend
-                          onClick={() => permissionDeniedtoInterview(job)}
-                          className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-blue-500"></MdScheduleSend>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                            </dialog>
+                          </>
+                        ) : (
+                          <MdScheduleSend
+                            onClick={() => permissionDeniedtoInterview(job)}
+                            className="text-4xl hover:scale-110 hover:bg-gray-300 p-2 rounded-md transition-all duration-500 text-blue-500"></MdScheduleSend>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

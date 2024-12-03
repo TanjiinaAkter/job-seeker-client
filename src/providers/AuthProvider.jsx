@@ -41,14 +41,19 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         const userInfo = { email: currentUser.email };
         axiosPublic.post("/jwt", userInfo).then((res) => {
-          console.log(res.data);
+          console.log("axiosPublic changes useEffect:", res.data);
           if (res.data.token) {
             localStorage.setItem("access-token", res.data.token);
+            console.log(res.data.token);
             setLoader(false);
           }
         });
       } else {
-        localStorage.removeItem("access-token");
+        // console.log("deleting access token", {
+        //   user,
+        //   prevToken: localStorage.getItem("access-token"),
+        // });
+        // localStorage.removeItem("access-token");
         setLoader(false);
       }
     });
@@ -58,7 +63,12 @@ const AuthProvider = ({ children }) => {
   }, [axiosPublic]);
   //============ 4 . USER LOGOUT===============================//
   const logOut = () => {
+    console.log("logOut", {
+      user,
+      prevT: localStorage.getItem("access-token"),
+    });
     setLoader(true);
+    localStorage.removeItem("access-token");
     return signOut(auth);
   };
   //============ 4 . USER reset password ===============================//

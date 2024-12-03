@@ -75,8 +75,8 @@ const router = createBrowserRouter([
             <Jobdetail></Jobdetail>
           </PrivateRouter>
         ),
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/alljobs/${params.id}`),
+        // loader: ({ params }) =>
+        //   fetch(`http://localhost:5000/alljobs/${params.id}`),
       },
       // {
       //   path: "/appliedjobs",
@@ -116,28 +116,52 @@ const router = createBrowserRouter([
 
       {
         path: "adminhome",
-        element: <AdminHome></AdminHome>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
         path: "adminprofile/:email",
-        element: <AdminProfile></AdminProfile>,
+        element: (
+          <AdminRoute>
+            <AdminProfile></AdminProfile>
+          </AdminRoute>
+        ),
         // loader: ({ params }) => fetch(`http://localhost:5000/users/${params.email}`),
       },
       {
         path: "stats",
-        element: <Stats></Stats>,
+        element: (
+          <AdminRoute>
+            <Stats></Stats>
+          </AdminRoute>
+        ),
       },
       {
         path: "addjob",
-        element: <Addjob></Addjob>,
+        element: (
+          <AdminRoute>
+            <Addjob></Addjob>
+          </AdminRoute>
+        ),
       },
       {
         path: "managejob",
-        element: <Managejob></Managejob>,
+        element: (
+          <AdminRoute>
+            <Managejob></Managejob>
+          </AdminRoute>
+        ),
       },
       {
         path: "applications",
-        element: <Applicants></Applicants>,
+        element: (
+          <AdminRoute>
+            <Applicants></Applicants>
+          </AdminRoute>
+        ),
       },
       {
         path: "editjob",
@@ -162,7 +186,11 @@ const router = createBrowserRouter([
       },
       {
         path: "savedjobs",
-        element: <SavedJobs></SavedJobs>,
+        element: (
+          <PrivateRouter>
+            <SavedJobs></SavedJobs>
+          </PrivateRouter>
+        ),
       },
       {
         path: "recommendation",
