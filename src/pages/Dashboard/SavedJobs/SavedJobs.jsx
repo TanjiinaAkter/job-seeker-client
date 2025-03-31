@@ -11,7 +11,7 @@ const SavedJobs = () => {
   const colors = ["#f6ebe7", "#d5edf2", "#ffdfdf", "#e7f6f1", "#e5f7c3"];
   console.log(savedJobs);
   return (
-    <div className="mx-auto max-w-5xl ">
+    <div className="mx-auto max-w-5xl overflow-hidden">
       <div>
         <UserPageHeader
           userheading={`Saved Jobs : ${savedJobs.length} `}></UserPageHeader>

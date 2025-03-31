@@ -54,7 +54,7 @@ const Applicants = () => {
     refetch();
   };
   return (
-    <div>
+    <div className=" overflow-hidden">
       <div>
         <UserPageHeader userheading={"Applications"}></UserPageHeader>
       </div>

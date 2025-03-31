@@ -9,6 +9,7 @@ import Pageheader from "../../components/Pageheader/Pageheader";
 import useAlljobs from "../../hooks/useAlljobs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavTop from "../Home/NavTop/NavTop";
+import Swal from "sweetalert2";
 // import useAxiosPublic from "../../hooks/useAxiosPublic";
 const Alljobs = () => {
   useEffect(() => {
@@ -42,12 +43,27 @@ const Alljobs = () => {
       setShowJobs(searchJob);
     }
   };
-
+  const showDetails = (jobId) => {
+    console.log(jobId);
+    Swal.fire({
+      title: "You are not logged in",
+      text: "Please login first to continue!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Log in!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/login", { state: { from: location } });
+      }
+    });
+  };
   return (
     <div className="">
       <NavTop></NavTop>
       <Navbar></Navbar>
-      <Pageheader heading={'All job'}></Pageheader>
+      <Pageheader heading={"All job"}></Pageheader>
       <div className="flex flex-wrap space-y-3 justify-center space-x-2 items-center md:justify-between my-12 mx-auto w-[90%] md:w-[75%]">
         <h3 className="text-3xl text-[#ff4848] font-semibold">
           Job Vacancies :
@@ -119,10 +135,8 @@ const Alljobs = () => {
                       </button>
                     </Link>
                   ) : (
-                    <button
-                      onClick={() =>
-                        navigate("/login", { state: { from: location } })
-                      }
+                    <button 
+                      onClick={() => showDetails(job._id)}
                       className="btn bg-[#b7e4a5] text-black text-base  btn-sm rounded-full ">
                       details
                     </button>

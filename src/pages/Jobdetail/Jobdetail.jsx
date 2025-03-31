@@ -54,7 +54,7 @@ const Jobdetail = () => {
     //name er value,email er value,ar resume er value append kore dicchi formData te... key+value..."name"+ name
     formData.append("name", name);
     formData.append("email", email);
-    formData.append("resume", resume);
+    formData.append("resume", resumeInput);
     // jei job er jonno apply kortesi setar info diye dicchi append kore
     formData.append("jobId", job._id); // Job ID
     formData.append("jobTitle", job.jobtitle); // Job title
@@ -71,7 +71,7 @@ const Jobdetail = () => {
     if (user && user?.email) {
       const res = await axiosSecure.post("/applications", formDataObj);
 
-      console.log(res.data);
+      console.log("bla bla", res.data);
       if (res.data) {
         Swal.fire({
           position: "top-end",
@@ -108,9 +108,9 @@ const Jobdetail = () => {
       <NavTop></NavTop>
       <Navbar></Navbar>
       <div className="addjob-img sm:h-auto bg-scroll space-y-28 pt-12 relative">
-        <div className="flex justify-center items-center py-24">
+        <div className="flex justify-center items-center pt-[9rem] pb-8 md:py-24 ">
           <hr className="h-[2px] mb-12 bg-[#ff4848] w-[6%] border-none" />
-          <p className="text-white font-semibold text-3xl md:text-4xl text-center">
+          <p className="text-white font-semibold text-[1.3rem] md:text-4xl text-center">
             Job Details : {job?.jobtitle}
           </p>
           <hr className="h-[2px] mt-14 bg-[#ff4848] w-[6%] border-none" />
@@ -147,7 +147,7 @@ const Jobdetail = () => {
               className="col-span-full lg:col-span-2 w-full mx-auto lg:p-2"
               data-aos="fade-right">
               <img
-                className="w-full lg:w-[80%] rounded-sm"
+                className="w-full h-[30rem] lg:w-[80%] object-cover rounded-sm"
                 src={job?.photo}
                 alt=""
               />
@@ -389,7 +389,7 @@ const Jobdetail = () => {
               </ul>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="md:flex md:items-center gap-2">
             <p className="text-gray-500  font-semibold">Facilities: </p>
             <p className=" text-gray-500 ">{job?.facilities}</p>
           </div>

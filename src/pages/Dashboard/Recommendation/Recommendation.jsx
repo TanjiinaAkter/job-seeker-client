@@ -72,7 +72,7 @@ const Recommendation = () => {
   }, [user, singleApplicantsData, alljobs]);
   // console.log(recommendation);
   return (
-    <div className="md:max-w-[80%] w-[90%] mx-auto ">
+    <div className="md:max-w-[80%] w-[90%] mx-auto overflow-hidden">
       <div className="">
         <UserPageHeader
           userheading={`Recommanded Jobs : ${recommendation.length} `}></UserPageHeader>

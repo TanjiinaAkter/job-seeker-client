@@ -34,7 +34,12 @@ const Sectionfour = () => {
             </div>
           </Link>
 
-          <Link to={`/dashboard/userprofile/${user?.email}`}>
+          <Link
+            to={
+              user && user?.email
+                ? `/dashboard/userprofile/${user?.email}`
+                : "/login"
+            }>
             <div className="card h-[100%] hover:bg-[#EDF5FF] transition-all hover:duration-500 hover:transform hover:scale-105  rounded-none shadow-xl">
               <div className="card-body ">
                 <img

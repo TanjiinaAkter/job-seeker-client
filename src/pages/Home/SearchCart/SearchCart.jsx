@@ -1,8 +1,11 @@
 import { FaArrowCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const SearchCart = ({ jobs, hasSearched }) => {
   console.log(hasSearched);
+  const { user } = useAuth();
+  console.log(user?.email);
   return (
     <div className="mx-auto max-w-6xl">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -27,7 +30,7 @@ const SearchCart = ({ jobs, hasSearched }) => {
                 />
               </div>
               <div className="flex flex-col justify-start text-justify items-start">
-                <h2 className="text-gray-600 text-lg font-bold">
+                <h2 className="text-gray-600 text-[1rem] font-bold">
                   {job.jobtitle}
                 </h2>
                 <p className="text-gray-500 text-[15px] font-medium">
@@ -39,7 +42,8 @@ const SearchCart = ({ jobs, hasSearched }) => {
                 </p>
               </div>
               <div className="justify-end flex flex-col items-end">
-                <Link to={`/jobdetail/${job._id}`}>
+                <Link
+                  to={user && user?.email ? `/jobdetail/${job._id}` : "/login"}>
                   <button className="text-black text-3xl">
                     <FaArrowCircleRight></FaArrowCircleRight>
                   </button>

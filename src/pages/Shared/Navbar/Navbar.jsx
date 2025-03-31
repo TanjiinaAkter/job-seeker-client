@@ -102,8 +102,8 @@ const Navbar = () => {
     //bg-white
     <div className="mx-auto absolute top-[8%] md:top-7 left-0 right-0 z-50  max-w-[95%] bg-transparent">
       <div className=" flex flex-col md:flex-row navbar pt-[2.4rem]  ">
-        <div className="md:navbar-start w-full flex justify-between items-center">
-          <div className="dropdown">
+        <div className="md:navbar-start w-full  flex justify-between items-center">
+          <div className="dropdown z-50">
             <div
               tabIndex={0}
               role="button"
@@ -141,9 +141,9 @@ const Navbar = () => {
           <ul className="menu  px-1">{links}</ul>
         </div>
         <div className="md:navbar-end space-y-2 sm:space-y-0 lg:space-x-4 mt-3 md:mt-0 md:pl-4 ">
-          { isAdmin ? (
+          {isAdmin ? (
             <div className="flex flex-row space-x-2 items-center justify-center ">
-           <div className=" flex justify-between items-center gap-3 z-10 ">
+              <div className=" flex justify-between items-center gap-3 z-10 ">
                 <Link to={`/dashboard/adminprofile/${user?.email}`}>
                   <img
                     onMouseEnter={handlehover}
@@ -155,23 +155,25 @@ const Navbar = () => {
                 </Link>
                 {Hovered ? (
                   <div>
-                 <p className="absolute text-lime-400 right-[10%] font-bold bg-red  top-24 ">
+                    <p className="absolute text-lime-400 right-[10%] font-bold bg-red  top-24 ">
                       {user?.displayName}
                     </p>
                   </div>
                 ) : (
                   ""
                 )}
-                <button
-                  onClick={userLogOut}
-                  className="button lg:btn-sm  bg-[#ff4848] ">
-                  Logout
-                </button>
+                <Link to="/login">
+                  <button
+                    onClick={userLogOut}
+                    className="button lg:btn-sm  bg-[#ff4848] ">
+                    Logout
+                  </button>
+                </Link>
               </div>
 
               {/* <p className="text-red-600 lg:hidden">{user?.displayName}</p> */}
             </div>
-          ) : user?.email?  (
+          ) : user?.email ? (
             <div className="flex flex-row space-x-2 items-center justify-center ">
               <div className=" flex justify-between items-center gap-3 z-10 ">
                 <Link to={`/dashboard/userprofile/${user?.email}`}>
@@ -192,11 +194,13 @@ const Navbar = () => {
                 ) : (
                   ""
                 )}
-                <button
-                  onClick={userLogOut}
-                  className="button lg:btn-sm  bg-[#ff4848] ">
-                  Logout
-                </button>
+                <Link to="/login">
+                  <button
+                    onClick={userLogOut}
+                    className="button lg:btn-sm  bg-[#ff4848] ">
+                    Logout
+                  </button>
+                </Link>
               </div>
 
               {/* <p className="text-red-600 lg:hidden">{user?.displayName}</p> */}

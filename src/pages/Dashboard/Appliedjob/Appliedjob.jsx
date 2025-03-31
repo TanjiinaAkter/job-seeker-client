@@ -35,7 +35,7 @@ const Appliedjob = () => {
   });
   console.log(singleApplicantsData);
   return (
-    <div>
+    <div className="overflow-hidden">
       <div>
         <UserPageHeader
           userheading={`Applied Jobs : ${singleApplicantsData.length} `}></UserPageHeader>

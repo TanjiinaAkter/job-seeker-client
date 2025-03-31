@@ -65,7 +65,7 @@ const Manageusers = () => {
     });
   };
   return (
-    <div>
+    <div className=" overflow-hidden">
       <div>
         <UserPageHeader userheading={"Manage Users"}></UserPageHeader>
       </div>
@@ -124,7 +124,7 @@ const Manageusers = () => {
           {/* foot */}
         </table>
       </div>
-      <h2>{users.length}</h2>
+  
     </div>
   );
 };

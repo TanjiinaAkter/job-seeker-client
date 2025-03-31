@@ -141,7 +141,7 @@ const Managejob = () => {
   };
 
   return (
-    <div>
+    <div className=" overflow-hidden">
       <div className="mb-12 mt-4">
         <UserPageHeader
           userheading={`Manage Job : ${alljobs.length}`}></UserPageHeader>

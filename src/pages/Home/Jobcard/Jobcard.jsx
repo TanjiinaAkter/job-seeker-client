@@ -119,7 +119,7 @@ const Jobcard = ({ job }) => {
         </div>
         <div className="flex flex-col items-center ">
           <div className="flex justify-center items-center py-3">
-            <Link to={`/jobdetail/${_id}`}>
+            <Link to={user && user?.email ? `/jobdetail/${_id}` : "/login"}>
               <button className="btn btn-md bg-red-600 text-white rounded-sm text-base">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

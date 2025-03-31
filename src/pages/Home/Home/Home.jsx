@@ -41,7 +41,7 @@ const Home = () => {
         <Navbar></Navbar>
 
         <div className="design max-h-screen mt-16 md:mt-16 text-center md:text-justify px-2 w-full md:w-[75%] z-20 absolute text-white">
-          <div className="mt-24 md:mt-0">
+          <div className="mt-[9rem] md:mt-0">
             <h2 className="text-white text-2xl font-bold md:font-medium md:text-6xl ">
               <span className="text-red-600 font-bold md:font-semibold">
                 <CountUp delay={2} end={alljobs.length} />+

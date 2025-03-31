@@ -103,7 +103,7 @@ const Registration = () => {
       <Navbar></Navbar>
       <hr />
       <div className="reg-img  relative md:mb-[25rem]">
-        <div className="flex w-1/2 mx-auto reg-img  items-center pt-32 justify-start flex-col space-y-4">
+        <div className="flex w-1/2 mx-auto reg-img  items-center pt-[12rem] md:pt-32 justify-start flex-col space-y-4">
           <h2 className="text-xl  text-white md:text-3xl text-center font-semibold">
             Account Register
           </h2>

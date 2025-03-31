@@ -37,7 +37,7 @@ const AdminProfile = () => {
         </div>
       </div>
       <div className="card bg-base-100 w-full md:w-2/3 mx-auto rounded-none shadow-xl">
-        <div className="card-body md:flex md:justify-normal  space-y-6">
+        <div className="card-body md:flex md:justify-normal space-y-6">
           <div className="md:flex items-center justify-start gap-4 ">
             <h2 className="md:text-xl font-semibold">Full Name:</h2>
             <h2 className="md:text-xl text-gray-500">

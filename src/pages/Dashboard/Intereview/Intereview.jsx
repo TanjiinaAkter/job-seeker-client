@@ -53,10 +53,10 @@ const Intereview = () => {
   }, [singleApplicantsData, user, allInterviewdata]);
   //console.log(details);
   return (
-    <div>
+    <div className="overflow-hidden">
       <UserPageHeader userheading={"Interview Schedule"}></UserPageHeader>
       <div data-aos="fade-left" className="max-w-6xl mx-auto">
-        <div className="overflow-hidden card shadow-xl rounded-md">
+        <div className="overflow-auto card shadow-xl rounded-md">
           <table className="table w-full p-8">
             {/* head */}
             <thead className="bg-[#b0c5ca]">

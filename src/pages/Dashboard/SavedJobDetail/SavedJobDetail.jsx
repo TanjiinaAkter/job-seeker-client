@@ -41,11 +41,10 @@ const SavedJobDetail = ({ job, style }) => {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: `${jobDetail?.jobtitle} is deleted`,
+        title: `${jobDetail?.jobtitle} is unsaved`,
         showConfirmButton: false,
         timer: 1500,
       });
-     
     }
 
     return res.data;

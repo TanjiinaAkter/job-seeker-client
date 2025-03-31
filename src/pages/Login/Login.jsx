@@ -119,7 +119,7 @@ const Login = () => {
       <Navbar></Navbar>
       <hr />
       <div className="reg-img  relative md:mb-[25rem] pt-20">
-        <div className="flex w-1/2 mx-auto reg-img  items-center pt-12 justify-start flex-col space-y-4">
+        <div className="flex w-1/2 mx-auto reg-img  items-center pt-[8rem] md:pt-12 justify-start flex-col space-y-4">
           <h2 className="text-xl  text-white md:text-3xl text-center font-semibold">
             Account Login
           </h2>
