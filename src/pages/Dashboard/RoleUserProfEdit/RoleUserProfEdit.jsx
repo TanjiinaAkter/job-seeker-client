@@ -1,14 +1,12 @@
-import { useForm } from "react-hook-form";
-import useAuth from "../../../hooks/useAuth";
 import { useEffect } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-// import { updateUserProfile } from "firebase/auth";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAllUsers from "../../../hooks/useAllUsers";
+import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 
-const UserProfileEdit = () => {
-
+const RoleUserProfEdit = () => {
   const { user, updateUserProfile } = useAuth();
   const [, refetch] = useAllUsers();
   const axiosSecure = useAxiosSecure();
@@ -23,7 +21,7 @@ const UserProfileEdit = () => {
     },
     enabled: !!user?.email, // Fetch only when email is available
   });
-
+  console.log("create for user role ", singleUser);
   const {
     register,
     handleSubmit,
@@ -59,7 +57,7 @@ const UserProfileEdit = () => {
       //console.log(updateUserProfile);
       //console.log(user.name);
       const updateres = await axiosSecure.patch(
-        `/users/single?email=${user?.email}`,
+        `/users/userprof/${user?.email}`,
         editProfile
       );
       console.log("data pacchi", updateres.data);
@@ -84,7 +82,6 @@ const UserProfileEdit = () => {
       });
     }
   };
-
   return (
     <div>
       <h2 className="text-[rgb(255,0,0)]  text-center mt-4 mb-8 font-semibold text-lg md:text-5xl">
@@ -238,4 +235,4 @@ const UserProfileEdit = () => {
   );
 };
 
-export default UserProfileEdit;
+export default RoleUserProfEdit;

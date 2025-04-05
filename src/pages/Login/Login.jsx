@@ -72,7 +72,14 @@ const Login = () => {
       })
 
       .catch((error) => {
-        console.error(error);
+        console.error(error, "auth/invalid-credential");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "auth/invalid-credential, Please try again.",
+          showConfirmButton: false,
+          timer: 6000,
+        });
       });
   };
   const emailRef = useRef(null);

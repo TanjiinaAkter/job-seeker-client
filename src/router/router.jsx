@@ -30,6 +30,7 @@ import Managejob from "../pages/Dashboard/Managejob/Managejob";
 import Applicants from "../pages/Dashboard/Applicants/Applicants";
 import EditJob from "../pages/Dashboard/EditJob/EditJob";
 import AdminProfile from "../pages/Dashboard/AdminProfile/AdminProfile";
+import RoleUserProfEdit from "../pages/Dashboard/RoleUserProfEdit/RoleUserProfEdit";
 // import AppliedJobs from "../pages/Dashboard/AppliedJobs/AppliedJobs";
 
 const router = createBrowserRouter([
@@ -125,6 +126,19 @@ const router = createBrowserRouter([
         // loader: ({ params }) => fetch(`https://job-seeker-server-gamma.vercel.app/users/${params.email}`),
       },
       {
+        path: "userprofileedit/:email",
+        element: (
+          <AdminRoute>
+            <UserProfileEdit></UserProfileEdit>
+          </AdminRoute>
+        ),
+        // ekhane loader dicchi karon er maddhome amra bujhte partesi kon email er route e jabe
+        loader: ({ params }) =>
+          fetch(
+            `https://job-seeker-server-gamma.vercel.app/users?email=${params.email}`
+          ),
+      },
+      {
         path: "stats",
         element: (
           <AdminRoute>
@@ -183,10 +197,11 @@ const router = createBrowserRouter([
         // loader: ({ params }) => fetch(`https://job-seeker-server-gamma.vercel.app/${params.email}`),
       },
       {
-        path: "userprofileedit/:email",
+        path: "roleuserprofedit/:email",
         element: (
           <PrivateRouter>
-            <UserProfileEdit></UserProfileEdit>
+            <RoleUserProfEdit></RoleUserProfEdit>
+            {/* <UserProfileEdit></UserProfileEdit> */}
           </PrivateRouter>
         ),
         // ekhane loader dicchi karon er maddhome amra bujhte partesi kon email er route e jabe

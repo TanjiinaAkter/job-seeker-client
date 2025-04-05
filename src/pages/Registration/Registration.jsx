@@ -51,9 +51,9 @@ const Registration = () => {
                   position: "top-end",
                   icon: "success",
                   title:
-                    "user profile created and (updated also first time in registration) successfully",
+                    "user profile created successfully",
                   showConfirmButton: false,
-                  timer: 3000,
+                  timer: 6000,
                 });
               }
             });
@@ -94,7 +94,17 @@ const Registration = () => {
           });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(
+          "This email is already registered. Try logging in instead.",
+          error
+        );
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "This email is already registered. Try logging in instead.",
+          showConfirmButton: false,
+          timer: 6000,
+        });
       });
   };
   return (

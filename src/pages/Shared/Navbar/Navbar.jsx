@@ -180,7 +180,7 @@ const Navbar = () => {
                   <img
                     onMouseEnter={handlehover}
                     onMouseLeave={handleNoHover}
-                    className="object-cover  w-12 h-12 hover:border hover:border-white border-2 rounded-full"
+                    className="object-cover  w-12 h-12  hover:border-white border-2 rounded-full"
                     src={user?.photoURL}
                     alt=""
                   />

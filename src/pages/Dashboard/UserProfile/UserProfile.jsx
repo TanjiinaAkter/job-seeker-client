@@ -77,7 +77,7 @@ const UserProfile = () => {
           </div>
 
           <div className="card-actions">
-            <Link to={`/dashboard/userprofileedit/${user?.email}`}>
+            <Link to={`/dashboard/roleuserprofedit/${user?.email}`}>
               <button className="btn px-12 bg-black text-white rounded-sm">
                 Edit profile
               </button>
