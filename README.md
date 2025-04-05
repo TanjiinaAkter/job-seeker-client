@@ -7,10 +7,9 @@
 ## Server side repo - [Backend Repository](https://github.com/TanjiinaAkter/job-seeker-server)
  
 ## Admin Login Credentials
-Email: admin@admin.com 
+Email: role3443@gmail.com
 
-Password: Asdf$$
-
+Password:Admin1@
 # Technologies Used
 ## Frontend:
 - HTML, CSS, Tailwind CSS, Daisy UI
