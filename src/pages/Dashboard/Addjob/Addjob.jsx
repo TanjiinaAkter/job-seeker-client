@@ -9,6 +9,7 @@ import useAuth from "../../../hooks/useAuth";
 import { ImCross } from "react-icons/im";
 import UserPageHeader from "../../../components/UserPageHeader/UserPageHeader";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 const Addjob = () => {
   useEffect(() => {
     AOS.init({
@@ -70,11 +71,19 @@ const Addjob = () => {
       facilities: data.facilities,
     };
     console.log("form final info", forminfo);
-   
-      axiosSecure.post("/alljobs", forminfo).then((res) => {
-        console.log("get information new", res.data);
-      });
-    
+
+    axiosSecure.post("/alljobs", forminfo).then((res) => {
+      console.log("get information new", res.data);
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your new Job post has been saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
   useEffect(() => {
     setValue("skills", skills);

@@ -33,10 +33,10 @@ const RoleUserProfEdit = () => {
       // firebase theke new user er data directly ekhane set kortesi tai displayName disi name na likhe,same for photo
       setValue("name", user?.displayName);
       setValue("email", user?.email);
-      setValue("photo", user?.photoURL);
+      setValue("photo", singleUser?.photo || user?.photoURL);
     }
     // dependency diyechi karon user change hole jeno abar chole
-  }, [user, setValue]);
+  }, [user, setValue, singleUser]);
 
   const onSubmit = async (data) => {
     // user er data ar form er data deyar karon user first time thakle to kono edit data thakbe na tokhn jeno user er name photo show hoy

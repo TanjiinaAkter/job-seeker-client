@@ -7,7 +7,10 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import useAdmin from "../../../hooks/useAdmin";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 const Navbar = () => {
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     AOS.init({
       duration: 1200,
@@ -26,6 +29,18 @@ const Navbar = () => {
       .then(() => {})
       .catch((error) => console.log(error));
   };
+  const { data: singleUser = {} } = useQuery({
+    queryKey: ["singleUser", user?.email],
+
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/single?email=${user?.email}`);
+      console.log("in user profile page", res.data);
+      return res.data;
+    },
+    enabled: !!user?.email, // Fetch only when email is available
+  });
+  console.log("singleUser is", singleUser);
+
   const links = (
     <div className="flex lg:flex-row flex-col lg:flex-1 space-y-2  md:space-y-0 md:space-x-2">
       <li>
@@ -181,7 +196,7 @@ const Navbar = () => {
                     onMouseEnter={handlehover}
                     onMouseLeave={handleNoHover}
                     className="object-cover  w-12 h-12  hover:border-white border-2 rounded-full"
-                    src={user?.photoURL}
+                    src={singleUser?.photo || user?.photoURL}
                     alt=""
                   />
                 </Link>
